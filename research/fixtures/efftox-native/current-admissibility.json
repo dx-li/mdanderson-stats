@@ -1,0 +1,3502 @@
+[
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 1,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 3,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "candidate": 4,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "admissible": true
+  }
+]

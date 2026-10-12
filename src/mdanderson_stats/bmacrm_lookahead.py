@@ -31,6 +31,15 @@ class BMACRMLookAhead:
     decisions: tuple[BMACRMDecision, ...]
     completion_events: NDArray[np.int64]
 
+    @property
+    def high_uncertainty(self) -> bool:
+        """A final consensus retains any completion's three-subject qualification.
+
+        Agreement on a dose is not agreement that it is sufficiently observed.
+        Waiting/work-limited results make no final-dose uncertainty assertion.
+        """
+        return self.action == "select_mtd" and any(d.high_uncertainty for d in self.decisions)
+
 
 def _freeze_counts(counts: NDArray[np.int64]) -> NDArray[np.int64]:
     return np.frombuffer(counts.tobytes(), dtype=np.int64).reshape(counts.shape)

@@ -74,6 +74,13 @@ class CRMDesktopRecommendation:
     cohort_entry_analysis: CRMCalendarDecision | None = None
 
     @property
+    def high_uncertainty(self) -> bool:
+        """Retain the final-dose qualification across pending-outcome consensus."""
+        return self.action == "select_mtd" and bool(
+            getattr(self.analysis.decision, "high_uncertainty", False)
+        )
+
+    @property
     def evaluations(self) -> int:
         return self.analysis.evaluations + (
             self.cohort_entry_analysis.evaluations if self.cohort_entry_analysis else 0
@@ -107,6 +114,7 @@ class CRMDesktopRecommendation:
             f"action: {escape(self.action)}; zero-based dose: {self.dose}; "
             f"can add patient: {self.can_add_patient}.</p>",
             f"<p>{escape(self.explanation)}</p>",
+            f"<p>Final-dose high uncertainty: {self.high_uncertainty}.</p>",
             f"<p>Seed: {self.seed}; draws: {self.draws}; warmup: {self.warmup}; "
             f"chains: {self.chains}; posterior evaluations: {self.evaluations}.</p>",
             "<h2>Current analysis</h2><table><tr><th>Dose</th><th>Treated</th><th>Observed</th>"
@@ -283,6 +291,11 @@ def _recommend_crm_desktop(
         "explanation",
         "Bounded complete-outcome look-ahead: " + getattr(analysis.decision, "reason", ""),
     )
+    if isinstance(analysis.decision, BMACRMLookAhead) and analysis.decision.high_uncertainty:
+        explanation += (
+            ". High uncertainty: at least one outcome completion retains the selected "
+            "dose without three treated subjects and without a lower dose with three subjects."
+        )
     limited = bool(getattr(analysis.decision, "raw_rate_limited", False))
     if da and within:
         limited = False

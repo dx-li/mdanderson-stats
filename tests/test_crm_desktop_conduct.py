@@ -186,3 +186,23 @@ def test_current_safety_stop_precedes_cohort_rewind():
     assert stopped.cohort_entry_analysis is None
     with pytest.raises(ValueError, match="does not allow"):
         stopped.add_patient(patient_id=2, fingerprint=12)
+
+
+def test_final_pending_consensus_preserves_three_subject_uncertainty():
+    saved = read_crm_desktop_html(
+        document()
+        .replace("<double>.3</double>", "<double>.1</double>")
+        .replace("<MaxPatients>2</MaxPatients>", "<MaxPatients>1</MaxPatients>")
+        .replace(
+            "<UpperLimitOnProbToxAtLowestDose>.9</UpperLimitOnProbToxAtLowestDose>",
+            "<UpperLimitOnProbToxAtLowestDose>1</UpperLimitOnProbToxAtLowestDose>",
+        )
+    )
+    pending = CRMDesktopPatient(1, 11, 1, 0, BASE, BASE, -1)
+    result = recommend_crm_desktop(CRMDesktopHistory(saved, (pending,), "mdy"), at=BASE, seed=5)
+    assert result.action == "select_mtd" and result.dose == 0
+    assert result.analysis.decision.reason == "invariant"
+    assert all(d.high_uncertainty for d in result.analysis.decision.decisions)
+    assert result.analysis.decision.high_uncertainty and result.high_uncertainty
+    assert "High uncertainty" in result.explanation
+    assert "Final-dose high uncertainty: True" in result.to_html()

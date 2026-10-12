@@ -83,3 +83,92 @@ not the CRM helper's greater-or-equal comparison. Its first native analysis uses
 only the completed-cohort prefix; optional within-cohort escalation/de-escalation
 then triggers a second analysis including the current cohort. Preserve this
 separate contract rather than sharing CRM's safety/entry-replay controller.
+
+## Further current-version recovery and saved-file implementation
+
+`efftox_desktop.py` now reads the current six-coefficient XML, preserves unknown
+metadata, maps all five native outcome codes, counts outcomes at the **administered**
+dose, preserves inactive conditional truth, rejects impossible active joint truth,
+and prevents `NewestHyperParams=input` from silently using stale output priors.
+This is saved-file interchange, **not completed conduct/simulation integration**.
+The original default study parses (five doses/five scenarios); synthetic tests
+cover patient codes, round trips, invalid/ambiguous files and prior precedence.
+
+Current client `CalculateDose` RVA0x7a80 sets **both** `m_allowDeEscalation` and
+`m_allowEscalation` false (IL168/175). Thus the advertised current GUI uses the
+completed-cohort prefix only; the optional second within-cohort analysis in the
+managed wrapper is not activated by this client. Preserve that distinction from
+latent wrapper capabilities. Patient outcome codes are independently confirmed
+by this caller's switch at IL734 and its component assignments.
+
+The managed wrapper's native BBQ vtable (FieldRVA0x85114) maps count collection,
+pending consistency and selection to RVA0xd710,0xd220,0xd630. The latter creates
+the BBQ analysis engine and calls RVA0xf790: posterior summaries at0xf540,
+observed per-dose totals at0xf340, then selection at0xfc90.
+
+### Executed original admissibility, not an inferred generic EffTox rule
+
+`tools/reference_efftox_current_admissibility.py` executes **all original branch
+instructions** at RVA0xecc0 of `EffToxManagedWrapper.dll`, SHA256
+`6b266b3927bec98fd6d64f5767a1110cfccc3fe6bd18c7d438b9cfd538e4479c`.
+Only the checked integer-vector accessor is a host service; inference is supplied
+as tail probabilities. The250 fixtures in `fixtures/efftox-native/current-admissibility.json`
+cover empty/endpoint/interior/noncontiguous tried-dose sets, starts0/2, all five
+candidates, threshold equality and either side of the probability cutoffs.
+Recovered rules (indices zero-based):
+
+- Toxicity-tail probability **at least** its cutoff; equality passes.
+- With any observations, candidate lies from `min(tried)-1` through `max(tried)+1`.
+- Efficacy-tail probability must be **strictly greater** than its cutoff, except
+  at candidate `max(tried)+1`, which receives the exploration exemption.
+- With no observations, the admissibility helper admits only the starting dose
+  after the toxicity test. However, the **selector** at0xfc90 bypasses the helper
+  and returns the starting dose whenever that starting dose has zero observations.
+- The selector computes Lp utility at posterior marginal means, uses strict
+  improvement (first index wins utility ties), and reports stop when no candidate
+  qualifies. It does not receive an interim/final flag. The outer conductor maps
+  non-stopping decisions to trial-complete only after comparing patient count
+  with maximum; final selection therefore uses the same native reachability rule.
+
+These are **different** from the generic `efftox_decision` profile's strict
+toxicity comparison, first-untried exploration and final unrestricted selection.
+Do not silently change that existing scientific API. A named current-desktop
+controller and original selection/pending probes are still needed.
+
+Pending checking at0xed80 first analyzes the **observed-only baseline**, then
+iterates completion count matrices (enumerator0x23200), requiring every completed
+analysis to retain the baseline's dose and stop flag. Agreement among completed
+analyses alone is insufficient. The outer controller0x41c10 maps inconsistency
+to WAIT. This is static instruction evidence; full pending enumerator execution
+and numerical inference integration are still outstanding.
+
+### Executed selector and named Python profile
+
+`reference_efftox_current_selection.py` now executes the complete original
+selector0xfc90 and admissibility helper0xecc0 for250 supplied-summary cases.
+The utility callback, checked vector access, memcpy and security-cookie return
+are explicit host services; original selection branches execute unchanged.
+`fixtures/efftox-native/current-selection.json` confirms unobserved-start bypass,
+no-admissible stopping, reachability, threshold equality, exploration and
+first-index utility ties. Combined with the250 admissibility cases, all500
+fixtures pass against the named `efftox_desktop_decision` Python profile. An
+additional fixed-parameter posterior test verifies that this profile applies
+current-desktop final reachability without changing generic final selection.
+The accurate Python Lp shape and independent posterior remain separate from
+original numerical/RNG identity. Pending/cohort/full simulation integration is
+still outstanding; no catalog promotion is made at this checkpoint.
+
+The expanded selector cases include negative utilities and the original -DBL_MAX
+initial utility sentinel. Equal-to-sentinel utilities do not select a dose. The
+Python compatibility profile retains this strict-improvement boundary.
+
+`reference_efftox_current_pending.py` additionally executes the original
+pending-consistency loop0xed80 for21 explicitly supplied completion/decision
+streams (`current-pending-loop.json`). The observed-only baseline comparison,
+dose/stop-flag equality and early exit execute as original instructions. Runtime
+containers, enumeration stream and posterior callbacks are supplied services;
+**the native enumerator itself is not yet validated by this probe**. Cases where
+all completed analyses agree with each other but differ from baseline correctly
+return false. BBQ conductor constructor0x2b40 initializes its extra pending-gate
+flag at offset8 to false, so that gate does not force unconditional WAIT in the
+current client path.

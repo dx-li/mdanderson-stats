@@ -339,3 +339,55 @@ def test_zero_uniform_native_forced_runin_population():
     assert [r.arm for r in trial.records] == [0, 0]
     assert trial.decisions[1].allocation[0] == 0
     assert trial.decisions[1].assignment_arms == (0, 1, 2)
+
+
+@pytest.mark.parametrize("power", [0.001, 0.5, 1.0])
+def test_integrated_replay_rejects_unresolved_eligible_tail(power):
+    from mdanderson_stats.arand_native_trial import ArandNativeRules, arand_native_replay
+
+    rules = ArandNativeRules(
+        (ArandNativeArmLimits(),) * 2,
+        maximum_enrollment=1,
+        lower=0,
+        upper=1,
+        stop_when_one_arm=False,
+        power=power,
+        floor=0,
+    )
+    with pytest.raises(ArithmeticError, match="tail unresolved"):
+        arand_native_replay(
+            [0, 1],
+            [0.9, 0.9],
+            [[2, 2]] * 2,
+            [[1, 1]] * 2,
+            prior=[[1, 1e300], [1, 1e-300]],
+            rules=rules,
+            monitor=ArandNativeMonitor(),
+            family="exponential",
+        )
+
+
+def test_integrated_equal_allocation_does_not_transform_unresolved_tail():
+    from mdanderson_stats.arand_native_trial import ArandNativeRules, arand_native_replay
+
+    rules = ArandNativeRules(
+        (ArandNativeArmLimits(),) * 2,
+        maximum_enrollment=1,
+        lower=0,
+        upper=1,
+        stop_when_one_arm=False,
+        power=0,
+        floor=0,
+    )
+    result = arand_native_replay(
+        [0, 1],
+        [0.9, 0.9],
+        [[2, 2]] * 2,
+        [[1, 1]] * 2,
+        prior=[[1, 1e300], [1, 1e-300]],
+        rules=rules,
+        monitor=ArandNativeMonitor(),
+        family="exponential",
+    )
+    np.testing.assert_array_equal(result.decisions[0].allocation, [0.5, 0.5])
+    assert result.decisions[0].state.evidence.absolute_error is not None

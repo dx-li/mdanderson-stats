@@ -11,7 +11,7 @@ from numpy.typing import ArrayLike
 from ._validation import FloatArray, finite
 from .toxfinder_model import ToxFinderFit, ToxFinderPrior, fit_toxfinder
 from .toxfinder_native_decision import toxfinder_native_allocation, toxfinder_native_stage1
-from .toxfinder_native_information import _frozen
+from .toxfinder_native_information import ToxFinderNativeMAP, _frozen
 from .toxfinder_native_trial import _integer
 
 
@@ -90,6 +90,7 @@ class ToxFinderObservedRecommendation:
     observed_patients: int
     pending_patients: int
     reason: str
+    map_fit: ToxFinderNativeMAP | None = None
 
 
 def recommend_toxfinder_native(
@@ -155,6 +156,7 @@ def recommend_toxfinder_native(
     selected: int | None
     dose: FloatArray | None
     capacity = len(records) >= n1 + n2
+    map_fit = None
     if len(observed) < n1:
         dose = toxfinder_native_stage1(
             levels,
@@ -184,6 +186,7 @@ def recommend_toxfinder_native(
         )
         selected = 2 if ((len(observed) - n1) // cohort) % 2 == 0 else 1
         pairs, dose, reason = allocation.doses, allocation.doses[selected], "stage_two"
+        map_fit = allocation.map_fit
     if capacity:
         selected, dose, reason = None, None, "capacity_reached"
     return ToxFinderObservedRecommendation(
@@ -195,6 +198,7 @@ def recommend_toxfinder_native(
         len(observed),
         len(records) - len(observed),
         reason,
+        map_fit,
     )
 
 

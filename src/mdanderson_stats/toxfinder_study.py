@@ -132,6 +132,10 @@ def simulate_toxfinder_study(
 
     Refit after all outcomes by default. Legacy pre-final-cohort posterior use
     requires an explicit final_policy='legacy'; the report identifies the choice.
+    The unchanged 500/250/two-chain sampler defaults may require an explicit
+    larger max_sampler_evaluations for larger designs. An impossible total
+    budget is rejected before any sampling, with a deterministic lower bound;
+    slice stepping needs additional headroom. The total ceiling is 200 million.
     """
     study = _study(study)
     elicitation = prior if isinstance(prior, ToxFinderNativeElicitation) else None
@@ -215,6 +219,15 @@ class ToxFinderStudyRecommendation:
     def to_html(self) -> str:
         """Printable current-history recommendation, physical doses and diagnostics."""
         r = self.recommendation
+        map_diagnostics = (
+            "<p>Allocation MAP: not used for this recommendation.</p>"
+            if r.map_fit is None
+            else f"<p>Allocation MAP pass convergence: {r.map_fit.pass_converged}; "
+            f"pass iterations: {r.map_fit.pass_iterations}; "
+            f"objective evaluations: {r.map_fit.evaluations}. "
+            "False denotes an unconverged native simplex pass; "
+            "the compatibility allocation retains that result.</p>"
+        )
         dose = None if r.dose is None else (r.dose * self.study.reference_doses).tolist()
         body = (
             "<!doctype html><meta charset='utf-8'><title>ToxFinder patient recommendation</title>"
@@ -227,7 +240,8 @@ class ToxFinderStudyRecommendation:
             f"MCSE: {escape(str(r.fit.parameter_summary.batch_mean_mcse))}.</p>"
             f"<p>Prior mean: {escape(str(self.prior.mean))}; "
             f"variance: {escape(str(self.prior.variance))}.</p>"
-            "<h2>Captured patient CSV (physical doses)</h2><pre>"
+            + map_diagnostics
+            + "<h2>Captured patient CSV (physical doses)</h2><pre>"
         )
         return (
             body

@@ -1,0 +1,5252 @@
+[
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 1,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 1,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 1,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 1,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": -1,
+    "stopped": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 1,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 1,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": -1,
+    "stopped": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": -1,
+    "stopped": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": -1,
+    "stopped": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": -1,
+    "stopped": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": -1,
+    "stopped": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": -1,
+    "stopped": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 1,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 1,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 1,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 1,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": -1,
+    "stopped": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 1,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 1,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": -1,
+    "stopped": true
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      3,
+      0,
+      3,
+      0
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 0,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 0,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.1,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.1,
+    "efficacy_tail": 0.100001,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.099999,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1
+    ],
+    "selected": 2,
+    "stopped": false
+  },
+  {
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "start": 2,
+    "toxicity_tail": 0.9,
+    "efficacy_tail": 0.9,
+    "utilities": [
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "selected": 2,
+    "stopped": false
+  }
+]

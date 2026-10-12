@@ -1,0 +1,602 @@
+[
+  {
+    "baseline": [
+      0,
+      false
+    ],
+    "completions": [],
+    "analyzed": [
+      [
+        0,
+        false
+      ]
+    ],
+    "consistent": true
+  },
+  {
+    "baseline": [
+      0,
+      false
+    ],
+    "completions": [
+      [
+        0,
+        false
+      ]
+    ],
+    "analyzed": [
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ]
+    ],
+    "consistent": true
+  },
+  {
+    "baseline": [
+      0,
+      false
+    ],
+    "completions": [
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ]
+    ],
+    "analyzed": [
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ]
+    ],
+    "consistent": true
+  },
+  {
+    "baseline": [
+      0,
+      false
+    ],
+    "completions": [
+      [
+        1,
+        false
+      ]
+    ],
+    "analyzed": [
+      [
+        0,
+        false
+      ],
+      [
+        1,
+        false
+      ]
+    ],
+    "consistent": false
+  },
+  {
+    "baseline": [
+      0,
+      false
+    ],
+    "completions": [
+      [
+        3,
+        false
+      ],
+      [
+        3,
+        false
+      ],
+      [
+        3,
+        false
+      ]
+    ],
+    "analyzed": [
+      [
+        0,
+        false
+      ],
+      [
+        3,
+        false
+      ]
+    ],
+    "consistent": false
+  },
+  {
+    "baseline": [
+      0,
+      false
+    ],
+    "completions": [
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        true
+      ]
+    ],
+    "analyzed": [
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        true
+      ]
+    ],
+    "consistent": false
+  },
+  {
+    "baseline": [
+      0,
+      false
+    ],
+    "completions": [
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ],
+      [
+        -1,
+        true
+      ]
+    ],
+    "analyzed": [
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ],
+      [
+        -1,
+        true
+      ]
+    ],
+    "consistent": false
+  },
+  {
+    "baseline": [
+      2,
+      false
+    ],
+    "completions": [],
+    "analyzed": [
+      [
+        2,
+        false
+      ]
+    ],
+    "consistent": true
+  },
+  {
+    "baseline": [
+      2,
+      false
+    ],
+    "completions": [
+      [
+        2,
+        false
+      ]
+    ],
+    "analyzed": [
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        false
+      ]
+    ],
+    "consistent": true
+  },
+  {
+    "baseline": [
+      2,
+      false
+    ],
+    "completions": [
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        false
+      ]
+    ],
+    "analyzed": [
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        false
+      ]
+    ],
+    "consistent": true
+  },
+  {
+    "baseline": [
+      2,
+      false
+    ],
+    "completions": [
+      [
+        1,
+        false
+      ]
+    ],
+    "analyzed": [
+      [
+        2,
+        false
+      ],
+      [
+        1,
+        false
+      ]
+    ],
+    "consistent": false
+  },
+  {
+    "baseline": [
+      2,
+      false
+    ],
+    "completions": [
+      [
+        3,
+        false
+      ],
+      [
+        3,
+        false
+      ],
+      [
+        3,
+        false
+      ]
+    ],
+    "analyzed": [
+      [
+        2,
+        false
+      ],
+      [
+        3,
+        false
+      ]
+    ],
+    "consistent": false
+  },
+  {
+    "baseline": [
+      2,
+      false
+    ],
+    "completions": [
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        true
+      ]
+    ],
+    "analyzed": [
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        true
+      ]
+    ],
+    "consistent": false
+  },
+  {
+    "baseline": [
+      2,
+      false
+    ],
+    "completions": [
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        false
+      ],
+      [
+        -1,
+        true
+      ]
+    ],
+    "analyzed": [
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        false
+      ],
+      [
+        -1,
+        true
+      ]
+    ],
+    "consistent": false
+  },
+  {
+    "baseline": [
+      -1,
+      true
+    ],
+    "completions": [],
+    "analyzed": [
+      [
+        -1,
+        true
+      ]
+    ],
+    "consistent": true
+  },
+  {
+    "baseline": [
+      -1,
+      true
+    ],
+    "completions": [
+      [
+        -1,
+        true
+      ]
+    ],
+    "analyzed": [
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        true
+      ]
+    ],
+    "consistent": true
+  },
+  {
+    "baseline": [
+      -1,
+      true
+    ],
+    "completions": [
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        true
+      ]
+    ],
+    "analyzed": [
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        true
+      ]
+    ],
+    "consistent": true
+  },
+  {
+    "baseline": [
+      -1,
+      true
+    ],
+    "completions": [
+      [
+        1,
+        false
+      ]
+    ],
+    "analyzed": [
+      [
+        -1,
+        true
+      ],
+      [
+        1,
+        false
+      ]
+    ],
+    "consistent": false
+  },
+  {
+    "baseline": [
+      -1,
+      true
+    ],
+    "completions": [
+      [
+        3,
+        false
+      ],
+      [
+        3,
+        false
+      ],
+      [
+        3,
+        false
+      ]
+    ],
+    "analyzed": [
+      [
+        -1,
+        true
+      ],
+      [
+        3,
+        false
+      ]
+    ],
+    "consistent": false
+  },
+  {
+    "baseline": [
+      -1,
+      true
+    ],
+    "completions": [
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        false
+      ]
+    ],
+    "analyzed": [
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        false
+      ]
+    ],
+    "consistent": false
+  },
+  {
+    "baseline": [
+      -1,
+      true
+    ],
+    "completions": [
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        true
+      ]
+    ],
+    "analyzed": [
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        true
+      ],
+      [
+        -1,
+        true
+      ]
+    ],
+    "consistent": true
+  }
+]

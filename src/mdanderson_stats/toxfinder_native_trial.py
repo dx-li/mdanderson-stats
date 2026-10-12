@@ -15,7 +15,7 @@ from .toxfinder_native_decision import (
     toxfinder_native_allocation,
     toxfinder_native_stage1,
 )
-from .toxfinder_native_information import _frozen
+from .toxfinder_native_information import ToxFinderNativeMAP, _frozen
 
 
 def _integer(value: int, name: str, low: int, high: int) -> int:
@@ -24,6 +24,38 @@ def _integer(value: int, name: str, low: int, high: int) -> int:
     if not low <= value <= high:
         raise ValueError(f"{name} must be in [{low},{high}]")
     return int(value)
+
+
+def _minimum_sampler_work(
+    prior: ToxFinderPrior,
+    n1: int,
+    n2: int,
+    cohort: int,
+    draws: int,
+    warmup: int,
+    chains: int,
+    final_policy: str,
+) -> int:
+    """Exact schedule lower bound, including one chain initialization per fit."""
+    if n1 % cohort or n2 % cohort or n1 + n2 > 100:
+        raise ValueError("stage sizes must be cohort multiples, with at most 100 patients")
+    if final_policy not in ("legacy", "refit"):
+        raise ValueError("unsupported final posterior policy")
+    free = int(np.count_nonzero(prior.variance))
+    rows = list(range(0, n1, cohort)) + list(range(n1, n1 + n2, 2 * cohort))
+    if final_policy == "refit":
+        rows.append(n1 + n2)
+    return sum(chains if n == 0 else chains * (1 + 3 * free * (draws + warmup)) * n for n in rows)
+
+
+def _check_sampler_budget(minimum: int, budget: int) -> None:
+    if minimum > budget:
+        raise ValueError(
+            f"sampler budget {budget} is below the deterministic minimum {minimum} "
+            "objective-evaluation rows for this design. Increase max_sampler_evaluations "
+            "explicitly (maximum 200000000), allowing additional work for slice stepping "
+            "and rejected proposals; the minimum is not a sufficient execution budget."
+        )
 
 
 def toxfinder_native_surface(surface: ArrayLike, doses: ArrayLike) -> FloatArray:
@@ -57,6 +89,7 @@ class ToxFinderNativeCohort:
     subjects: int
     true_toxicity: float
     posterior_update: int
+    map_fit: ToxFinderNativeMAP | None = None
 
 
 @dataclass(frozen=True)
@@ -110,7 +143,19 @@ class ToxFinderNativeTrial:
             "Monte Carlo results.</p>"
             "<table><tr><th>Contour point</th><th>Drug 1</th><th>Drug 2</th>"
             "<th>Posterior mean</th><th>Posterior SD</th><th>Scenario truth</th>"
-            "<th>Absolute error</th></tr>" + "".join(rows) + "</table>"
+            "<th>Absolute error</th></tr>"
+            + "".join(rows)
+            + "</table>"
+            + "<h2>Allocation MAP diagnostics</h2>"
+            + "".join(
+                f"<p>First patient {c.first_patient} (zero-based): pass convergence "
+                f"{c.map_fit.pass_converged}; iterations {c.map_fit.pass_iterations}; "
+                f"objective evaluations {c.map_fit.evaluations}.</p>"
+                for c in self.cohorts
+                if c.map_fit is not None
+            )
+            + "<p>False denotes an unconverged native simplex pass; "
+            "the compatibility allocation retains that result.</p>"
         )
 
 
@@ -145,7 +190,7 @@ def simulate_toxfinder_native_trial(
     cohort = _integer(cohort_size, "cohort_size", 1, 100)
     start = _integer(start_index, "start_index", 0, len(levels) - 1)
     seed = _integer(seed, "seed", 0, 2**63 - 1)
-    budget = _integer(max_sampler_evaluations, "max_sampler_evaluations", 1, 20_000_000)
+    budget = _integer(max_sampler_evaluations, "max_sampler_evaluations", 1, 200_000_000)
     _integer(draws, "draws", 8, 10_000)
     _integer(warmup, "warmup", 0, 100_000)
     _integer(chains, "chains", 2, 4)
@@ -159,6 +204,9 @@ def simulate_toxfinder_native_trial(
     from .toxfinder_native_information import _gamma
 
     _gamma(prior)
+    _check_sampler_budget(
+        _minimum_sampler_work(prior, n1, n2, cohort, draws, warmup, chains, final_policy), budget
+    )
     if np.any(prior.mean < 0.005) or np.any(prior.mean > 30):
         raise ValueError("native MAP prior means must lie in [.005,30]")
     toxfinder_native_surface(true_surface, levels)
@@ -178,10 +226,16 @@ def simulate_toxfinder_native_trial(
         y = np.asarray(outcomes) if history else np.zeros(1)
         n = np.ones(len(history)) if history else np.zeros(1)
         # Deterministic lower bound rejects excessive requests before fitting.
-        if (draws + warmup) * chains * 6 * len(d) > budget - evaluations:
-            raise ValueError("trial exceeds total sampler evaluation budget")
         result = fit_toxfinder(
-            d, y, n, prior=prior, rng=sampler_rng, draws=draws, warmup=warmup, chains=chains
+            d,
+            y,
+            n,
+            prior=prior,
+            rng=sampler_rng,
+            draws=draws,
+            warmup=warmup,
+            chains=chains,
+            max_evaluations=min(budget - evaluations, 20_000_000),
         )
         evaluations += result.evaluations * len(d)
         if evaluations > budget:
@@ -190,7 +244,7 @@ def simulate_toxfinder_native_trial(
         posterior_subjects = len(history)
         return result
 
-    def enroll(pairs: FloatArray, selected: int) -> None:
+    def enroll(pairs: FloatArray, selected: int, map_fit: ToxFinderNativeMAP | None = None) -> None:
         dose = pairs[selected]
         truth = float(toxfinder_native_surface(true_surface, [dose])[0])
         y = (outcomes_rng.random(cohort) < truth).astype(int)
@@ -204,6 +258,7 @@ def simulate_toxfinder_native_trial(
                 cohort,
                 truth,
                 update,
+                map_fit,
             )
         )
         history.extend([dose.tolist() for _ in range(cohort)])
@@ -236,9 +291,9 @@ def simulate_toxfinder_native_trial(
                 log_parameters=True,
             )
             selected = 2 if ((len(history) - n1) // cohort) % 2 == 0 else 1
-            enroll(result.doses, selected)
+            enroll(result.doses, selected, result.map_fit)
             if len(history) < n1 + n2:
-                enroll(result.doses, 3 - selected)
+                enroll(result.doses, 3 - selected, result.map_fit)
     if final_policy == "refit":
         fit = refit()
     contour = toxfinder_native_allocation(
@@ -291,6 +346,24 @@ class ToxFinderNativeSimulation:
         if scale.shape != (2,) or np.any(scale <= 0):
             raise ValueError("reference_doses must contain two positive scales")
         rows = []
+        diagnostics = [
+            "<h2>Allocation MAP diagnostics</h2><table><tr><th>Trial</th>"
+            "<th>First patient (zero-based)</th><th>Pass convergence</th>"
+            "<th>Pass iterations</th><th>Objective evaluations</th></tr>"
+        ]
+        for trial_index, trial in enumerate(self.trials, 1):
+            for cohort in trial.cohorts:
+                fit = cohort.map_fit
+                if fit is not None:
+                    diagnostics.append(
+                        f"<tr><td>{trial_index}</td><td>{cohort.first_patient}</td>"
+                        f"<td>{fit.pass_converged}</td><td>{fit.pass_iterations}</td>"
+                        f"<td>{fit.evaluations}</td></tr>"
+                    )
+        diagnostics.append(
+            "</table><p>False denotes an unconverged native simplex pass; "
+            "the compatibility allocation retains that result.</p>"
+        )
         for i, label in enumerate(("Middle", "Branch 1", "Branch 2")):
             dose, sd = self.mean_final_doses[i] * scale, self.sd_final_doses[i] * scale
             rows.append(
@@ -315,7 +388,7 @@ class ToxFinderNativeSimulation:
             "Per-trial fits retain parameter MCSE and split R-hat diagnostics.</p>"
             "<table><tr><th>Point</th><th>Mean drug 1 (SD)</th><th>Mean drug 2 (SD)</th>"
             "<th>Mean estimated risk</th><th>Mean true risk</th><th>Mean absolute error</th>"
-            "<th>Mean posterior SD</th></tr>" + "".join(rows) + "</table>"
+            "<th>Mean posterior SD</th></tr>" + "".join(rows) + "</table>" + "".join(diagnostics)
         )
 
 
@@ -349,11 +422,27 @@ def simulate_toxfinder_native(
     budget = _integer(max_sampler_evaluations, "max_sampler_evaluations", 1, 200_000_000)
     _integer(draws, "draws", 8, 10_000)
     _integer(chains, "chains", 2, 4)
+    _integer(warmup, "warmup", 0, 100_000)
+    cohort = _integer(cohort_size, "cohort_size", 1, 100)
     total_patients = _integer(stage1_patients, "stage1_patients", 1, 100) + _integer(
         stage2_patients, "stage2_patients", 0, 100
     )
-    if count * chains * draws * (7 + 2 * total_patients) > 2_000_000:
-        raise ValueError("retained final fits exceed two million numeric values")
+    retained = count * chains * draws * (7 + 2 * total_patients)
+    if retained > 2_000_000:
+        raise ValueError(
+            f"retained final fits require {retained} numeric values, exceeding the "
+            "2000000-value cap. Run smaller batches with distinct seeds and save "
+            "their results separately; changing sampler quality is not required."
+        )
+    if not isinstance(prior, ToxFinderPrior):
+        raise TypeError("prior must be a ToxFinderPrior")
+    _check_sampler_budget(
+        count
+        * _minimum_sampler_work(
+            prior, stage1_patients, stage2_patients, cohort, draws, warmup, chains, final_policy
+        ),
+        budget,
+    )
     results = []
     remaining = budget
     for stream in np.random.SeedSequence(seed).spawn(count):
@@ -374,7 +463,7 @@ def simulate_toxfinder_native(
             draws=draws,
             warmup=warmup,
             chains=chains,
-            max_sampler_evaluations=min(remaining, 20_000_000),
+            max_sampler_evaluations=remaining,
         )
         remaining -= result.sampler_evaluations
         results.append(result)

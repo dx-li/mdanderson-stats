@@ -500,3 +500,15 @@ fields do not establish a current interactive trinary workflow. The recovered
 legacy fitter closes the missing approximate-fitting algorithm, with its
 bounded instruction-reference and floating-point limitations documented.
 The Windows integration kernel has not been run for direct parity checks.
+
+### Current desktop source boundary
+
+The current5.2.3 saved-file reader is available as
+`mdanderson_stats.efftox_desktop.read_efftox_desktop_xml`. It preserves the current
+six-coefficient XML and native patient codes, and rejects historical model formats
+rather than guessing migration. File interchange does not yet complete the desktop
+conduct/simulation workflow. New original-instruction evidence also identifies
+current-desktop admissibility and pending rules that differ from the generic
+`efftox_decision` profile above; see the
+[current workflow contract](../research/efftox-current-workflow-contracts-2026-10-12.md).
+The generic defaults have not been silently changed to these compatibility rules.

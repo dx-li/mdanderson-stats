@@ -145,3 +145,56 @@ def test_csv_writer_rejects_comment_ids_and_preserves_quoted_identifiers():
         read_toxfinder_subject_csv(text, reference_doses=[1200, 600])[0].identifier
         == row.identifier
     )
+
+
+def test_ordinary_design_impossible_budget_fails_before_sampling(monkeypatch):
+    import mdanderson_stats.toxfinder_native_trial as module
+
+    study = read_toxfinder_tmml(
+        TEXT.replace("num-stage1 2\n", "num-stage1 20\n")
+        .replace("num-stage2 2\n", "num-stage2 40\n")
+        .replace("cohort 1\n", "cohort 2\n")
+    )
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("preflight must happen before fitting")
+
+    monkeypatch.setattr(module, "fit_toxfinder", forbidden)
+    prior = ToxFinderPrior(np.ones(6), np.full(6, 0.25))
+    with pytest.raises(ValueError, match="deterministic minimum 28622124"):
+        simulate_toxfinder_study(study, prior=prior, trials=2, seed=55)
+    with pytest.raises(ValueError, match="retained final fits"):
+        simulate_toxfinder_study(
+            study, prior=prior, trials=50, seed=55, max_sampler_evaluations=200_000_000
+        )
+
+
+def test_exhausted_map_passes_survive_simulation_and_patient_reports(monkeypatch):
+    import importlib
+
+    module = importlib.import_module("mdanderson_stats.toxfinder_native_information")
+    simplex = module._simplex
+    monkeypatch.setattr(
+        module, "_simplex", lambda start, step, objective: simplex(start, step, objective, budget=1)
+    )
+    prior = ToxFinderPrior(np.ones(6), np.full(6, 0.25))
+    study = read_toxfinder_tmml(TEXT)
+    result = simulate_toxfinder_study(study, prior=prior, trials=2, seed=55, draws=8, warmup=0)
+    for trial in result.simulation.trials:
+        assert trial.cohorts[0].map_fit is None
+        for cohort in trial.cohorts[2:]:
+            assert cohort.map_fit.pass_converged == (False, False)
+            assert cohort.map_fit.pass_iterations == (1, 1)
+    assert "(False, False)" in result.to_html()
+    from mdanderson_stats.toxfinder_native_io import read_toxfinder_subject_csv
+    from mdanderson_stats.toxfinder_study import recommend_toxfinder_study
+
+    records = read_toxfinder_subject_csv(
+        "1,x,2026,1,1,0,0,120,60,0\n2,x,2026,1,1,0,1,600,300,1\n",
+        reference_doses=study.reference_doses,
+    )
+    recommendation = recommend_toxfinder_study(
+        study, records, prior=prior, seed=5, draws=8, warmup=0
+    )
+    assert recommendation.recommendation.map_fit.pass_converged == (False, False)
+    assert "(False, False)" in recommendation.to_html()

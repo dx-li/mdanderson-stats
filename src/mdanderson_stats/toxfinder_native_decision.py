@@ -9,7 +9,12 @@ from numpy.typing import ArrayLike
 
 from ._validation import FloatArray, finite, scalar
 from .toxfinder_model import ToxFinderPrior, toxfinder_probabilities
-from .toxfinder_native_information import _frozen, _history, toxfinder_native_information
+from .toxfinder_native_information import (
+    ToxFinderNativeMAP,
+    _frozen,
+    _history,
+    toxfinder_native_information,
+)
 
 
 def _levels(value: ArrayLike) -> FloatArray:
@@ -206,6 +211,7 @@ class ToxFinderNativeAllocation:
     estimated_toxicity: FloatArray
     mode: str
     allocation: bool
+    map_fit: ToxFinderNativeMAP | None = None
 
 
 def toxfinder_native_allocation(
@@ -248,5 +254,9 @@ def toxfinder_native_allocation(
 
     pairs = _allocation(levels, goal, strength, mode, predict, information, allocation)
     return ToxFinderNativeAllocation(
-        _frozen(pairs), _frozen([predict(*p) for p in pairs]), mode, allocation
+        _frozen(pairs),
+        _frozen([predict(*p) for p in pairs]),
+        mode,
+        allocation,
+        info.map_fit if allocation else None,
     )

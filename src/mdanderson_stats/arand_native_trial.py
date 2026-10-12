@@ -101,10 +101,16 @@ class ArandNativeRules:
 class ArandNativeEvidence:
     probability_best: FloatArray
     futility_probability: FloatArray | None = None
+    absolute_error: FloatArray | None = None
 
     def __post_init__(self) -> None:
         p = _probabilities(self.probability_best)
         object.__setattr__(self, "probability_best", _freeze(p))
+        if self.absolute_error is not None:
+            error = finite(self.absolute_error, "absolute_error")
+            if error.shape != p.shape or np.any(error < 0):
+                raise ValueError("absolute errors must be nonnegative and match the arm count")
+            object.__setattr__(self, "absolute_error", _freeze(error))
         if self.futility_probability is not None:
             f = _probabilities(self.futility_probability)
             if len(f) != len(p):
@@ -265,6 +271,13 @@ def arand_native_decide(
                     "native forced run-in weights are not a probability distribution"
                 )
         else:
+            if (
+                total >= runin
+                and rules.power > 0
+                and evidence.absolute_error is not None
+                and np.any(evidence.probability_best[eligible] <= evidence.absolute_error[eligible])
+            ):
+                raise ArithmeticError("best-arm tail unresolved for allocation; tighten tolerance")
             probabilities = (
                 np.ones(len(eligible)) if total < runin else evidence.probability_best[eligible]
             )
@@ -368,7 +381,11 @@ def arand_native_replay(
                 threshold=futility_threshold,
                 absolute_tolerance=absolute_tolerance,
             )
-        return ArandNativeEvidence(posterior.best.probability, posterior.exceedance_probability)
+        return ArandNativeEvidence(
+            posterior.best.probability,
+            posterior.exceedance_probability,
+            posterior.best.absolute_error,
+        )
 
     state = ArandNativeState(monitor, (0,) * k, analyze(0))
     decisions: list[ArandNativeDecision] = []

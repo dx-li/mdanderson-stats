@@ -323,8 +323,19 @@ def fit_toxfinder(
     draws: int = 500,
     warmup: int = 250,
     chains: int = 2,
+    max_evaluations: int = _MAX_EVALS,
 ) -> ToxFinderFit:
-    """Fit the two-agent model by componentwise slice sampling in log parameters."""
+    """Fit by slice sampling, with an explicit objective-evaluation times rows cap.
+
+    The default cap is two million; callers can opt into up to twenty million.
+    Stepping and rejected proposals count against this cap as they execute.
+    """
+    if (
+        isinstance(max_evaluations, (bool, np.bool_))
+        or not isinstance(max_evaluations, (int, np.integer))
+        or not 1 <= max_evaluations <= 20_000_000
+    ):
+        raise ValueError("max_evaluations must be an integer in [1,20000000]")
     dose = _dose_array(doses)
     raw_y, raw_n = np.asarray(toxicities), np.asarray(subjects)
     if raw_y.size > _MAX_PAIRS or raw_n.size > _MAX_PAIRS:
@@ -351,7 +362,6 @@ def fit_toxfinder(
         or draws > 10_000
         or chains * draws * 6 > 200_000
         or chains * draws * y.size > 200_000
-        or (warmup + draws) * chains * 6 * y.size > _MAX_EVALS
     ):
         raise ValueError("requested fit exceeds resource limits")
     if not isinstance(rng, np.random.Generator):
@@ -366,11 +376,14 @@ def fit_toxfinder(
     evaluations = 0
     no_data = not np.any(n)
     free_indices = np.flatnonzero(~fixed)
+    minimum = chains * (1 + (0 if no_data else 3 * len(free_indices) * (warmup + draws)))
+    if minimum * y.size > max_evaluations:
+        raise ValueError("minimum sampler work exceeds max_evaluations budget")
 
     def objective(value: FloatArray) -> float:
         nonlocal evaluations
         evaluations += 1
-        if evaluations * y.size > _MAX_EVALS:
+        if evaluations * y.size > max_evaluations:
             raise ValueError("actual sampler parameter-dose evaluations exceed the resource limit")
         return _log_posterior(value, dose, y, n, shape, scale, fixed)
 

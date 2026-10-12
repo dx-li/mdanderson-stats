@@ -121,3 +121,59 @@ comments, quoting and unique IDs are validated by the strict reader. Recommendat
 reports retain patient rows, prior moments, saved settings and sampler diagnostics.
 A capacity-reached result supplies no new treatment dose. The Python APIs return
 values and strings; file writing occurs only in the explicit caller code above.
+
+## Computational budgets and allocation diagnostics
+
+The default sampler remains500 retained draws,250 warmup and two chains. Work is
+counted as posterior-objective evaluations multiplied by history rows, including
+slice stepping and rejected proposals. The20-million default total is a bounded
+interactive budget, **not sufficient for every saved design**. Preflight now
+rejects a provably insufficient budget before sampling and reports its lower bound.
+For stage sizes20/40 and cohort size2, final refit analyzes history sizes
+0,2,...,18;20,24,...,56;60. With six nonfixed coefficients this requires at least
+14,311,062 counted evaluations per trial,28,622,124 for two. Actual work is larger.
+The prior-only fit counts its chain initializations; it draws directly from the
+prior rather than doing slice updates.
+
+Opt into a larger bounded budget explicitly, without lowering sampler quality:
+
+```python
+run = simulate_toxfinder_study(
+    study,
+    prior=prior,
+    trials=2,
+    seed=2027,
+    max_sampler_evaluations=200_000_000,
+)
+```
+
+The total ceiling remains200 million, with at most20 million per individual fit.
+Actual work stops at the specified limit. Retained final arrays have a separate
+2-million-value cap. Fifty60-patient trials at the default draws/chains would
+retain6.35 million values and are rejected before sampling. Run smaller batches
+with distinct seeds, save each batch separately, and combine trial-level summaries
+with appropriate weighting/MCSE. The API does not silently thin draws or retain
+unbounded arrays; different batch boundaries do not promise identical random tapes.
+
+Allocation results retain `map_fit`, and each simulated cohort retains the MAP
+used for its allocation (shared by the two stage-two cohorts that share a posterior).
+Stage one and final CKP contour selection do not use this MAP and store `None`.
+Simulation, individual-trial and patient reports display both native simplex
+passes' convergence, iteration counts and objective evaluations. A false flag
+is visible; compatibility behavior retains the original optimizer's result,
+without silently replacing it with another optimizer.
+
+The independent R posterior reference covers a scalar alpha1 slice. It does not
+validate joint six-dimensional mixing. `tools/check_toxfinder_joint_posterior.py`
+adds an independent randomized importance-integration comparison for all six log
+parameters and four predictive risks on a specified moderate-data example. Its
+four-chain2000-draw/1000-warmup check is supporting numerical evidence for that
+case, not a convergence guarantee for every prior, history or clinical use.
+
+A recorded two-trial60-patient execution at500/250/two-chain settings used
+28,573,716 and28,666,554 counted evaluations (57,240,270 total), completing in
+582.84 seconds in the recorded environment with an explicit200-million cap.
+This is a representative cost measurement, not a guaranteed upper bound for
+other priors, histories, seeds or machines. See the saved
+[budget execution evidence](../research/toxfinder-default-budget-check-2026-10-12.json)
+and [joint-posterior check](../research/toxfinder-joint-posterior-check-2026-10-12.json).

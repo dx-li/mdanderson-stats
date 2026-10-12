@@ -70,3 +70,8 @@ settings, inspect `result.analysis.posterior.parameter_summary`, and compare the
 returned actions. Increasing draws is not a guarantee of convergence. Native
 hidden MCMC controls remain preserved metadata; the Python settings and diagnostic
 results are recorded in each report.
+
+A final pending-outcome consensus retains `high_uncertainty` whenever any
+completion selects the dose without the three-subject qualification. Agreement
+on a dose does not remove that qualification. The recommendation and printable
+report expose it, in addition to the full completion witnesses.
