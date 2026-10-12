@@ -15,6 +15,7 @@ CASES = json.loads((Path(__file__).parent / "fixtures/wfmm-native-bounds.json").
 @pytest.mark.parametrize("case", CASES, ids=lambda c: c["case"])
 def test_original_conditional_width_roots_and_invalid_sentinels(case):
     trace = case["traces"][0]
+    root_tolerance = 1e-4 if case["case"] == "floor_freeze_odds_cap" else 5e-5
     model = case["model"]
     y, x = np.array(case["y"]), np.array(model["X"])
     beta = np.array(trace["beta"])
@@ -49,7 +50,7 @@ def test_original_conditional_width_roots_and_invalid_sentinels(case):
                 return nll(v) - peak - 1
 
             hi = brentq(root, mle[h, j], upper[h, j] * 1.01)
-            assert upper[h, j] == pytest.approx(hi, abs=5e-5, rel=0)
+            assert upper[h, j] == pytest.approx(hi, abs=root_tolerance, rel=0)
             if lower[h, j] < 0:
                 # When no nonnegative lower root exists, native writes -upper;
                 # it doubles the scale relative to a floor-truncated interval.
@@ -57,4 +58,32 @@ def test_original_conditional_width_roots_and_invalid_sentinels(case):
                 assert root(1e-6) < 0
             else:
                 lo = brentq(root, 1e-6, mle[h, j])
-                assert lower[h, j] == pytest.approx(lo, abs=5e-5, rel=0)
+                assert lower[h, j] == pytest.approx(lo, abs=root_tolerance, rel=0)
+
+
+def test_native_floor_freeze_differs_from_analytic_conditional_optimum():
+    case = next(c for c in CASES if c["case"] == "floor_freeze_odds_cap")
+    trace = case["traces"][0]
+    y = np.array(case["y"])
+    beta = np.array(trace["beta"])[0]
+    residual = (y - beta).reshape(4, 2, 4)
+    group_mean = residual.mean(axis=1)
+    # Balanced random intercept covariance eigenvalues: s (four within-pair
+    # contrasts) and s+2q (four group-mean contrasts), with beta held fixed.
+    s = ((residual - group_mean[:, None, :]) ** 2).sum(axis=(0, 1)) / 4
+    q = (group_mean**2).mean(axis=0) - s / 2
+    native = np.array(trace["mle"])
+    for j in (1, 2):
+        assert trace["theta_MOM"][0][j] == native[0, j] == 1e-6
+        assert q[j] > 0.5
+
+        def nll(random, resid):
+            return 0.5 * (
+                4 * np.log(resid)
+                + 4 * np.log(resid + 2 * random)
+                + 4 * s[j] / resid
+                + 2 * np.sum(group_mean[:, j] ** 2) / (resid + 2 * random)
+            )
+
+        gap = nll(native[0, j], native[1, j]) - nll(q[j], s[j])
+        assert gap > 0.04

@@ -36,6 +36,17 @@ with tempfile.TemporaryDirectory(prefix="wfmm-bounds-reference-") as temporary:
         )
         for c in source["cases"]
     ]
+    mixed = next(c for c in source["cases"] if c["case"] == "random_intercept")
+    cases.append(
+        trace(
+            binary,
+            Path(temporary),
+            {k: np.array(v) for k, v in mixed["model"].items()},
+            "floor_freeze_odds_cap",
+            mode="bounds",
+            mcmc_settings={"maxO": 2.0},
+        )
+    )
 args.output.write_text(
     json.dumps(dict(executable_sha256=SHA, cases=cases), indent=2, allow_nan=False) + "\n"
 )

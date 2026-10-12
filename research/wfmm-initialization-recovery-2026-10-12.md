@@ -114,3 +114,16 @@ source proposal mapping and conditional-bound semantics. Scope still open:
 compose GLS/EB with the conditional optimizer, safe/native scale usability,
 complete transform/extension coverage, saved WFMM1/WFMM2/WFMM3 studies and
 postprocessing/prediction integration. Entry70 remains partial.
+
+A fifth bound fixture sets maxO=2 in the balanced random-intercept design.
+Native components starting at the MOM floor remain frozen there during MLE.
+Independent balanced-eigenvalue formulas show conditional optima q=.533729 and
+q=1.229817 for two such coefficients, with log-likelihood improvements.0401964
+and.0943257. This is a **restricted optimizer**, not global conditional ML over
+all positive variance components. Native bound tolerance is1e-4 for this extra
+case (maximum observed root error5.15e-5), versus5e-5 on the original four.
+The next initializer must expose the floor freeze in its compatibility profile;
+a mathematical optimizer must be free to leave that floor. A log-parameterized
+simplex started exactly at its lower bound can also falsely stick there, so it
+is not an adequate independent optimization check without analytic or multi-start
+validation.

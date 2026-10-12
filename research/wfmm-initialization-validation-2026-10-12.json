@@ -1,0 +1,95 @@
+{
+  "scope": "WFMM70 MOM and native standardized-input empirical-Bayes initialization components; conditional likelihood/bounds/proposal source contracts. Application remains partial.",
+  "production_commit": "f98f2fd3c25bf361a9f16fd8f778fc6af8e2e412",
+  "full_suite": {
+    "passed": 76362,
+    "seconds": 457.52,
+    "log_sha256": "4f19091d06b9d5be4450a751253b4c49475c2e5744aca349a0055b288ccf8807",
+    "all_extras": true,
+    "warnings_as_errors": true,
+    "workers": 4,
+    "production_python_files": 772,
+    "production_unchanged": true
+  },
+  "supplemental_source_bound_tests": {
+    "passed": 6,
+    "seconds": 0.43,
+    "log_sha256": "d0ca14f0d26a99d8ffd6e2982cfe1f53ef0e0e6a41e9ff058480612f20973eac"
+  },
+  "installed_wheel": {
+    "wfmm": {
+      "passed": 234,
+      "seconds": 11.35,
+      "log_sha256": "13da01a56e8003a12e2b1b4a4088f8004b75e9c41bb44e730f7275ebf53debe7"
+    },
+    "supplemental_bounds": {
+      "passed": 6,
+      "seconds": 0.45,
+      "log_sha256": "6f2a6a181b34e81468842a5c4e45f5cfc6cd3b58cfb0768bab229a345b27d204"
+    },
+    "extras": {
+      "passed": 12,
+      "seconds": 4.15,
+      "log_sha256": "0c3d05039522ee6443a7e1a0678e5e3a68ee139ca60bdf8d43d3cbbbe23bf2e2"
+    },
+    "outside_checkout": true,
+    "example": "wfmm_initialization.py",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "dependency_check": "passed"
+  },
+  "source_references": {
+    "byte_identical_files": 5,
+    "likelihood_evaluations": 969,
+    "mom_designs": 19,
+    "mom_systems": 166,
+    "eb_designs": 10,
+    "eb_calls": 20,
+    "proposal_matrices": 4,
+    "bound_matrices": 5,
+    "fixture_sha256": {
+      "wfmm-native-bounds.json": "147ed6a7fedb9b2ea5327225992bf47b00d6cef1d6191b15dda116963ec828cc",
+      "wfmm-native-compression.json": "9f770ce732ce2d6c0e3fb560d73f2d9f93ddf75884323d27a673b86720a36b3c",
+      "wfmm-native-eb.json": "2ea0caef3092600f9c2bd202cdcbe9ac4834c5574ce39ee87bc28f57dbd4f95b",
+      "wfmm-native-initialization.json": "20b32db05411a76504a473f6e6ffa5592e8899d2cdebfd60790f024464188928",
+      "wfmm-native-mom.json": "0ec6282374ecefda42e35309d3c128a3511803e9b0933dce5910472eef146ab7",
+      "wfmm-native-proposal.json": "979aa2d556f90f08507523eb54414f53382171a00f2762860e3154826653c2a7",
+      "wfmm-native-variance-prior.json": "458efd0457226f65ec54d4826356145cb66be39a4759f00753c0aa543685c48b"
+    }
+  },
+  "artifact_audit": {
+    "source_wheel_byte_matched_files": 776,
+    "notices_identical": true,
+    "raw_binaries_excluded": true,
+    "wheel_sha256": "8d7f85bd5d2b82804915c4005e50a47ad892ab89e8aafccb0c28143544780c29",
+    "sdist_sha256": "ddd1385a2bf10144e07fbb77d1ad0da8dcb0f9d2da5a0460abe71ac4f675ec2e"
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format": "2010 files already formatted",
+    "mypy": "Success: no issues found in 772 source files",
+    "build": "passed",
+    "retained_notice_files": 29
+  },
+  "compatibility_defects": [
+    "MOM omits later-residual-column off-diagonal trace entries",
+    "GLS omits random components at/below zero threshold",
+    "MOM and EB signed stopping can hide material absolute changes",
+    "EB returned gamma is evaluated at previous parameters",
+    "Native optimizer freezes MOM-floor components",
+    "Native bounds can be zero or artificial lower=-upper",
+    "propvar_omega is an SD multiplier despite guide variance wording"
+  ],
+  "catalog": {
+    "entries": 138,
+    "implemented": 103,
+    "partial": 31,
+    "pending": 4
+  },
+  "remaining": [
+    "Compose fixed-shrunken-beta conditional optimizer with MOM/EB and quality-qualified prior/proposal handoff",
+    "Complete transforms/extensions and saved initialization/sampling/postprocessing/prediction workflow",
+    "Exact missing models and BLESS/ComPAS deployed contracts remain blocked",
+    "Mixed-license community distribution decision and Forbidden PR creation remain unresolved"
+  ]
+}
