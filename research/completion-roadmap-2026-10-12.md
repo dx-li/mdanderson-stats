@@ -156,3 +156,10 @@ integrate fixed-shrunken-beta conditional optimization, bounds/scale usability,
 then saved initialization/sampling/postprocessing and remaining transforms and
 prediction. Source scales at boundaries can be zero or use artificial negative
 lower endpoints; neither is silently a valid confidence interval. No promotion.
+
+WFMM automatic coefficient-domain initialization is integrated with explicit
+holds, independent restricted optimization and proper prior/proposal handoff.
+Next finish native frozen-component sampling, general transform metadata and
+PCA/PCw/wPC/boundary transforms, then saved study/MCMC/postprocessing/prediction
+reports. Original PC alpha=1 has a confirmed synthetic failure; distinguish safe
+mathematics from compatibility. No application status promotion.

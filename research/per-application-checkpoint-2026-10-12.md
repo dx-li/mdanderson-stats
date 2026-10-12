@@ -169,3 +169,10 @@ profile retains omitted residual-column cross terms, zero-component omission
 and signed stopping. Native EB reports signed stops separately from convergence.
 Automatic conditional optimization/bounds, transforms and complete saved
 MCMC/postprocessing/prediction integration remain open. Entry70 stays partial.
+
+WFMM70: automatic initializer integration now closes MOM→shrinkage→conditional
+covariance fit→final shrinkage→prior/proposal handoff, with explicit quality holds.
+Nine original full initializations and analytic covariance optima validate the
+composition; native Brent rounding is not claimed. Next contracts remain native
+frozen-component sampling, PCA/hybrid/remaining transforms and saved full studies,
+postprocessing/prediction/reports. Status remains partial.

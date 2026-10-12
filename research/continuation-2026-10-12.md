@@ -851,3 +851,11 @@ compatibility behavior. Original proposal SD is propvar_omega times se_omega;
 zero bounds and artificial lower=-upper fallbacks require usability diagnostics.
 Next compose the fixed-shrunken-beta conditional optimizer and bounds, then saved
 full WFMM workflow and remaining transforms/prediction. No status promotion.
+
+WFMM automatic initializer now composes MOM/EB, conditional covariance fitting,
+proper prior mapping and audited proposal scales. See
+`wfmm-conditional-initializer-checkpoint-2026-10-12.md`; catalog remains partial.
+Next close native frozen-component sampling, saved full studies/reports and
+remaining transforms. Native PC/PCw/wPC probes are available under
+/tmp/wfmm-pca-probe; alphaPC=1 fails on the basic synthetic input. Do not silently
+copy that failure into a mathematical default or claim full native transform parity.

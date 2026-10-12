@@ -57,6 +57,7 @@ def trace(
     coefficients: np.ndarray | None = None,
     mcmc_settings: dict | None = None,
     basis_settings: dict | None = None,
+    extra_outputs: tuple[str, ...] = (),
 ) -> dict:
     y = Y if coefficients is None else coefficients
     entry = {"likelihood": ENTRY, "mom": 0x428360, "eb": 0x494010, "bounds": 0x48AB80}[mode]
@@ -232,6 +233,7 @@ def trace(
                 "tau_MOM",
                 "pi_MOM",
             )
+            + extra_outputs
         },
     )
 

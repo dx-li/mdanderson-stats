@@ -5,9 +5,10 @@ fits functional fixed and random effects in a transformed coefficient space.
 Python supports orthogonal wavelets and supplied custom transform pairs,
 coefficient-specific Bayesian mixed models, reconstruction, posterior curve
 summaries and [future-curve prediction](wfmm-prediction.md). An explicit Python REML
-initializer supplies starting variance estimates. Catalog entry 70 is
-**partial**: native variance/proposal initialization, other transform families and
-native file workflows remain open.
+initializer supplies REML starts. `initialize_wfmm` now composes MOM, shrinkage,
+conditional covariance fitting and prior/proposal calibration. Catalog entry70
+is **partial**: additional transform families, native zero-proposal/fixed-component
+sampling and complete saved file workflows remain open.
 
 ## Transform and reconstruct curves
 
@@ -547,8 +548,49 @@ as a **proposal standard deviation**, despite the guide's variance wording.
 Zero native scales remain zero. This evidence does not authorize silently
 substituting zero proposal scales into the current Python sampler.
 
-These components do not yet close the automatic WFMM initializer or the saved
-WFMM1/WFMM2/WFMM3 pipeline. Fixed-shrunken-beta conditional optimization,
-likelihood-width bounds, proposal usability, remaining transforms and integrated
-postprocessing/prediction remain explicit completion contracts. Entry70 is partial.
+These components underpin the automatic initializer described below. Remaining
+transforms, native frozen-component sampling and the saved WFMM1/WFMM2/WFMM3
+pipeline with postprocessing/prediction remain explicit completion contracts.
+Entry70 is partial.
 See `examples/wfmm_initialization.py` for diagnostics on synthetic input.
+
+
+### Automatic initialization and sampler handoff
+
+`initialize_wfmm(D, X, Z, ...)` returns an auditable `WFMMInitialization`:
+MOM diagnostics, initial shrinkage, fixed-shrunken-beta covariance fitting,
+final shrinkage, a proper `WFMMPrior`, proposal scales and explicit holds.
+Check `ready_for_sampling` before handing the result to MCMC. This readiness
+check concerns initialization only; posterior mixing and precision still require
+separate assessment. See `examples/wfmm_automatic.py` for the complete handoff.
+
+The default stable profile uses complete MOM equations, mathematical EM, a
+conditional optimizer free to leave initial variance floors, and nonnegative
+floor-truncated bounds. `profile="legacy_3_1"` keeps the recovered MOM/EB defects,
+freezes floor starts and retains zero/artificial bounds. Native EB controls may
+be supplied through `native_eb_settings`. Those controls are rejected in stable
+mode. A legacy signed stop or unusable zero proposal becomes an explicit hold.
+The sampler does not silently turn a zero native proposal into a positive one.
+
+`fit_wfmm_conditional_variances` also exposes the optimizer independently, with
+supplied fixed coefficients and positive variance starts. The objective holds
+beta fixed; this is neither ordinary profile ML nor REML. Two starts, analytic
+gradients, bounded work, covariance conditioning and projected-gradient checks
+support a local convergence claim. Global optimality and the original native
+Brent iteration/rounding trajectory are not claimed. The two profiles differ in
+floor restrictions and bound handling, not the underlying likelihood formula.
+
+The reported width varies one component while all other variances and beta stay
+fixed. It is not a marginal/profile confidence interval or posterior uncertainty.
+`frozen_descent` identifies native floor restrictions that block likelihood
+improvement; `artificial_lower` identifies negative symmetry sentinels.
+`proposal_sd` is the width times `proposal_multiplier`, with random components
+first, then residual strata. Use its two slices as the sampler's explicit pair.
+
+Nine complete native initialization studies verify the composition. Tight
+analytic checks validate identity and balanced mixed-model optima. Numerical
+values differ from native Brent outputs by up to.0011 in variance and.006 in
+final slab-to-sampling ratios on these fixtures; first shrunken coefficients
+agree within1e-6. These are bounded reference results, not universal error bounds
+or clinical validation. Saved study/MCMC/postprocessing integration and broader
+transform coverage remain open.

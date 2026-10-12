@@ -2294,8 +2294,10 @@ from .weibull_unknown_shape_gof import (
 )
 from .wfmm_basis import WFMMBasis, WFMMTransformed, wfmm_basis, wfmm_inverse, wfmm_transform
 from .wfmm_compression import WFMMCompression, wfmm_compress_coefficients
+from .wfmm_conditional import WFMMConditionalVariance, fit_wfmm_conditional_variances
 from .wfmm_covariance import WFMMCovarianceSummary, wfmm_covariance, wfmm_summarize_covariance
 from .wfmm_empirical_bayes import WFMMShrinkage, calibrate_wfmm_shrinkage
+from .wfmm_initialization import WFMMInitialization, initialize_wfmm
 from .wfmm_model import WFMMCoefficientFit, WFMMPrior, fit_wfmm_coefficients
 from .wfmm_mom import WFMMMomentInitialization, wfmm_mom_initialization
 from .wfmm_native_eb import WFMMNativeEmpiricalBayes, wfmm_native_empirical_bayes
@@ -2420,6 +2422,10 @@ __all__ = [
     "calibrate_wfmm_shrinkage",
     "WFMMNativeEmpiricalBayes",
     "wfmm_native_empirical_bayes",
+    "WFMMConditionalVariance",
+    "fit_wfmm_conditional_variances",
+    "WFMMInitialization",
+    "initialize_wfmm",
     "WFMMMomentInitialization",
     "wfmm_mom_initialization",
     "WFMMVarianceInitialization",
