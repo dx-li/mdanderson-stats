@@ -22,11 +22,11 @@ from .uaroet import (
 _MAX_DOSES = 5
 _MAX_LEVELS = 4
 _MAX_SUBJECTS = 10_000
-_MAX_CHAINS = 8
+_MAX_CHAINS = 20
 _MAX_DRAWS = 100_000
 _MAX_WARMUP = 100_000
 _MAX_RETAINED = 2_000_000
-_MAX_EVALUATIONS = 2_000_000
+_MAX_EVALUATIONS = 128_000_000
 
 
 def _counts(value: ArrayLike) -> NDArray[np.int64]:
@@ -94,6 +94,35 @@ class UAROETFit:
     direct_prior: bool
 
 
+def _summarize_uaroet_chains(samples: FloatArray) -> ChainSummary:
+    if samples.shape[0] >= 2:
+        return summarize_chains(samples)
+    x = samples[0]
+    ordered = np.sort(x, axis=0)
+    included = max(1, int(np.ceil(0.8 * len(x))))
+    widths = ordered[included - 1 :] - ordered[: len(x) - included + 1]
+    index = np.argmin(widths, axis=0)
+    low = np.take_along_axis(ordered, index[None], axis=0)[0]
+    high = np.take_along_axis(ordered, (index + included - 1)[None], axis=0)[0]
+    size = max(2, int(np.sqrt(len(x))))
+    batches = len(x) // size
+    batch_means = x[: batches * size].reshape((batches, size, *x.shape[1:])).mean(axis=1)
+    mcse = batch_means.std(axis=0, ddof=1) / np.sqrt(batches)
+    return ChainSummary(
+        *[
+            _freeze(np.asarray(v))
+            for v in (
+                x.mean(axis=0),
+                np.median(x, axis=0),
+                x.std(axis=0, ddof=1),
+                np.stack((low, high), axis=-1),
+                np.full(x.shape[1:], np.nan),
+                mcse,
+            )
+        ]
+    )
+
+
 def fit_uaroet(
     counts: ArrayLike,
     *,
@@ -101,7 +130,7 @@ def fit_uaroet(
     prior_sd: ArrayLike,
     toxicity_only_counts: ArrayLike | None = None,
     initial_parameters: ArrayLike | None = None,
-    initial_association: float | None = None,
+    initial_association: ArrayLike | None = None,
     monotone_efficacy: bool = True,
     monotone_toxicity: bool = True,
     association: float | None = None,
@@ -126,7 +155,10 @@ def fit_uaroet(
 
     Optional initial_parameters is one parameter vector or a chain-by-parameter
     matrix; initial_association starts an inferred correlation at a supplied
-    interior value. These affect initialization only, not the prior/model.
+    interior scalar or one value per chain. These affect initialization only, not
+    the prior/model. One through twenty chains are supported; a single chain
+    has unavailable (NaN) R-hat. Explicit work budgets may exceed the default
+    two million evaluations, up to 128 million; retained-cell limits still apply.
     Analytic likelihood upper bounds can reject extreme proposals without
     evaluating unrepresentable cells. Every accepted state still uses the
     actual Gaussian-copula likelihood; unexplained numerical failures propagate.
@@ -178,7 +210,7 @@ def fit_uaroet(
             raise ValueError("fitted association must lie strictly inside (-1,1)")
     draw_count = _integer(draws, "draws", 8, _MAX_DRAWS)
     warmup_count = _integer(warmup, "warmup", 0, _MAX_WARMUP)
-    chain_count = _integer(chains, "chains", 2, _MAX_CHAINS)
+    chain_count = _integer(chains, "chains", 1, _MAX_CHAINS)
     evaluation_limit = _integer(max_evaluations, "max_evaluations", 1, _MAX_EVALUATIONS)
     retained_cells = chain_count * draw_count * int(observed.size)
     if retained_cells > _MAX_RETAINED:
@@ -193,19 +225,18 @@ def fit_uaroet(
             raise ValueError(
                 "initial_parameters must match chains/coordinates and increment support"
             )
-    start_rho: float | None = None
+    start_rho: FloatArray | None = None
     if initial_association is not None:
-        rho_start = np.asarray(initial_association)
-        if (
-            rho_start.ndim != 0
-            or rho_start.dtype.kind not in "iuf"
-            or not np.isfinite(rho_start)
-            or not -1 < float(rho_start) < 1
-        ):
-            raise ValueError("initial_association must lie strictly inside (-1,1)")
+        rho_start = _real_matrix(initial_association, "initial_association")
+        if rho_start.ndim == 0:
+            rho_start = np.full(chain_count, float(rho_start))
+        if rho_start.shape != (chain_count,) or np.any(np.abs(rho_start) >= 1):
+            raise ValueError(
+                "initial_association must be an interior scalar or one value per chain"
+            )
         if fixed_rho is not None:
             raise ValueError("initial_association applies only to an inferred correlation")
-        start_rho = float(rho_start)
+        start_rho = rho_start
     if direct and (starts is not None or start_rho is not None):
         raise ValueError("initial values are only meaningful with observed data")
     minimum_likelihood_calls = chain_count * (
@@ -309,7 +340,7 @@ def fit_uaroet(
         rho = (
             float(fixed_rho)
             if fixed_rho is not None
-            else (start_rho if start_rho is not None else float(2 * rng.random() - 1))
+            else (float(start_rho[chain]) if start_rho is not None else float(2 * rng.random() - 1))
         )
         while abs(rho) == 1:
             rho = float(2 * rng.random() - 1)
@@ -366,8 +397,8 @@ def fit_uaroet(
                 likelihood_draws[chain, draw] = likelihood
         acceptance[chain] = accepted_rho / draw_count
 
-    parameter_summary = summarize_chains(parameter_draws)
-    association_summary = summarize_chains(rho_draws)
+    parameter_summary = _summarize_uaroet_chains(parameter_draws)
+    association_summary = _summarize_uaroet_chains(rho_draws)
     return UAROETFit(
         names,
         _freeze(parameter_draws),

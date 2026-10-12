@@ -89,7 +89,7 @@ def uaroet_allocation(
     joint = np.asarray(fit.joint)
     if (
         joint.ndim != 5
-        or joint.shape[0] < 2
+        or joint.shape[0] < 1
         or joint.shape[1] < 1
         or not 1 <= joint.shape[2] <= 5
         or any(not 2 <= size <= 4 for size in joint.shape[3:])

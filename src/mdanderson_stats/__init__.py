@@ -2183,6 +2183,7 @@ from .uaroet_desktop_study import (
     uaroet_desktop_prior_coordinates,
 )
 from .uaroet_fit import UAROETFit, fit_uaroet
+from .uaroet_precision import UAROETPrecisionFit, fit_uaroet_desktop
 from .uaroet_simulation import (
     UAROETSimulation,
     UAROETTrial,
@@ -3037,6 +3038,8 @@ __all__ = [
     "catbub_operating_characteristics",
     "UAROETAllocation",
     "UAROETPriorESS",
+    "UAROETPrecisionFit",
+    "fit_uaroet_desktop",
     "uaroet_desktop_prior_ess",
     "uaroet_marginal_ess",
     "UAROETDesktopCounts",

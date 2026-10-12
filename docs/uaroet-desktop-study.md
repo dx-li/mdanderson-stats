@@ -93,3 +93,25 @@ Both native-recognized distribution keywords, `DistributionSave` and
 `DistributionSaveOption`, now canonicalize to the latter. Supplying both is an
 error; no preference is silently chosen. Capturing an export setting still does
 not imply that the complete desktop export workflow is implemented.
+
+Continuous posterior precision is available through `fit_uaroet_desktop(study,
+ rng=..., conduct=False)`. Simulation uses TargetMCSERatio (default0.03);
+conduct uses TargetMCSERatio_Treat (default0.005). An explicit target overrides
+these settings. The undocumented TargetMCSERatio_Sim alias requires an explicit
+target until its precedence is recovered. The function honors1–20 chains and
+burn-in once per chain, retaining at least the burn-in length before acceptance.
+Each chain continues from its last parameters and association, with a separate
+random stream. Joint/parameter means and screening summaries accumulate online;
+only utility samples are retained across chunks. Lowest, upper-middle and highest
+dose utilities must each meet the target in **every chain**. Batch means use
+floor(sqrt(draws)) samples per batch; exact native batch partition/RNG equivalence
+is not claimed. Between-chain split R-hat is reported separately and is NaN for
+one chain. Neither diagnostic establishes convergence or clinical validity.
+
+Always inspect `precision_met`: reaching max_draws can return False and must not
+support a precision-qualified recommendation. Work-budget exhaustion raises.
+A constant sampled chain is not counted as precise; an analytically constant
+utility table is handled separately. The default work budget remains2million;
+callers can explicitly raise it up to128million. Retained utilities are bounded
+at20million values and each joint-posterior chunk at2million cells. No desktop
+controller or calibration workflow is implied by this inference API.

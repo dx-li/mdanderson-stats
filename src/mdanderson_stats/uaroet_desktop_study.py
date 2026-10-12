@@ -405,7 +405,7 @@ def _validate_settings(
             if not 0 < v < 1:
                 raise ValueError("target MCSE ratios must be strictly between 0 and 1")
         elif k == "NumChains":
-            _whole(float(v), k, 2, 8)
+            _whole(float(v), k, 1, 20)
         elif k == "BurnInSamples":
             _whole(float(v), k, 0, 100000)
         else:

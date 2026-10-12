@@ -318,3 +318,17 @@ Ruff, formatting2,665files, mypy753sourcefiles and wheel/sdist build pass.
 All757 packaged Python/JSON files and29 licensing files match the checkout;
 original assets remain excluded. See uaroet-inference-validation-2026-10-12.json.
 No status promotion; continuous per-chain precision is the immediate next gate.
+
+Continuous per-chain precision is now integrated. Separate chain RNGs and explicit
+parameter/rho continuation preserve retained draws across chunk boundaries. The
+API supports1–20 chains, reports unavailable R-hat for a single chain, accumulates
+joint/parameter/screening means online, and retains bounded utility samples.
+It checks MCSE/SD independently for each chain at doses0,floor(D/2),D−1; draw-limit
+failure returns precision_met=False, and work exhaustion raises. Analytically
+constant utility tables are distinguished from stuck sampled chains. Native exact
+batch partition/RNG identity is not claimed.611 focused and493 existing regression
+tests pass. A four-chain correlated pending-outcome case meets0.03 after4,000draws
+per chain: maximum ratio0.0274011 and maximum utility split R-hat1.0005601.
+See uaroet-precision-quality-2026-10-12.json. Full final-code acceptance is pending
+for this new precision component; the prior66,131-test checkpoint predates it.
+Pseudo-trial calibration, controllers, calendar simulation and reports remain open.
