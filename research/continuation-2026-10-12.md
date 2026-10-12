@@ -606,3 +606,27 @@ Continue PRT69 through saved study, explicit native profiles, controller/calenda
 simulation and reports before promotion. Native projection/hazard/calendar defects
 must remain explicit. Six unavailable fits, separate web contracts, mixed-license
 distribution and Forbidden PR creation remain unchanged blockers.
+
+## PRT handoff after UAROET acceptance
+
+UAROET acceptance is preserved at3a6fcd64caf8e570e13317bc698316d69f8e1850.
+PRT source recovery now adds64 as-of boundary cases, both native final-clock
+paths on3 histories, and90 suspension-arrival/cohort bookkeeping cases. Both
+new files regenerate byte-identically;333 combined native projection/hazard/
+count/arrival/calendar tests pass. No production Python changed after the
+70,589-test acceptance run; PRT69 remains partial.
+
+Immediate remaining contracts: recover statistical suspension and final-choice
+controller branches, including finite800-candidate exhaustion; then integrate
+versioned original conduct/simulation inputs, explicit projection and hazard
+compatibility profiles, complete conduct/calendar/batch/report workflows. Native
+max-min projection can exceed1, hazard inversion reuses a variate and shifts
+rates, exact-window observations are misclassified, and final time uses only
+the last three patients. Do not make these silent scientific defaults. Existing
+paper APIs remain distinct. Native posterior pilots agree with independent
+quadrature; large-prior pilot MCSE remains inadequate for a precision claim.
+
+Original executables are ignored under research/raw/next-desktop-2026-10-12/PRT_V1.0/PRT.
+Source probes pin their hashes. Portable tools and fixtures are committed; scratch
+disassembly is /tmp/prt-sims-disassembly.txt and /tmp/prt-main.txt. No task URL
+was exposed by this execution environment. PR creation remains Forbidden.

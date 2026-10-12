@@ -95,3 +95,33 @@ MCSEs of the integrals; maximum Python R-hat1.0006571. The native six-dose pilot
 batch errors are materially larger and are reported rather than presented as
 precision-qualified clinical inference. See posterior fixture, native generator,
 `tools/check_prt_native_posterior.py` and the dated quality JSON.
+
+## As-of conversion and final-clock recovery
+
+`reference_prt_calendar.py` executes native simulation RVAs3cae–3f2f and
+3b01–3cae;64 synthetic boundary cases and3 final clocks are preserved in
+`prt-desktop-calendar.json`. Independent arithmetic checks pass all67 cases.
+An event is seen when its delay is at most the window and its event clock has
+arrived. Native daily index is floor(observed time) below the window, window+1
+above it, but zero at exactly the window (also below day1). Coarse interval uses
+right-sided endpoint search plus the event indicator. Thus exactly-window
+censoring loses follow-up and an exactly-window event enters interval1. Events
+before day1 still enter interval1; they are not discarded.
+
+Native final time considers only the last three patients. Synthetic earlier
+pending patients demonstrate a final time4 versus complete follow-up90, and11
+versus94. These are legacy defects, not acceptable silent scientific defaults.
+This probe does not close the full suspension/controller contract. Current
+paper-calendar behavior remains unchanged; PRT69 remains partial.
+
+The same last-three-patient clock is independently executed through both native
+finalization paths (3919 and3b01). A separate calendar-control fixture executes
+3acb–3b01 and4000–4045 on90 synthetic states. Suspension advances exactly one
+candidate-arrival index when enrollment is below the cap, sets its calendar
+clock, and leaves enrollment unchanged. At the cap this block leaves the clock
+unchanged before the final-clock block. Only a current cohort of three shrinks
+to the remaining sample size; cohorts of one or two do not change in this block.
+These are bookkeeping references, not recovery of the statistical suspension
+predicate, native candidate-array exhaustion or the entire loop. The complete
+calendar reference suite now passes157 tests. Full controller integration remains
+open and must not infer untested rules from these bounded blocks.

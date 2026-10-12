@@ -1,0 +1,2127 @@
+{
+  "executable_sha256": "52903a7af2e75998bf2a8cbda6e2049e7fa25e0981cf9806317841da13a91b54",
+  "scope": "native as-of conversion/final clock",
+  "cases": [
+    {
+      "rows": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 3.0,
+      "result": {
+        "clock": 3.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 10.0,
+      "result": {
+        "clock": 10.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 11.0,
+      "result": {
+        "clock": 11.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.1
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.1
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 3.0,
+      "result": {
+        "clock": 3.0,
+        "observed_time": [
+          0.1
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.1
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 10.0,
+      "result": {
+        "clock": 10.0,
+        "observed_time": [
+          0.1
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.1
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 11.0,
+      "result": {
+        "clock": 11.0,
+        "observed_time": [
+          0.1
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 3.0,
+      "result": {
+        "clock": 3.0,
+        "observed_time": [
+          1.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          1
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 10.0,
+      "result": {
+        "clock": 10.0,
+        "observed_time": [
+          1.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          1
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 11.0,
+      "result": {
+        "clock": 11.0,
+        "observed_time": [
+          1.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          1
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 3.0,
+      "result": {
+        "clock": 3.0,
+        "observed_time": [
+          2.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          2
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 10.0,
+      "result": {
+        "clock": 10.0,
+        "observed_time": [
+          2.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          2
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 11.0,
+      "result": {
+        "clock": 11.0,
+        "observed_time": [
+          2.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          2
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          3.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          3.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 3.0,
+      "result": {
+        "clock": 3.0,
+        "observed_time": [
+          3.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          3
+        ],
+        "interval": [
+          2
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          3.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 10.0,
+      "result": {
+        "clock": 10.0,
+        "observed_time": [
+          3.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          3
+        ],
+        "interval": [
+          2
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          3.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 11.0,
+      "result": {
+        "clock": 11.0,
+        "observed_time": [
+          3.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          3
+        ],
+        "interval": [
+          2
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          9.999999
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          9.999999
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 3.0,
+      "result": {
+        "clock": 3.0,
+        "observed_time": [
+          3.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          3
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          9.999999
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 10.0,
+      "result": {
+        "clock": 10.0,
+        "observed_time": [
+          9.999999
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          9
+        ],
+        "interval": [
+          3
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          9.999999
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 11.0,
+      "result": {
+        "clock": 11.0,
+        "observed_time": [
+          9.999999
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          9
+        ],
+        "interval": [
+          3
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          10.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          10.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 3.0,
+      "result": {
+        "clock": 3.0,
+        "observed_time": [
+          3.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          3
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          10.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 10.0,
+      "result": {
+        "clock": 10.0,
+        "observed_time": [
+          10.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          10.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 11.0,
+      "result": {
+        "clock": 11.0,
+        "observed_time": [
+          10.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          11.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          11.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 3.0,
+      "result": {
+        "clock": 3.0,
+        "observed_time": [
+          3.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          3
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          11.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 10.0,
+      "result": {
+        "clock": 10.0,
+        "observed_time": [
+          10.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          11.0
+        ]
+      ],
+      "endpoints": [
+        3.0,
+        7.0,
+        10.0
+      ],
+      "clock": 11.0,
+      "result": {
+        "clock": 11.0,
+        "observed_time": [
+          11.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          11
+        ],
+        "interval": [
+          3
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 15.0,
+      "result": {
+        "clock": 15.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 90.0,
+      "result": {
+        "clock": 90.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 91.0,
+      "result": {
+        "clock": 91.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.1
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.1
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 15.0,
+      "result": {
+        "clock": 15.0,
+        "observed_time": [
+          0.1
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.1
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 90.0,
+      "result": {
+        "clock": 90.0,
+        "observed_time": [
+          0.1
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          0.1
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 91.0,
+      "result": {
+        "clock": 91.0,
+        "observed_time": [
+          0.1
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 15.0,
+      "result": {
+        "clock": 15.0,
+        "observed_time": [
+          1.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          1
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 90.0,
+      "result": {
+        "clock": 90.0,
+        "observed_time": [
+          1.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          1
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 91.0,
+      "result": {
+        "clock": 91.0,
+        "observed_time": [
+          1.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          1
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 15.0,
+      "result": {
+        "clock": 15.0,
+        "observed_time": [
+          2.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          2
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 90.0,
+      "result": {
+        "clock": 90.0,
+        "observed_time": [
+          2.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          2
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 91.0,
+      "result": {
+        "clock": 91.0,
+        "observed_time": [
+          2.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          2
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          15.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          15.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 15.0,
+      "result": {
+        "clock": 15.0,
+        "observed_time": [
+          15.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          15
+        ],
+        "interval": [
+          2
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          15.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 90.0,
+      "result": {
+        "clock": 90.0,
+        "observed_time": [
+          15.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          15
+        ],
+        "interval": [
+          2
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          15.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 91.0,
+      "result": {
+        "clock": 91.0,
+        "observed_time": [
+          15.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          15
+        ],
+        "interval": [
+          2
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          89.999999
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          89.999999
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 15.0,
+      "result": {
+        "clock": 15.0,
+        "observed_time": [
+          15.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          15
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          89.999999
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 90.0,
+      "result": {
+        "clock": 90.0,
+        "observed_time": [
+          89.999999
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          89
+        ],
+        "interval": [
+          6
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          89.999999
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 91.0,
+      "result": {
+        "clock": 91.0,
+        "observed_time": [
+          89.999999
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          89
+        ],
+        "interval": [
+          6
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          90.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          90.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 15.0,
+      "result": {
+        "clock": 15.0,
+        "observed_time": [
+          15.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          15
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          90.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 90.0,
+      "result": {
+        "clock": 90.0,
+        "observed_time": [
+          90.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          90.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 91.0,
+      "result": {
+        "clock": 91.0,
+        "observed_time": [
+          90.0
+        ],
+        "censored": [
+          0
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          91.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 0.0,
+      "result": {
+        "clock": 0.0,
+        "observed_time": [
+          0.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          91.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 15.0,
+      "result": {
+        "clock": 15.0,
+        "observed_time": [
+          15.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          15
+        ],
+        "interval": [
+          1
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          91.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 90.0,
+      "result": {
+        "clock": 90.0,
+        "observed_time": [
+          90.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          0
+        ],
+        "interval": [
+          0
+        ]
+      }
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          91.0
+        ]
+      ],
+      "endpoints": [
+        15.0,
+        30.0,
+        45.0,
+        60.0,
+        75.0,
+        90.0
+      ],
+      "clock": 91.0,
+      "result": {
+        "clock": 91.0,
+        "observed_time": [
+          91.0
+        ],
+        "censored": [
+          1
+        ],
+        "daily_index": [
+          91
+        ],
+        "interval": [
+          6
+        ]
+      }
+    }
+  ],
+  "final_cases": [
+    {
+      "rows": [
+        [
+          0.0,
+          90.0
+        ],
+        [
+          1.0,
+          1.0
+        ],
+        [
+          2.0,
+          1.0
+        ],
+        [
+          3.0,
+          1.0
+        ]
+      ],
+      "endpoints": [
+        30.0,
+        60.0,
+        90.0
+      ],
+      "result": {
+        "clock": 4.0,
+        "observed_time": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "censored": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "daily_index": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "interval": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "after_accrual_clock": 4.0
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          100.0
+        ],
+        [
+          1.0,
+          100.0
+        ],
+        [
+          2.0,
+          100.0
+        ]
+      ],
+      "endpoints": [
+        30.0,
+        60.0,
+        90.0
+      ],
+      "result": {
+        "clock": 92.0,
+        "observed_time": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "censored": [
+          0,
+          0,
+          0
+        ],
+        "daily_index": [
+          0,
+          0,
+          0
+        ],
+        "interval": [
+          0,
+          0,
+          0
+        ]
+      },
+      "after_accrual_clock": 92.0
+    },
+    {
+      "rows": [
+        [
+          0.0,
+          90.0
+        ],
+        [
+          2.0,
+          90.0
+        ],
+        [
+          4.0,
+          90.0
+        ],
+        [
+          6.0,
+          1.0
+        ],
+        [
+          8.0,
+          1.0
+        ],
+        [
+          10.0,
+          1.0
+        ]
+      ],
+      "endpoints": [
+        30.0,
+        60.0,
+        90.0
+      ],
+      "result": {
+        "clock": 11.0,
+        "observed_time": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "censored": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "daily_index": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "interval": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "after_accrual_clock": 11.0
+    }
+  ]
+}
