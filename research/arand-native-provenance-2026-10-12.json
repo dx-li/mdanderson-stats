@@ -7,7 +7,13 @@
       "authorship": "newly authored source-informed compatibility implementation; not a clean-room claim",
       "evidence": "research/arand-controller-recovery-2026-10-12.md",
       "notice": "THIRD_PARTY_NOTICES.md#arand-native-profile-continuation-october-12-2026",
-      "original_artifacts_bundled": false
+      "original_artifacts_bundled": false,
+      "direct_relative_imports": [
+        "_cdflib",
+        "_validation"
+      ],
+      "transitive_explicit_restricted_seed_matches": [],
+      "static_import_scope": "Relative module imports only; excludes eager package-root imports, external dependencies and dynamic imports. No legal clearance inferred."
     },
     {
       "path": "src/mdanderson_stats/arand_native_trial.py",
@@ -15,7 +21,15 @@
       "authorship": "newly authored source-informed compatibility implementation; not a clean-room claim",
       "evidence": "research/arand-controller-recovery-2026-10-12.md",
       "notice": "THIRD_PARTY_NOTICES.md#arand-native-profile-continuation-october-12-2026",
-      "original_artifacts_bundled": false
+      "original_artifacts_bundled": false,
+      "direct_relative_imports": [
+        "_cdflib",
+        "_validation",
+        "arand_native",
+        "arand_posterior"
+      ],
+      "transitive_explicit_restricted_seed_matches": [],
+      "static_import_scope": "Relative module imports only; excludes eager package-root imports, external dependencies and dynamic imports. No legal clearance inferred."
     },
     {
       "path": "src/mdanderson_stats/arand_native_study.py",
@@ -23,7 +37,17 @@
       "authorship": "newly authored source-informed compatibility implementation; not a clean-room claim",
       "evidence": "research/arand-controller-recovery-2026-10-12.md",
       "notice": "THIRD_PARTY_NOTICES.md#arand-native-profile-continuation-october-12-2026",
-      "original_artifacts_bundled": false
+      "original_artifacts_bundled": false,
+      "direct_relative_imports": [
+        "_cdflib",
+        "_validation",
+        "arand_native",
+        "arand_native_trial",
+        "arand_posterior",
+        "arand_simulation"
+      ],
+      "transitive_explicit_restricted_seed_matches": [],
+      "static_import_scope": "Relative module imports only; excludes eager package-root imports, external dependencies and dynamic imports. No legal clearance inferred."
     }
   ],
   "distribution": "Existing mixed-license terms retained; no split or relicensing performed"

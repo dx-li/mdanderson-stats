@@ -40,26 +40,26 @@ permission, clean-room status, unrestricted bundle or clinical validation.
   transitions, constraints and both final selectors.
 - `tools/arand_native_reference/verify_python.py` executes **900** deterministic
   original-instruction comparisons: 300 status transitions plus 600 whole/group
-  selectors. Random seed123 covers exact cutoffs, permanent closures, action
+  selectors. Random seed 123 covers exact cutoffs, permanent closures, action
   overrides and deliberately inconsistent supplied posterior scores. This checks
   controller logic, not posterior inference.
-- Exact beta polynomial integration gives5/6 after a success/failure history;
-  independent reciprocal-Gamma ordering gives11/16 for a censor/event history.
-  Seeded mean/median trials agree. A512-replicate one-arm simulation agrees within
+- Exact beta polynomial integration gives 5/6 after a success/failure history;
+  independent reciprocal-Gamma ordering gives 11/16 for a censor/event history.
+  Seeded mean/median trials agree. A 512-replicate one-arm simulation agrees within
   six analytical MCSEs with Poisson(.5) enrollment and .75-month expected stopping
   time, including exponential candidate overshoot beyond the .25-month horizon.
 
 ## Additional report-source recovery
 
 Original `PrintSimulationSummary` at RVA0x60a14 contains a duration-vector guard
-at IL offsets927–949: percentile reads execute only for at least100 values.
+at IL offsets927–949: percentile reads execute only for at least 100 values.
 The zero-based indices then use `int(ceil(n*p - 1) + 1)` for p=.025/.975, not
-NumPy type7. A new bounded original-IL slice runner preserves12 fixtures in
+NumPy type7. A new bounded original-IL slice runner preserves 12 fixtures in
 `fixtures/arand-native/report-index-supplement.jsonl`. It supplies sorted vector
 memory and Math.Ceiling, executes the original branch/arithmetic/read instructions,
-and fails on out-of-range reads. Below100 it records no read and untouched zero
+and fails on out-of-range reads. Below 100 it records no read and untouched zero
 locals; it does **not** claim what the complete GUI renders in those cases.
-At100 the indices are3 and98; at1000 they are25 and975. Enrollment-array sections
+At 100 the indices are 3 and 98; at 1000 they are 25 and 975. Enrollment-array sections
 also contain the same arithmetic, but their complete output branches have not
 been executed by this new slice probe. The existing98-fixture manifest remains
 unchanged; these12 probes are a separately scoped supplement.
@@ -103,8 +103,8 @@ Final-code full regression and artifact evidence are appended below when complet
 
 ### Missing XML closure-action default narrowed
 
-Inspection of original constructor RVA0x19704 shows status cells at offsets116
-and120 initialized to2. XMLPopulate RVA0x6e05c reads `min_prob_action` and
+Inspection of original constructor RVA0x19704 shows status cells at offsets 116
+and 120 initialized to2. XMLPopulate RVA0x6e05c reads `min_prob_action` and
 `max_prob_action` with empty-string defaults, then calls SetAction. The original
 SetAction method at RVA0x6f5a4 maps case-sensitive `open`→0, `tmp_close`→1,
 `close_early`→2 and `close`→3; empty or unrecognized strings retain the cell's
@@ -112,13 +112,13 @@ existing value. A second bounded original-IL runner,
 `arand_action_reference.py`, preserves eight probes in
 `fixtures/arand-native/action-supplement.jsonl`, including missing, unknown and
 uppercase strings. Thus a fresh native stopping-rule object's absent action
-attributes retain2; a reused object's value is state-dependent. This resolves
+attributes retain 2; a reused object's value is state-dependent. This resolves
 that narrow missing-action question, not the full saved-study loader, enabled
 flags, desktop serialization/default precedence or nonempty patient histories.
 The current explicit Python profile continues to use its documented supported
 actions and does not silently assume those XML defaults.
 
-A further300 deterministic original-instruction comparisons (seed314,
+A further 300 deterministic original-instruction comparisons (seed 314,
 `verify_constraints.py`) agree on ordered arm/group constraints, including
 conflicting maxima/minima, closed-arm reopening and exact start/duration
 boundaries. Total supplementary differential comparisons: **1,200**.
@@ -139,17 +139,58 @@ Seven additional original GetTreat instruction probes now confirm the `<=`
 inverse-CDF boundary itself, with supplied uniform/vector services and no RNG
 identity claim. Exact0 with weights(0,.5,.5) chooses index0; the next representable
 positive uniform chooses index1. The caller's eligibility/population dispatch is
-established by the separate source path above. All27 supplementary action,
+established by the separate source path above. All 27 supplementary action,
 percentile and assignment probes are hash-recorded in
-`fixtures/arand-native/supplement-manifest.json`, separate from the original98.
+`fixtures/arand-native/supplement-manifest.json`, separate from the original 98.
 
 ### Interim executor status requested by parent
 
 Environment ready; exact e74b1ef parent recovered. Implementation preservation
 commit `3732fde7c6d4b69653da379509aa862722cd1e03` is pushed and remote-verified.
 No executor, repository-access or tool blocker prevents continued work. Corrected
-code passes89 affected tests and120 isolated-wheel tests including plot/image
+code passes 89 affected tests and 120 isolated-wheel tests including plot/image
 extras; the guide example, lint, types, build and provenance checks pass. The
 restarted full regression is still running and is not yet counted as a pass.
 Do not duplicate ARAND implementation while that verification is active. The
 final validation section below will supersede this interim status.
+
+## Final validation and preserved outcome
+
+The corrected, frozen production code and test set passed **34,179 tests in
+818.71 seconds**, with warnings treated as errors, under Python 3.13.5. This
+supersedes the interrupted earlier attempt. The complete ARAND affected set
+passed **89 tests in 3.66 seconds**. No statistical implementation or test changed
+after the successful full run began; subsequent edits were research evidence,
+provenance and continuation documentation.
+
+A fresh isolated wheel environment outside the checkout with both `[plot,image]`
+extras passed **120 tests in 4.93 seconds**: the 89 affected ARAND tests plus 31
+existing BLiP/plot and independent TIFF-reference tests. The installed native
+workflow guide example completed, including simulation, seed replay, JSON
+round trip and HTML report. Imports resolve to the isolated site-packages tree.
+Installed versions: NumPy 2.5.4, SciPy 1.18.1, Matplotlib 3.11.2, Pillow 12.3.0.
+This is affected-workflow/example validation, not an installed example audit of
+all 138 applications.
+
+Ruff lint and formatting pass; mypy passes for 707 source files. Wheel and sdist
+build successfully. All 711 packaged Python/JSON source/data files match the
+checkout bytes; licenses/notices are present, and no original EXE/DLL/MSI/ZIP or
+raw research assets are included. All 27 new root exports exist exactly once.
+Changed-guide links and all 138 catalog/status IDs agree. The scoped provenance
+manifest records source hashes and relative imports. No explicitly restricted
+seed module appears in the new modules' relative-import closure, but that audit
+excludes eager root/external/dynamic imports and is not legal clearance; the
+complete package retains its mixed-license restrictions.
+
+The original 98 fixtures regenerate identically, the 27 supplementary probes are
+hash recorded, and 1,200 original-instruction differential comparisons pass.
+Original posterior/RNG/whole-GUI identity and clinical validity remain separate,
+unclaimed properties. No coverage status was promoted. No head-specific hosted
+CI is claimed; no PR permission-denial workaround was attempted.
+
+Implementation is preserved in `3732fde7c6d4b69653da379509aa862722cd1e03`, with
+additional assignment evidence in `78653d44`. Both were pushed normally to the
+existing feature branch; the final validation/provenance commit follows them.
+The parent can continue from the current remote head using the five precise
+remaining ARAND contracts above. No executor/tool blocker remains, and no
+verified task URL was exposed by this environment.

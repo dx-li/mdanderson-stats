@@ -237,9 +237,23 @@ The next [integration checkpoint](arand-native-integration-2026-10-12.md) closes
 a named single-endpoint native supplied-calendar/Python-study workflow, including
 controller ordering, all-arm posterior integration, censor-aware simulation,
 versioned JSON and explicit reports. The existing policy API remains available.
-All98 original fixtures regenerate; all six integrated controller cases agree;
+All 98 original fixtures regenerate; all six integrated controller cases agree;
 1,200 additional original-instruction comparisons pass. New bounded report-index
 and missing-action probes narrow the next native saved-study/report gates.
-Coverage remains93 implemented/39 partial/6 pending. Consult that checkpoint's
+Coverage remains 93 implemented/39 partial/6 pending. Consult that checkpoint's
 final validation and remaining contracts before continuing; do not treat the
 source-recovery-only next steps above as still unimplemented Python work.
+
+### ARAND batch final verification
+
+Corrected final code passed **34,179 tests in 818.71 seconds**, warnings as errors.
+All 89 affected ARAND tests and 120 isolated-wheel tests (including plot/image
+extras) pass; the installed saved-study/simulation/report example also passes.
+Lint, formatting, mypy 707-source-file checking, wheel/sdist builds, source-byte
+and notice/exclusion audits pass. All 98 prior original fixtures regenerate,
+27 additional source probes are preserved, and 1,200 differential comparisons
+pass. See the [integration checkpoint](arand-native-integration-2026-10-12.md)
+for the interrupted attempt, allocation-population correction, exact evidence
+boundaries and next source contracts. Code was pushed at 3732fde7; supplementary
+assignment evidence was pushed at 78653d44; final validation follows on the same
+feature branch. No merge, release, outreach, PR bypass or license change occurred.
