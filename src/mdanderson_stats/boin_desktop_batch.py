@@ -9,7 +9,7 @@ from .boin_desktop import BOINDesktopStudy
 from .boin_desktop_simulation import (
     BOINDesktopSimulation,
     _validate_request,
-    simulate_boin_desktop_combination,
+    simulate_boin_desktop_study,
 )
 
 
@@ -37,21 +37,7 @@ class BOINDesktopBatch:
         }
 
 
-def simulate_boin_desktop_scenarios(
-    study: BOINDesktopStudy,
-    *,
-    scenario_indices: tuple[int, ...] | None = None,
-    batches: int = 1,
-    trials: int | None = None,
-    seed: int | None = None,
-    profile: str = "safe",
-) -> BOINDesktopBatch:
-    """Run saved scenarios after validating the complete allocation/work budget.
-
-    At most 100 runs, two million retained trial-dose cells and one million
-    planned patient draws across the request. Every run uses a distinct seed;
-    the seed and resulting full arrays are retained for independent replay.
-    """
+def _scenario_plan(study, scenario_indices, batches, trials, seed, profile, max_calendar_gaps):
     indices = (
         tuple(range(len(study.scenarios))) if scenario_indices is None else tuple(scenario_indices)
     )
@@ -61,7 +47,16 @@ def simulate_boin_desktop_scenarios(
         raise ValueError("batches must be an integer in [1,100]")
     if len(indices) * batches > 100:
         raise ValueError("at most 100 scenario-batch runs are supported")
-    validated = [_validate_request(study, i, trials, seed, profile) for i in indices]
+    if study.mode in ("single", "tite"):
+        from .boin_desktop_univariate_simulation import _preflight
+
+        validated = [
+            _preflight(study, i, trials, seed, profile, max_calendar_gaps)[:2] for i in indices
+        ]
+    else:
+        if max_calendar_gaps != 1000:
+            raise ValueError("calendar gap settings require a TITE study")
+        validated = [_validate_request(study, i, trials, seed, profile) for i in indices]
     repetitions, master_seed = validated[0]
     runs = len(indices) * batches
     maximum = sum(study.subtrial_maximums) if study.mode == "contour" else study.maximum_patients
@@ -74,15 +69,49 @@ def simulate_boin_desktop_scenarios(
         raise ValueError("complete request exceeds 2000000 retained trial-dose cells")
     if repetitions * runs * (maximum + overhead) > 1_000_000:
         raise ValueError("complete request exceeds 1000000 planned patient draws")
+    if (
+        study.mode == "tite"
+        and repetitions * runs * max_calendar_gaps * study.shape[0] > 50_000_000
+    ):
+        raise ValueError("complete request exceeds 50000000 bounded calendar dose-check cells")
     # Consecutive uint64 seeds are distinct, including at the wrap boundary.
     seeds = tuple((master_seed + i) % 2**64 for i in range(runs))
+    return indices, repetitions, master_seed, seeds
+
+
+def simulate_boin_desktop_scenarios(
+    study: BOINDesktopStudy,
+    *,
+    scenario_indices: tuple[int, ...] | None = None,
+    batches: int = 1,
+    trials: int | None = None,
+    seed: int | None = None,
+    profile: str = "safe",
+    max_calendar_gaps: int = 1000,
+) -> BOINDesktopBatch:
+    """Run saved scenarios after validating the complete allocation/work budget.
+
+    At most 100 runs, two million retained trial-dose cells and one million
+    planned patient draws across the request. Every run uses a distinct seed;
+    the seed and resulting full arrays are retained for independent replay.
+    """
+    indices, repetitions, master_seed, seeds = _scenario_plan(
+        study,
+        scenario_indices,
+        batches,
+        trials,
+        seed,
+        profile,
+        max_calendar_gaps,
+    )
     results = tuple(
-        simulate_boin_desktop_combination(
+        simulate_boin_desktop_study(
             study,
             scenario_index=scenario,
             trials=repetitions,
             seed=seeds[position * batches + batch],
             profile=profile,
+            max_calendar_gaps=max_calendar_gaps,
         )
         for position, scenario in enumerate(indices)
         for batch in range(batches)

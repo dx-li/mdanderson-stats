@@ -31,3 +31,10 @@ BOIN combination saved workflows now reach simulation/batches and bilingual repo
 single/TITE saved final counts are integrated. Continue the [desktop calendar and
 comparison contracts](boin-desktop-workflow-checkpoint-2026-10-12.md), using256 new
 original TITE traces and keeping future-outcome stopping in an explicit legacy profile.
+
+The [single/TITE checkpoint](boin-desktop-univariate-checkpoint-2026-10-12.md)
+now integrates four-mode saved simulation, native calendars, saved comparators,
+STFT and bilingual reports. Finish BOIN99's source-specific pending table and
+standalone analysis/report crosswalk next. Its64 source table requests are
+recovered, so this remains immediately actionable. Then revisit source-recoverable
+partial rows in dependency order, including72's preserved controller/XLL contracts.

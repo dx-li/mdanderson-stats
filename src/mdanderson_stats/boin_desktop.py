@@ -244,3 +244,15 @@ def read_boin_desktop_project(document: str) -> BOINDesktopStudy:
         _integer(sim, "Seed", 0, 2**31 - 1),
         subtrial_maximums,
     )
+
+
+def desktop_bound_probabilities(study: BOINDesktopStudy) -> tuple[float, float]:
+    """Resolve the native flag before consulting retained inactive numeric bounds."""
+    design = ET.fromstring(study.xml).find("SimDat/TrialDesign")
+    assert design is not None
+    if _boolean(design, "UseDefaultBounds"):
+        return 0.6 * study.target, 1.4 * study.target
+    return (
+        _number(design, "AcceptableToxicity_LowerBound"),
+        _number(design, "AcceptableToxicity_UpperBound"),
+    )

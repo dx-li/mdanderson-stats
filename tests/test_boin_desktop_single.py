@@ -75,3 +75,30 @@ def test_invalid_count_shape_and_values_rejected():
         boin_desktop_single_counts(
             read_boin_desktop_project(saved.xml.replace("<int>3", "<int>3.2"))
         )
+
+
+def test_native_default_bound_flag_ignores_inactive_saved_values():
+    from mdanderson_stats.boin_desktop_controller import desktop_combination_design
+    from mdanderson_stats.boin_desktop_single import desktop_single_design
+
+    for saved, resolve in (
+        (study(), desktop_combination_design),
+        (single_study(), desktop_single_design),
+    ):
+        xml = saved.xml.replace(
+            "<AcceptableToxicity_LowerBound>.15", "<AcceptableToxicity_LowerBound>.01"
+        ).replace("<AcceptableToxicity_UpperBound>.35", "<AcceptableToxicity_UpperBound>.99")
+        explicit = resolve(read_boin_desktop_project(xml))
+        default = resolve(
+            read_boin_desktop_project(
+                xml.replace("<UseDefaultBounds>false", "<UseDefaultBounds>true")
+            )
+        )
+        assert (explicit.safe_probability, explicit.toxic_probability) == (0.01, 0.99)
+        assert (default.safe_probability, default.toxic_probability) == (0.15, 0.35)
+        with pytest.raises(ValueError, match="UseDefaultBounds"):
+            resolve(
+                read_boin_desktop_project(
+                    xml.replace("<UseDefaultBounds>false</UseDefaultBounds>", "")
+                )
+            )

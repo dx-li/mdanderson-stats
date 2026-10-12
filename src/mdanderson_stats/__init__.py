@@ -383,6 +383,7 @@ from .boin_desktop import (
     read_boin_desktop_project,
 )
 from .boin_desktop_batch import BOINDesktopBatch, simulate_boin_desktop_scenarios
+from .boin_desktop_comparison import BOINDesktopWorkflow, simulate_boin_desktop_workflow
 from .boin_desktop_controller import BOINDesktopRecommendation, recommend_boin_desktop
 from .boin_desktop_patients import (
     add_boin_desktop_patient,
@@ -391,15 +392,33 @@ from .boin_desktop_patients import (
     update_boin_desktop_patient,
 )
 from .boin_desktop_protocol import boin_desktop_combination_protocol
-from .boin_desktop_report import boin_desktop_conduct_html, boin_desktop_simulation_html
+from .boin_desktop_report import (
+    boin_desktop_conduct_html,
+    boin_desktop_simulation_html,
+    boin_desktop_workflow_html,
+)
+from .boin_desktop_rolling import BOINDesktopRollingTrial, replay_boin_desktop_rolling_six
 from .boin_desktop_selection import BOINDesktopSelection, select_boin_desktop_mtd
-from .boin_desktop_simulation import BOINDesktopSimulation, simulate_boin_desktop_combination
+from .boin_desktop_simulation import (
+    BOINDesktopSimulation,
+    simulate_boin_desktop_combination,
+    simulate_boin_desktop_study,
+)
 from .boin_desktop_single import (
     boin_desktop_single_counts,
     desktop_single_design,
     select_boin_desktop_single,
     set_boin_desktop_single_counts,
 )
+from .boin_desktop_tite import (
+    BOINDesktopFollowup,
+    BOINDesktopTITESettings,
+    boin_desktop_stft,
+    desktop_tite_settings,
+)
+from .boin_desktop_tite_calendar import BOINDesktopTITETrial, replay_boin_desktop_tite
+from .boin_desktop_univariate_protocol import boin_desktop_univariate_protocol
+from .boin_desktop_univariate_simulation import simulate_boin_desktop_univariate
 from .boin_protocol import boin_protocol
 from .boin_simulation import BOINSimulation, simulate_boin
 from .boin_time_comparison import (
@@ -4233,6 +4252,20 @@ __all__ += [
     "delete_last_boin_desktop_patient",
     "update_boin_desktop_patient",
     "boin_desktop_combination_protocol",
+    "BOINDesktopWorkflow",
+    "simulate_boin_desktop_workflow",
+    "boin_desktop_workflow_html",
+    "BOINDesktopRollingTrial",
+    "replay_boin_desktop_rolling_six",
+    "simulate_boin_desktop_study",
+    "BOINDesktopFollowup",
+    "BOINDesktopTITESettings",
+    "boin_desktop_stft",
+    "desktop_tite_settings",
+    "BOINDesktopTITETrial",
+    "replay_boin_desktop_tite",
+    "boin_desktop_univariate_protocol",
+    "simulate_boin_desktop_univariate",
     "boin_desktop_conduct_html",
     "boin_desktop_simulation_html",
     "BOINDesktopSelection",

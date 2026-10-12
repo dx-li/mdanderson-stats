@@ -2,9 +2,9 @@
 
 Catalog entry **99**, the [BOIN desktop program](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99),
 collects single-agent, delayed-toxicity and drug-combination trial designs.
-The Python package provides these methods through the APIs below. It shares
-implementations with the separately listed web applications rather than
-maintaining a second statistical backend for the desktop entry.
+The Python package provides these methods through the APIs below. It reuses independently validated statistical primitives while preserving
+separate desktop calendar, titration and saved-setting conventions. Web wrappers
+are not interchangeable with saved desktop workflows.
 
 | Desktop capability | Python interface | Coverage |
 | --- | --- | --- |
@@ -66,13 +66,13 @@ Path("methods-zh.md").write_text(
     m.boin_desktop_combination_protocol(study, language="zh"))
 ```
 
-Simulation requires an empty combination/contour study. Every batch retains its
+Simulation requires a study without patient-history records. Every batch retains its
 seed and full observations. Complete-request resource bounds are checked before
 running. Safe profiles preserve actual counts and planned enrollment; explicit
 `desktop_legacy` profiles expose original phantom enrollment, discarded outcomes,
 unsafe selection and cross-replication state. Reports show actual and reported
-patients/DLTs separately. Legacy nominal binomial errors are not validated
-uncertainty estimates because replications can share defective state.
+patients/DLTs separately. For the legacy combination single-MTD wrapper, nominal binomial errors are not
+validated uncertainty estimates because replications can share defective state.
 
 For single-agent/TITE final data, `set_boin_desktop_single_counts` edits the native
 row-major count array; `boin_desktop_single_counts` reads it. Call
@@ -80,18 +80,52 @@ row-major count array; `boin_desktop_single_counts` reads it. Call
 are complete. The array itself cannot establish that fact. The shared selector
 uses mathematical tie ordering rather than the native 1e-10 perturbation.
 
+## Single-agent and TITE saved workflows
+
+`simulate_boin_desktop_study` and `simulate_boin_desktop_scenarios` dispatch all
+four saved modes. `simulate_boin_desktop_workflow` also honors the saved 3+3 or
+Rolling Six comparison flags; `boin_desktop_workflow_html` combines the methods
+in one reopenable report. Method streams have distinct recorded seeds.
+3+3 starts at dose one and optional expansion targets the planned maximum without
+shrinking larger dose-finding samples or revising the selection. Rolling Six
+uses its own six-per-dose bound, not the BOIN planned maximum.
+
+For a saved single-agent/TITE study:
+
+```python
+workflow = m.simulate_boin_desktop_workflow(study, batches=2, trials=100, seed=2026)
+Path("comparison.html").write_text(m.boin_desktop_workflow_html(workflow))
+Path("methods.md").write_text(m.boin_desktop_univariate_protocol(study))
+Path("methods-zh.md").write_text(
+    m.boin_desktop_univariate_protocol(study, language="zh"))
+```
+
+`desktop_tite_settings` resolves days/months, monthly accrual, pending percentage,
+analysis trimester weights and event distribution. `boin_desktop_stft` reads
+saved pending follow-up **in days**, even when the assessment window is months.
+Simulation normalizes informative weights; the calculator requires valid raw
+probabilities. Default-bound flags suppress inactive custom numeric bounds.
+
+`replay_boin_desktop_tite` starts the first patient at zero and advances pending
+checks on supplied arrival gaps. Safe replay uses observed outcomes; the explicit
+legacy profile exposes native future-outcome stopping and backward reported
+clock defects. Both reported duration and actual decision time are retained.
+`replay_boin_desktop_rolling_six` retains safe exclusions, identifies legacy unsafe
+assignments, and raises if a native over-enrollment loop exceeds six per dose.
+Failed simulations are never silently discarded. Arrival-gap budgets are recorded
+and preflighted across the complete comparison request.
+
 ## What remains
 
-Entry 99 remains **partial**. Current saved-project combination conduct, final
-selection, simulation, scenario batches, bilingual methods and HTML reports are
-integrated. Single/TITE saved final selection is integrated, but saved simulation,
-comparison and TITE calendar/protocol adapters still need validation. In particular,
-the desktop TITE simulator starts its first arrival at zero and checks pending
-outcomes on additional random arrival increments, differing from the existing
-Python calendar's conventions. Do not silently substitute one for the other.
+Entry 99 remains **partial**. Saved simulations, comparisons, calendar replay,
+STFT, final selection, bilingual methods and reports are integrated. Remaining
+closure work is the source-specific TITE pending-outcome decision-table and
+flowchart contract, scenario-level native operating-characteristic summaries,
+saved standalone analysis/report coverage, and a final crosswalk of all advertised desktop workflows. The complete-outcome table in
+the methods document explicitly does not substitute for the pending-outcome table.
 
 Source compatibility, correct mathematical implementation and clinical validity
 are separate claims. Native RNG/Iso solver identity, historical GUI appearance,
 and exact proprietary template layout are not promised. The original program
 is not redistributable and none of its executable/source/template assets are
-bundled. See the [current evidence and remaining contracts](../research/boin-desktop-workflow-checkpoint-2026-10-12.md).
+bundled. See the [current evidence and remaining contracts](../research/boin-desktop-univariate-checkpoint-2026-10-12.md).

@@ -152,25 +152,82 @@ def boin_desktop_simulation_html(batch) -> str:
     if read_boin_desktop_project(study.xml) != study:
         raise ValueError("simulation inputs do not match the retained saved XML")
     profile = batch.results[0].profile
-    if any(r.study != study or r.profile != profile for r in batch.results):
-        raise ValueError("simulation report requires one saved study and one profile")
+    method = batch.results[0].method
+    if any(r.study != study or r.profile != profile or r.method != method for r in batch.results):
+        raise ValueError("simulation report requires one saved study, profile and method")
     parts = [
-        "<!doctype html><html><head><meta charset='utf-8'><title>BOIN simulation</title>",
+        "<!doctype html><html><head><meta charset='utf-8'>"
+        f"<title>{escape(method)} simulation</title>",
         "<style>body{font:16px sans-serif;margin:2em}table{border-collapse:collapse}"
         "th,td{border:1px solid #aaa;padding:.4em}pre{white-space:pre-wrap}</style>"
-        "</head><body><h1>BOIN saved-study simulation</h1>",
+        f"</head><body><h1>{escape(method)} saved-study simulation</h1>",
         f"<p>Profile: {escape(profile)}. Master seed: {batch.master_seed}.</p>",
         "<p>Python random streams are reproducible; "
         "native R random-stream identity is not claimed. "
         "Monte Carlo error describes simulation precision, not clinical validity.</p>",
     ]
-    if profile == "desktop_legacy":
+    if profile == "desktop_legacy" and study.mode in ("combination", "contour"):
         parts.append(
             "<p><strong>Legacy compatibility can report phantom patients, discard observed "
             "outcomes, or select eliminated or unobserved doses. Single-MTD state defects "
             "persist within each batch and restart between batches. Nominal binomial errors "
             "do not account for this dependence and are not "
             "validated uncertainty estimates.</strong></p>"
+        )
+    if profile == "desktop_legacy" and study.mode == "tite" and method == "BOIN":
+        parts.append(
+            "<p><strong>Legacy TITE compatibility can stop using future unobserved outcomes "
+            "and report a duration earlier than its actual decision clock. These are explicit "
+            "compatibility defects, not defaults of the safe analysis.</strong></p>"
+        )
+    if method.startswith("3+3 with"):
+        parts.append(
+            "<p>Expansion adds patients at the fixed dose-finding selection up to the "
+            "planned study maximum; it never shrinks a larger dose-finding sample or "
+            "revises the selection after expansion outcomes.</p>"
+        )
+    if method == "Rolling Six" and profile == "desktop_legacy":
+        parts.append(
+            "<p>Legacy Rolling Six can reassign an eliminated dose and report duration "
+            "earlier than its decision clock. Runs exceeding six patients per dose "
+            "raise an explicit error; failed replications are not discarded.</p>"
+        )
+    if study.mode == "tite":
+        parts.append("<h2>Calendar diagnostics</h2>")
+        parts.append(
+            _table(
+                [
+                    "Scenario",
+                    "Seed",
+                    "Arrival-gap budget",
+                    "Mean reported duration (months)",
+                    "Mean actual final time (months)",
+                    "Mean extra checks",
+                    "Future-outcome stops",
+                    "Unsafe assignments",
+                ],
+                [
+                    (
+                        r.scenario_index,
+                        r.seed,
+                        r.calendar_gap_budget,
+                        _number(np.mean(r.reported_duration)),
+                        _number(np.mean(r.actual_duration)),
+                        _number(np.mean(r.suspension_checks)),
+                        int(np.sum(r.future_stop)),
+                        int(np.sum(r.unsafe_assignment_count))
+                        if r.unsafe_assignment_count is not None
+                        else 0,
+                    )
+                    for r in batch.results
+                ],
+            )
+        )
+        parts.append(
+            "<p>Desktop enrollment starts at zero. Pending decisions advance on additional "
+            "arrival gaps. Time is in months; one month is "
+            "30.436666666666667 days. Replaying a batch requires its seed "
+            "and arrival-gap budget.</p>"
         )
     parts.append("<h2>Replay and discrepancies</h2>")
     parts.append(
@@ -255,3 +312,18 @@ def boin_desktop_simulation_html(batch) -> str:
         + "</pre></details></body></html>"
     )
     return study.to_html("".join(parts))
+
+
+def boin_desktop_workflow_html(workflow) -> str:
+    """Combine method-specific reports in one reopenable saved-study document."""
+    primary = boin_desktop_simulation_html(workflow.primary)
+    if workflow.comparator is None:
+        return primary
+    first = workflow.primary.results[0]
+    if any(
+        r.study != first.study or r.profile != first.profile for r in workflow.comparator.results
+    ):
+        raise ValueError("comparison report requires matching saved study and profile")
+    comparison = boin_desktop_simulation_html(workflow.comparator)
+    body = comparison.split("<body>", 1)[1].split("</body>", 1)[0]
+    return primary.replace("</body>", "<hr>" + body + "</body>", 1)

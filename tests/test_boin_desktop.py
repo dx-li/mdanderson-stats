@@ -13,7 +13,7 @@ GUID = "E45C3723-2D8F-40F8-8A47-AEF4DFD489E7"
 def document(patient="", extra=""):
     return f'''<Model ProgID="{GUID}" future="retain"><SimDat><TrialDesign>
 <SingleDrugTrial>false</SingleDrugTrial><TITE_BOINTrial>false</TITE_BOINTrial>
-<FindContours>false</FindContours><NumberOfDoses_DrugA>2</NumberOfDoses_DrugA>
+<FindContours>false</FindContours><UseDefaultBounds>false</UseDefaultBounds><NumberOfDoses_DrugA>2</NumberOfDoses_DrugA>
 <NumberOfDoses_DrugB>3</NumberOfDoses_DrugB><CohortSize>3</CohortSize>
 <MaximumSampleSize>12</MaximumSampleSize><StartingDoseLevel_DrugA>1</StartingDoseLevel_DrugA>
 <StartingDoseLevel_DrugB>1</StartingDoseLevel_DrugB><TargetToxicityProbability>.25</TargetToxicityProbability>

@@ -28,6 +28,11 @@ references = (
     ("single_simulation", None, "single-simulation", False),
     ("tite_calendar_extended", None, "tite-calendar-extended", False),
     ("rolling_calendar", None, "rolling-calendar", False),
+    ("three_plus_three", None, "three-plus-three", False),
+    ("single_edited", None, "single-edited", False),
+    ("tite_table", None, "tite-table", False),
+    ("single_reports", None, "single-reports", False),
+    ("simulation_summaries", "Functions for BOIN_Comb.R", "simulation-summaries", True),
 )
 with tempfile.TemporaryDirectory(prefix="boin-reference-") as temp:
     for driver, original, fixture, needs_repo in references:

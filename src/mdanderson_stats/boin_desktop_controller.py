@@ -8,7 +8,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from .boin_combination import BOINCombDecision, BOINCombSelection
-from .boin_desktop import BOINDesktopStudy, _boolean, _integer, _number
+from .boin_desktop import BOINDesktopStudy, _boolean, _integer, _number, desktop_bound_probabilities
 from .boin_desktop_contour import desktop_contour_decision
 from .boin_desktop_decision import BOINDesktopCombDesign
 from .boin_desktop_selection import BOINDesktopSelection, select_boin_desktop_mtd
@@ -35,10 +35,11 @@ def desktop_combination_design(study: BOINDesktopStudy) -> BOINDesktopCombDesign
         raise ValueError("a BOIN combination/contour study is required")
     design = ET.fromstring(study.xml).find("SimDat/TrialDesign")
     assert design is not None
+    safe, toxic = desktop_bound_probabilities(study)
     return BOINDesktopCombDesign(
         target=study.target,
-        safe_probability=_number(design, "AcceptableToxicity_LowerBound"),
-        toxic_probability=_number(design, "AcceptableToxicity_UpperBound"),
+        safe_probability=safe,
+        toxic_probability=toxic,
         elimination_probability=_number(design, "EliminateDoseThreshold"),
         extra_safe=_boolean(design, "ExtraSafe"),
         safety_offset=_number(design, "Offset"),

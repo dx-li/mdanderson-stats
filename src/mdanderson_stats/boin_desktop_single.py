@@ -10,6 +10,7 @@ from .boin_desktop import (
     _boolean,
     _integer,
     _number,
+    desktop_bound_probabilities,
     read_boin_desktop_project,
 )
 
@@ -20,10 +21,11 @@ def desktop_single_design(study: BOINDesktopStudy) -> BOINDesign:
         raise ValueError("single-agent/TITE saved study with one drug-B column required")
     design = ET.fromstring(study.xml).find("SimDat/TrialDesign")
     assert design is not None
+    safe, toxic = desktop_bound_probabilities(study)
     return BOINDesign(
         target=study.target,
-        safe_probability=_number(design, "AcceptableToxicity_LowerBound"),
-        toxic_probability=_number(design, "AcceptableToxicity_UpperBound"),
+        safe_probability=safe,
+        toxic_probability=toxic,
         elimination_probability=_number(design, "EliminateDoseThreshold"),
         extra_safe=_boolean(design, "ExtraSafe"),
         safety_offset=_number(design, "Offset"),

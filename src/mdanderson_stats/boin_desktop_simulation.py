@@ -9,6 +9,7 @@ from .boin_desktop import BOINDesktopStudy
 from .boin_desktop_controller import desktop_combination_design
 from .boin_desktop_decision import BOINDesktopCombDesign
 from .boin_desktop_selection import select_boin_desktop_mtd
+from .boin_desktop_single import desktop_single_design
 from .boin_waterfall_trial import _final_contour, run_boin_waterfall_trial
 
 
@@ -25,6 +26,13 @@ class BOINDesktopSimulation:
     selected: np.ndarray
     selected_eliminated: np.ndarray
     stop_reasons: tuple[str, ...]
+    reported_duration: np.ndarray | None = None
+    actual_duration: np.ndarray | None = None
+    suspension_checks: np.ndarray | None = None
+    future_stop: np.ndarray | None = None
+    calendar_gap_budget: int | None = None
+    method: str = "BOIN"
+    unsafe_assignment_count: np.ndarray | None = None
 
     @property
     def selection_probability(self) -> np.ndarray:
@@ -218,8 +226,8 @@ def _contour_trials(study, probability, repetitions, generator, profile):
 
 
 def _validate_request(study, scenario_index, trials, seed, profile):
-    if study.mode not in ("combination", "contour") or study.patients:
-        raise ValueError("simulation requires an empty combination/contour study")
+    if study.mode not in ("combination", "contour", "single", "tite") or study.patients:
+        raise ValueError("simulation requires an empty supported desktop study")
     if profile not in ("safe", "desktop_legacy"):
         raise ValueError("profile must be safe or desktop_legacy")
     if (
@@ -259,8 +267,14 @@ def _validate_request(study, scenario_index, trials, seed, profile):
         )
     ):
         raise ValueError("legacy simulation requires a positive whole-cohort maximum")
-    # Construct and validate active design settings before any random draws.
-    desktop_combination_design(study)
+    if repetitions * maximum > 1_000_000:
+        raise ValueError("request exceeds 1000000 planned patient draws")
+    if study.mode in ("single", "tite"):
+        if study.maximum_patients % study.cohort_size:
+            raise ValueError("single-agent simulation requires a whole-cohort planned maximum")
+        desktop_single_design(study)
+    else:
+        desktop_combination_design(study)
     return int(repetitions), int(outcome_seed)
 
 
@@ -280,6 +294,8 @@ def simulate_boin_desktop_combination(
     waterfall retains source overhead and extra-safe gating. These profiles are
     comparisons, not interchangeable operating-characteristic estimates.
     """
+    if study.mode not in ("combination", "contour"):
+        raise ValueError("combination simulation requires a combination/contour study")
     repetitions, outcome_seed = _validate_request(study, scenario_index, trials, seed, profile)
     probability = np.asarray(study.scenarios[scenario_index].probabilities)
     generator = np.random.default_rng(outcome_seed)
@@ -299,4 +315,41 @@ def simulate_boin_desktop_combination(
         _owned(selected),
         _owned(unsafe),
         reasons,
+    )
+
+
+def simulate_boin_desktop_study(
+    study: BOINDesktopStudy,
+    *,
+    scenario_index: int = 0,
+    trials: int | None = None,
+    seed: int | None = None,
+    profile: str = "safe",
+    max_calendar_gaps: int = 1000,
+) -> BOINDesktopSimulation:
+    """Dispatch saved single-agent, TITE, combination or contour simulation.
+
+    The calendar gap budget is explicit; exhaustion raises instead of dropping
+    trials or silently changing the arrival model. Native RNG identity is not
+    claimed. Comparison designs are handled separately.
+    """
+    if study.mode in ("single", "tite"):
+        from .boin_desktop_univariate_simulation import simulate_boin_desktop_univariate
+
+        return simulate_boin_desktop_univariate(
+            study,
+            scenario_index=scenario_index,
+            trials=trials,
+            seed=seed,
+            profile=profile,
+            max_calendar_gaps=max_calendar_gaps,
+        )
+    if max_calendar_gaps != 1000:
+        raise ValueError("calendar gap settings require a TITE study")
+    return simulate_boin_desktop_combination(
+        study,
+        scenario_index=scenario_index,
+        trials=trials,
+        seed=seed,
+        profile=profile,
     )

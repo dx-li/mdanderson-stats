@@ -1,0 +1,76 @@
+{
+  "scope": "BOIN desktop saved single/TITE simulation, comparison, calendar, STFT and bilingual methods/report integration; application99 remains partial",
+  "production_tree_sha256": "6a2cc8c15a3795ff5355afc6fc8f734faf1b330ff15d4240595aa161e91ea66f",
+  "production_tree_hash_algorithm": "SHA256 of sorted relative path, NUL, bytes, NUL for every package Python/JSON file",
+  "full_suite": {
+    "passed": 43912,
+    "seconds": 879.81,
+    "warnings_as_errors": true,
+    "extras": [
+      "plot",
+      "image"
+    ],
+    "production_code_unchanged_during_run": true,
+    "log_sha256": "1b43369e34375c6bec5406bef83ff459074a8dd057918b3724d11477d676ddaf"
+  },
+  "additional_tests_added_during_full_run": {
+    "adverse_single_mtd_histories": 481,
+    "single_tite_report_numerics": 960,
+    "all_passed_against_installed_wheel": true,
+    "production_code_unchanged": true
+  },
+  "fresh_installed_wheel": {
+    "desktop_tests_passed": 8518,
+    "seconds": 17.42,
+    "additional_tests_passed": 1441,
+    "plot_tests_passed": 21,
+    "image_tests_passed": 28,
+    "review_regressions_passed": 7,
+    "all_four_original_saved_defaults_passed": true,
+    "import_location": "/tmp/boin-checkpoint-env/lib/python3.13/site-packages/mdanderson_stats/__init__.py"
+  },
+  "quality": {
+    "record": "boin-desktop-univariate-quality-2026-10-12.json",
+    "trials": 40000,
+    "maximum_selection_mcse": 0.015677212762477903,
+    "description": "five original scenarios, two independent batches of500, primary and enabled comparator; single-agent plus three TITE event distributions"
+  },
+  "integrated_source_reference_cases": {
+    "single_simulation": 192,
+    "tite_calendar": 2304,
+    "rolling_calendar_complete": 238,
+    "rolling_guarded_native_overenrollment": 2,
+    "three_plus_three_expansion": 12,
+    "managed_stft": 84,
+    "adverse_single_mtd_histories": 480,
+    "single_tite_final_report_numerics": 960
+  },
+  "remaining_work_references": {
+    "tite_table_requests": 64,
+    "tite_table_rows": 7124,
+    "temporary_table_probe_evaluations": 61916,
+    "simulation_summary_requests": 192
+  },
+  "r_reference_files_regenerated_identically": 13,
+  "lint": "pass",
+  "format": "1849 files pass",
+  "types": "737 source files pass",
+  "catalog": {
+    "implemented": 98,
+    "partial": 34,
+    "pending": 6
+  },
+  "remaining": [
+    "source-specific pending decision table/flowchart with safe and legacy semantics",
+    "native scenario-level operating-characteristic summaries and conventional-duration approximation",
+    "standalone analysis reports and captured-input methods/results crosswalk",
+    "final application99 acceptance, then continue recoverable partial applications"
+  ],
+  "limitations": [
+    "no native RNG/Iso floating identity claim",
+    "Monte Carlo precision is not clinical validity",
+    "original assets excluded; mixed-license restrictions retained",
+    "no status promotion"
+  ],
+  "artifact_hash_location": "final audited artifact hashes in preservation commit message; avoids self-referential sdist manifest"
+}

@@ -50,7 +50,7 @@ def test_entire_request_rejected_before_first_simulation(monkeypatch):
 
     monkeypatch.setattr(
         module,
-        "simulate_boin_desktop_combination",
+        "simulate_boin_desktop_study",
         lambda *a, **k: pytest.fail("simulation started before preflight"),
     )
     for kwargs in (

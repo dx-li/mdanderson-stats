@@ -17,6 +17,15 @@ for path in sorted(root.glob("Default*.html")):
     study = m.read_boin_desktop_project(path.read_text(encoding="utf-8-sig"))
     assert m.read_boin_desktop_project(study.to_html()) == study
     if study.mode in ("single", "tite"):
+        for language in ("en", "zh"):
+            assert m.boin_desktop_univariate_protocol(study, language=language)
+        for profile in ("safe", "desktop_legacy"):
+            workflow = m.simulate_boin_desktop_workflow(
+                study, batches=2, trials=3, seed=712, profile=profile
+            )
+            report = m.boin_desktop_workflow_html(workflow)
+            assert m.read_boin_desktop_project(report) == study
+            print(path.name, profile, "saved simulation/comparison/report passed", flush=True)
         study = m.set_boin_desktop_single_counts(study, [3, 3, 12, 6, 0], [0, 0, 3, 3, 0])
         selected = m.select_boin_desktop_single(study, outcomes_complete=True)
         assert selected.dose is not None

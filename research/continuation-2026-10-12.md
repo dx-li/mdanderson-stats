@@ -522,3 +522,26 @@ STFT84 executed IL cases. Draft independent kernels exist locally in
 STFT saved follow-up is alwaysdays, and native simulation normalizes timing
 weights while the calculator uses raw weights (valid GUI priors sum to one).
 Do not silently replace the desktop calendar with the existing web calendar.
+
+### BOIN single/TITE integration after1c6f618
+
+Current implementation supersedes the above unintegrated-draft notes. Saved
+single/TITE simulations, active bound flag, native desktop calendar, STFT,
+3+3/Rolling Six comparisons, all-scenario batches, bilingual methods and reports
+are implemented. [Scope and precise remaining contracts](boin-desktop-univariate-checkpoint-2026-10-12.md).
+Catalog remains98/34/6. New pending-table references include7124 rows from64
+original requests; a temporary independent probe matched61916 threshold-neighborhood
+evaluations, but the public table/flowchart and standalone report crosswalk remain.
+The draft probe is `/tmp/boin-pending-table-probe.py`; original call-builder IL is
+`/tmp/boin-boundary-ui-il.txt`. Keep source-table two-decimal/strict-boundary rules
+separate from unrounded safe mathematics and the simulator's run-in rule.
+Continue through available recovery work; these are not external blockers.
+
+The univariate integration checkpoint passed43,912 full-suite tests in879.81s
+on unchanged production code. Fresh-wheel evidence:8,518 desktop tests plus481
+adverse-history and960 report-numeric tests added during the full run;21 plot,
+28 image and7 review regressions; all4 original defaults.40,000 installed quality
+trials pass;13 R fixture files regenerate identically. See the linked manifest
+for exact qualifications. Newly recovered report sources distinguish native
+console versus returned MTD definitions; pending-table and report-summary
+integration remain the next authorized work, not a completed application claim.
