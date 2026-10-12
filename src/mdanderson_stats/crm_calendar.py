@@ -1,6 +1,6 @@
 """Retrospective patient snapshots and posterior routing for CRM designs."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from math import sqrt
 from typing import Literal
 
@@ -246,6 +246,7 @@ def crm_calendar_decision(
     draws: int = 2000,
     warmup: int = 1000,
     chains: int = 2,
+    raw_rate_policy: Literal["completion", "observed"] = "completion",
     max_completions: int = 128,
     max_evaluations: int = 200_000,
 ) -> CRMCalendarDecision:
@@ -253,9 +254,14 @@ def crm_calendar_decision(
 
     This function performs one as-of analysis only. It does not advance a
     trial calendar, enforce cohort timing, or infer final-study timing.
+    The desktop ``observed`` policy applies the raw-toxicity escalation cap
+    after pending-outcome consensus, using only actually observed outcomes.
+    Completion witnesses retain their uncapped decisions in that profile.
     """
     if method not in {"bmacrm", "dacrm"}:
         raise ValueError("method must be 'bmacrm' or 'dacrm'")
+    if raw_rate_policy not in {"completion", "observed"}:
+        raise ValueError("raw_rate_policy must be completion or observed")
     target_value = _scalar_value(target, "target")
     if not 0 < target_value < 1:
         raise ValueError("target must lie strictly between 0 and 1")
@@ -317,9 +323,21 @@ def crm_calendar_decision(
                 starting_dose=start,
                 safety_cutoff=cutoff,
                 final=final_value,
+                apply_raw_rate=raw_rate_policy == "completion",
                 max_completions=completion_limit,
                 max_evaluations=min(_MAX_TOTAL_EVALUATIONS, remaining_budget),
             )
+            if (
+                raw_rate_policy == "observed"
+                and not final_value
+                and lookahead.action in {"start", "treat"}
+                and lookahead.dose is not None
+                and current_dose is not None
+            ):
+                for dose in range(current_dose, lookahead.dose):
+                    if observed[dose] > 0 and events[dose] / observed[dose] > target_value:
+                        lookahead = replace(lookahead, dose=dose)
+                        break
             evaluations += lookahead.evaluations
             routing: Literal["complete", "lookahead", "data_augmentation"] = "lookahead"
             decision: BMACRMDecision | BMACRMLookAhead = lookahead

@@ -345,6 +345,7 @@ def run_crm_trial(
             warmup=warmup,
             chains=chains,
             final=final,
+            raw_rate_policy="observed" if native_schedule else "completion",
             max_completions=completion_limit,
             max_evaluations=min(per_call_limit, total_limit - evaluations),
         )

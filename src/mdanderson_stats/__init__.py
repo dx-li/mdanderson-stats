@@ -787,6 +787,13 @@ from .crm_desktop import (
     read_crm_desktop_html,
     simulate_crm_desktop_study,
 )
+from .crm_desktop_conduct import CRMDesktopRecommendation, recommend_crm_desktop
+from .crm_desktop_history import (
+    CRMDesktopHistory,
+    CRMDesktopPatient,
+    crm_desktop_snapshot,
+    read_crm_desktop_history,
+)
 from .crm_prior_ess import CRMPriorESSSimulation, simulate_crm_prior_ess
 from .crm_simulation import CRMSimulation, simulate_crm
 from .crm_trial import CRMTrial, CRMTrialStep, run_crm_trial
@@ -4159,6 +4166,12 @@ __all__ += ["EffToxContourFitRun", "EffToxNativeContourFit", "fit_efftox_native_
 
 
 __all__ += [
+    "CRMDesktopPatient",
+    "CRMDesktopHistory",
+    "CRMDesktopRecommendation",
+    "read_crm_desktop_history",
+    "crm_desktop_snapshot",
+    "recommend_crm_desktop",
     "CRMDesktopStudy",
     "CRMDesktopRun",
     "read_crm_desktop_html",

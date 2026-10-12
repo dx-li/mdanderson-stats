@@ -53,6 +53,7 @@ def bmacrm_decision(
     starting_dose: int = 0,
     safety_cutoff: float = 0.9,
     final: bool = False,
+    apply_raw_rate: bool = True,
 ) -> BMACRMDecision:
     """Apply complete-outcome BMA-CRM start, safety, escalation, and MTD rules.
 
@@ -62,13 +63,16 @@ def bmacrm_decision(
     intervening toxicity rate above the posterior's target caps the move at
     that first level. Final MTD selection instead applies the three-subject
     eligibility fallback. Pending outcomes and cohort-timing rules are outside
-    this function's scope.
+    this function's scope. Set apply_raw_rate=False only when a separate
+    controller applies the observed-data raw-rate gate after look-ahead.
     """
     if not isinstance(posterior, BMACRMPosterior):
         raise TypeError("posterior must be a BMACRMPosterior")
     if not isinstance(final, (bool, np.bool_)):
         raise ValueError("final must be boolean")
     final_value = bool(final)
+    if not isinstance(apply_raw_rate, bool):
+        raise ValueError("apply_raw_rate must be boolean")
     means = np.asarray(posterior.dose_mean, dtype=float)
     overdose = np.asarray(posterior.overdose_probability, dtype=float)
     events = np.asarray(posterior.events, dtype=float)
@@ -176,7 +180,7 @@ def bmacrm_decision(
 
     dose = no_skip
     raw_rate_limited = False
-    if current is not None and dose > current:
+    if apply_raw_rate and current is not None and dose > current:
         observed_rate = np.divide(events, subjects, out=np.zeros_like(events), where=subjects > 0)
         excessive = np.flatnonzero(
             (np.arange(dose_count) >= current)

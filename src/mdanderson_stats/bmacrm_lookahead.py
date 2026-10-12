@@ -160,6 +160,7 @@ def bmacrm_lookahead(
     starting_dose: int = 0,
     safety_cutoff: float = 0.9,
     final: bool = False,
+    apply_raw_rate: bool = True,
     max_completions: int = 128,
     max_evaluations: int = 200_000,
 ) -> BMACRMLookAhead:
@@ -170,8 +171,12 @@ def bmacrm_lookahead(
     ``product(pending[j] + 1)``. It is preflighted before any refits. Each
     hypothetical posterior uses the original model prior weights, not the
     observed-data posterior model weights. If the bounded enumeration is too
-    large, the result is an explicit wait with reason ``work_limit``.
+    large, the result is an explicit wait with reason ``work_limit``. A separate
+    native conductor can set apply_raw_rate=False and apply its raw-rate gate
+    to observed data after completing the invariant-decision check.
     """
+    if not isinstance(apply_raw_rate, bool):
+        raise ValueError("apply_raw_rate must be boolean")
     completion_limit = _setting(max_completions, "max_completions", _MAX_COMPLETIONS)
     evaluation_limit = _setting(max_evaluations, "max_evaluations", _MAX_TOTAL_EVALUATIONS)
     events, pending_counts, start, current, cutoff = _validate(
@@ -202,6 +207,7 @@ def bmacrm_lookahead(
             starting_dose=start,
             safety_cutoff=cutoff,
             final=final,
+            apply_raw_rate=apply_raw_rate,
         )
 
     if not np.any(pending_counts):
@@ -249,6 +255,7 @@ def bmacrm_lookahead(
             starting_dose=start,
             safety_cutoff=cutoff,
             final=final,
+            apply_raw_rate=apply_raw_rate,
         )
         completion_rows.append(completed_events.copy())
         decision_rows.append(decision)

@@ -149,3 +149,13 @@ def test_suite_calendar_safety_wait_then_complete_information_stop():
         )
         assert result.routing == routing
         assert result.decision.action == expected
+
+
+def test_desktop_raw_cap_uses_observed_outcomes_after_completion_consensus():
+    snapshot = crm_calendar_snapshot([0, 0], [0, 1], [np.inf, np.inf], window=2, at=2, dose_count=2)
+    kwargs = dict(target=0.25, prior_sd=0.01, current_dose=0, safety_cutoff=1)
+    ordinary = crm_calendar_decision(snapshot, [0.05, 0.25], **kwargs)
+    native = crm_calendar_decision(snapshot, [0.05, 0.25], raw_rate_policy="observed", **kwargs)
+    assert (ordinary.decision.action, ordinary.decision.dose) == ("wait", None)
+    assert (native.decision.action, native.decision.dose) == ("treat", 1)
+    assert {d.dose for d in native.decision.decisions} == {1}

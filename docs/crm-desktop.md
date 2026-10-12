@@ -41,7 +41,7 @@ rows. DA requires exactly one active row, which need not be the first stored row
 Scenario vectors and dose labels use their first `NumDoses` entries. Extra slots
 remain in the saved XML. `study.to_html()` round-trips settings without simulation.
 
-Execution currently accepts the recovered sample conventions: probability/median
+Execution accepts the recovered guide/visible-control conventions: probability/median
 skeleton input (`PriorsAre_P=1`), strict escalation, and the three-patient final
 MTD rule. Other policy values raise instead of being ignored. `EvalTime` must be a positive whole number of days, matching the native
 TimeSpan.Days conversion. All saved scenarios are simulated serially. The explicit trial count and seed replace their XML
@@ -53,7 +53,8 @@ mean total toxicities, and trial duration. Native report months use exactly
 Imported patient records are preserved, but this simulation evaluates a prospective
 design, not the unfinished imported trial. Native dates use locale-dependent
 short-date strings. They are not guessed or silently converted to a calendar.
-For patient-level replay, use the explicit numeric-time [calendar API](crm-conduct.md).
+For populated patient files, use the explicit-date [desktop conduct workflow](crm-desktop-conduct.md).
+The numeric-time [calendar API](crm-conduct.md) remains available.
 
 Default total work across all scenarios is 20 million evaluations, configurable
 up to 200 million. Exhaustion raises rather than returning a partial report.
@@ -120,7 +121,8 @@ prior parameters and final duration; independent R references establish posterio
 and complete-data trial calculations. See
 [recovery evidence](../research/native-workflow-recovery-2026-10-12.md).
 
-Exact native fast-MCMC stopping/completion-bound shortcuts, populated native
-patient-file reopening, and native generated-report comparison remain unverified.
+Populated patient-file reopening, editing and conduct now have bounded original
+references for both desktop versions. Exact native fast-MCMC stopping/completion-bound
+shortcuts and native generated-report comparison remain unverified.
 The installer examples contain placeholder reports. Online BMA-CRM is a separate
 contract; these desktop settings are not assumed to be its defaults.

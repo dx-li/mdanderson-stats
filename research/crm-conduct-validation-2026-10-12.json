@@ -1,0 +1,61 @@
+{
+  "scope": "CRM populated desktop conduct and saved studies; catalog unchanged at this checkpoint",
+  "full_regression": {
+    "passed": 34688,
+    "seconds": 854.27,
+    "warnings_as_errors": true,
+    "extras": [
+      "plot",
+      "image"
+    ],
+    "log_sha256": "8c28c201ad67f286dd3c64bf99a5a3802cf8e0a1143c97a94c72492f7633873c"
+  },
+  "focused_tests_passed": 188,
+  "installed_wheel_tests_passed": 230,
+  "installed_examples": {
+    "original_studies": 6,
+    "scenarios_per_study": 5,
+    "report_and_patient_history_roundtrips": true,
+    "da_draws": 8,
+    "da_warmup": 0,
+    "scope": "plumbing smoke, not Monte Carlo adequacy"
+  },
+  "original_references": {
+    "instruction_cases_per_version": 142,
+    "versions": 2,
+    "byte_identical": true,
+    "managed_xml_files_per_version": 4,
+    "managed_xml_byte_identical": true,
+    "bounded_version_regions": 4
+  },
+  "independent_R": {
+    "bmacrm_rows": 120,
+    "bmacrm_max_absolute_difference": 1.0658141036401503e-14,
+    "dacrm_rows": 94,
+    "dacrm_max_absolute_difference": 9.992007221626409e-16
+  },
+  "quality": {
+    "ruff": true,
+    "format": true,
+    "mypy_source_files": 710,
+    "build": true,
+    "notices_retained": true
+  },
+  "artifact_audit": {
+    "python_json_files_byte_identical": 714,
+    "notices_byte_identical": true,
+    "binary_raw_exclusions": true,
+    "artifacts": {
+      "dist/.gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+      "dist/mdanderson_stats-0.1.0-py3-none-any.whl": "150f778c23714c1ce576dfe7fa093f0382a0ef9e339af960d0b03f2f9082ed43",
+      "dist/mdanderson_stats-0.1.0.tar.gz": "ef5333cf006eb9705b3e8dab6ac2abf3bb3c711fd9befdfc4d60fe8b92d38502"
+    }
+  },
+  "boundaries": [
+    "Independent inference, not native adaptive MCMC/RNG identity",
+    "No clinical validation claim",
+    "Mixed-license restrictions retained",
+    "No merge, release, deployment, permission change or PR bypass"
+  ],
+  "production_manifest_sha256": "81ebb437f6a7a73f7dc06dc4ad52d926637da3ddd633456081e1a01d6d0f3f84"
+}

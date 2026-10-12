@@ -1,0 +1,34 @@
+{"cohorts": [], "incomplete": false, "size": 1}
+{"cohorts": [1], "incomplete": false, "size": 1}
+{"cohorts": [1, 1], "incomplete": false, "size": 1}
+{"cohorts": [1, 1, 1], "incomplete": false, "size": 1}
+{"cohorts": [1, 1, 1, 1], "incomplete": false, "size": 1}
+{"cohorts": [1, 1, 2], "incomplete": false, "size": 1}
+{"cohorts": [1, 1, 2, 2], "incomplete": false, "size": 1}
+{"cohorts": [0, 0, 1], "incomplete": false, "size": 1}
+{"cohorts": [], "incomplete": false, "size": 2}
+{"cohorts": [1], "incomplete": true, "size": 2}
+{"cohorts": [1, 1], "incomplete": false, "size": 2}
+{"cohorts": [1, 1, 1], "incomplete": false, "size": 2}
+{"cohorts": [1, 1, 1, 1], "incomplete": false, "size": 2}
+{"cohorts": [1, 1, 2], "incomplete": true, "size": 2}
+{"cohorts": [1, 1, 2, 2], "incomplete": false, "size": 2}
+{"cohorts": [0, 0, 1], "incomplete": true, "size": 2}
+{"cohorts": [], "incomplete": false, "size": 3}
+{"cohorts": [1], "incomplete": true, "size": 3}
+{"cohorts": [1, 1], "incomplete": true, "size": 3}
+{"cohorts": [1, 1, 1], "incomplete": false, "size": 3}
+{"cohorts": [1, 1, 1, 1], "incomplete": false, "size": 3}
+{"cohorts": [1, 1, 2], "incomplete": true, "size": 3}
+{"cohorts": [1, 1, 2, 2], "incomplete": true, "size": 3}
+{"cohorts": [0, 0, 1], "incomplete": true, "size": 3}
+{"cohorts": [], "incomplete": false, "size": 4}
+{"cohorts": [1], "incomplete": true, "size": 4}
+{"cohorts": [1, 1], "incomplete": true, "size": 4}
+{"cohorts": [1, 1, 1], "incomplete": true, "size": 4}
+{"cohorts": [1, 1, 1, 1], "incomplete": false, "size": 4}
+{"cohorts": [1, 1, 2], "incomplete": true, "size": 4}
+{"cohorts": [1, 1, 2, 2], "incomplete": true, "size": 4}
+{"cohorts": [0, 0, 1], "incomplete": true, "size": 4}
+{"action": 0, "da_within_cohort_safety": 0}
+{"action": 1, "da_within_cohort_safety": 1}

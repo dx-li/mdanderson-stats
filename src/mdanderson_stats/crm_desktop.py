@@ -153,6 +153,62 @@ def read_crm_desktop_html(document: str) -> CRMDesktopStudy:
     )
 
 
+def _design_html(study: CRMDesktopStudy) -> str:
+    """Visible captured design/settings, in addition to the retained native XML."""
+    root = ET.fromstring(study.xml)
+    model = root.find("CRMSimulatorData/Model")
+    data = root.find("CRMSimulatorData")
+    assert model is not None and data is not None
+    rows = ["<h2>Trial design and simulation settings</h2><table>"]
+    for key, label in [
+        ("TargetToxicity", "Target toxicity probability"),
+        ("UpperLimitOnProbToxAtLowestDose", "Safety stopping probability"),
+        ("MaxPatients", "Maximum patients"),
+        ("CohortSize", "Cohort size"),
+        ("StartingDoseIndex", "Starting dose index (zero-based)"),
+        ("EvalTime", "Toxicity assessment period (days)"),
+        ("MinPatientsToDeclareMTD", "Final-dose minimum treated patients"),
+    ]:
+        rows.append(f"<tr><th>{label}</th><td>{escape(_text(model, key))}</td></tr>")
+    rows.append(f"<tr><th>Data augmentation</th><td>{study.data_augmentation}</td></tr>")
+    if study.data_augmentation:
+        rows.append(
+            "<tr><th>Minimum observations for escalation</th><td>"
+            + escape(_text(model, "MinimumNumberRequiredToEscalate"))
+            + "</td></tr>"
+        )
+        probabilities = [
+            _text(v, ".") for v in model.findall("ToxicityOccurrencePriorProbabilities/double")
+        ]
+        rows.append(
+            "<tr><th>DLT timing prior (three trimesters)</th><td>"
+            + escape(", ".join(probabilities))
+            + "</td></tr>"
+        )
+    for key, label in [
+        ("NumRepetitions", "Requested simulated trials per scenario"),
+        ("Seed", "Saved simulation seed"),
+    ]:
+        rows.append(f"<tr><th>{label}</th><td>{escape(_text(data, key))}</td></tr>")
+    gap = _number(data, "MeanInterArrivalTimeSpan")
+    if gap <= 0:
+        raise ValueError("mean interarrival time must be positive")
+    late = 1 - _number(data, "FractToxFirstHalfT")
+    rows.append(
+        f"<tr><th>Accrual (patients per 30.4375-day month)</th><td>{30.4375 / gap:.8g}</td></tr>"
+    )
+    rows.append(f"<tr><th>DLTs observed in second half of window</th><td>{late:.8g}</td></tr>")
+    rows.append("</table><h3>Active prior-median skeletons</h3><table>")
+    for i, skeleton in enumerate(study.skeletons):
+        rows.append(
+            f"<tr><th>Skeleton {i + 1}</th>"
+            + "".join(f"<td>{p:.8g}</td>" for p in skeleton)
+            + "</tr>"
+        )
+    rows.append("</table>")
+    return "\n".join(rows)
+
+
 @dataclass(frozen=True)
 class CRMDesktopRun:
     """A saved study's scenarios simulated under the documented Python engine."""
@@ -170,6 +226,7 @@ class CRMDesktopRun:
             "<p>Native desktop calendar profile; independent Python inference and random streams. "
             "Native adaptive MCMC and random-seed identity are not claimed.</p>",
         ]
+        body.append(_design_html(self.study))
         if self.study.data_augmentation:
             body.append(
                 f"<p>DA sampler: {self.draws} retained draws, "

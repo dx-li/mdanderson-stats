@@ -1,0 +1,38 @@
+[
+  {
+    "region": "native_conductor",
+    "suite_rva": 202432,
+    "older_rva": 202416,
+    "bytes": 6960,
+    "suite_sha256": "353f0dd48b7fe7e398694a03b076fdae732b346f4aef646b24dcab4aaf12147e",
+    "older_sha256": "fa0e6a8feff78cee24e80912df7bb940e6d2198b70ca50d2ba4eec2a700385c6",
+    "equal_after_declared_pointer_mapping": true
+  },
+  {
+    "region": "lookahead",
+    "suite_rva": 201424,
+    "older_rva": 201408,
+    "bytes": 1008,
+    "suite_sha256": "8fd474c7d51ebe6e627100a69a9ccd7401780918dc5b7f02799d47abc4acc03d",
+    "older_sha256": "4f5d07f2ab1a1fb7a2aa71fc0727295c42be2102decdf38a73a9141a77c3ee65",
+    "equal_after_declared_pointer_mapping": true
+  },
+  {
+    "region": "dose_finder_region",
+    "suite_rva": 172944,
+    "older_rva": 172928,
+    "bytes": 3440,
+    "suite_sha256": "5f79312e6d92d75c53c608a25facd2d309774558709e449e5d31e45b1f401d8f",
+    "older_sha256": "8016d28c5ab327e2cf841e60f3e05763ea6f8371391bcd9d820175fd8da074ad",
+    "equal_after_declared_pointer_mapping": true
+  },
+  {
+    "region": "cohort_helper",
+    "suite_rva": 209392,
+    "older_rva": 209376,
+    "bytes": 272,
+    "suite_sha256": "725ea9f1bf31e7a6d264ec278201c17da5dd772c2564d3f5b22f30d751697fd3",
+    "older_sha256": "725ea9f1bf31e7a6d264ec278201c17da5dd772c2564d3f5b22f30d751697fd3",
+    "equal_after_declared_pointer_mapping": true
+  }
+]

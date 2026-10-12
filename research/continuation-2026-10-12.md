@@ -322,3 +322,19 @@ contract; clinical validity is not asserted. Next use the
 then the remaining per-application roadmap. The six fitted models still require
 exact unavailable contracts. Mixed-license distribution and Forbidden PR creation
 remain unresolved; no split, release, merge, outreach or bypass is authorized.
+
+## CRM populated-history checkpoint
+
+CRM Suite and older BMA-CRM patient files now have an explicit-date import/edit/
+save/conduct workflow, original assessment censoring, current safety checks and
+strict-cohort entry replay. Desktop simulation now applies the observed raw-rate
+cap after lookahead. Reports expose saved design settings. See
+[conduct recovery](crm-desktop-conduct-2026-10-12.md),
+[guide crosswalk](crm-guide-scope-2026-10-12.md), and
+[validation manifest](crm-conduct-validation-2026-10-12.json).
+Both versions reproduce142 original instruction cases and four managed XML files;
+four native code regions agree after explicitly mapped pointer relocations.
+The catalog remains94/38/6 at this preservation checkpoint; promotion is separate
+from code recovery. Next is the already source-recovered ToxFinder saved-prior/
+patient/report journey, then the application scope/status checkpoint. Native RNG
+identity, clinical validity and mixed-license distribution remain separate claims.
