@@ -1,5 +1,6 @@
 """Bounded continuous-chain UAROET inference with per-chain utility precision."""
 
+from collections.abc import Callable
 from dataclasses import dataclass
 
 import numpy as np
@@ -9,7 +10,7 @@ from ._cdflib import _freeze
 from ._validation import FloatArray
 from .uaroet import _integer, _real_matrix, uaroet_parameter_names
 from .uaroet_desktop_study import UAROETDesktopStudy
-from .uaroet_fit import _positive_mask, _summarize_uaroet_chains, fit_uaroet
+from .uaroet_fit import UAROETFit, _positive_mask, _summarize_uaroet_chains, fit_uaroet
 
 
 @dataclass(frozen=True)
@@ -57,6 +58,7 @@ def fit_uaroet_desktop(
     max_evaluations: int = 2_000_000,
     initial_parameters: ArrayLike | None = None,
     initial_association: ArrayLike | None = None,
+    on_chunk: Callable[[int, int, UAROETFit], None] | None = None,
 ) -> UAROETPrecisionFit:
     """Continue each posterior chain until its monitored utility ratios pass.
 
@@ -67,11 +69,16 @@ def fit_uaroet_desktop(
     False and must not drive a precision-qualified recommendation. Work-budget
     exhaustion raises from the sampler. Native RNG and exact batch partition
     equivalence are not claimed. Between-chain R-hat is reported separately.
+    Optional on_chunk(chain_index, first_draw_index, fit) receives read-only
+    chunks for streaming distributions; indices are zero-based. Callback errors
+    propagate, and partial output must not be treated as an accepted fit.
     """
     if not isinstance(study, UAROETDesktopStudy) or not isinstance(rng, np.random.Generator):
         raise ValueError("require a UAROETDesktopStudy and explicit NumPy Generator")
     if not isinstance(conduct, (bool, np.bool_)):
         raise ValueError("conduct must be boolean")
+    if on_chunk is not None and not callable(on_chunk):
+        raise ValueError("on_chunk must be callable")
     settings = study.simulation_parameters
     if "TargetMCSERatio_Sim" in settings and not conduct and target is None:
         raise ValueError("supply target explicitly when TargetMCSERatio_Sim is present")
@@ -165,6 +172,8 @@ def fit_uaroet_desktop(
             )
             states[c] = (fit.parameters[0, -1].copy(), float(fit.association[0, -1]))
             work += fit.work_evaluations
+            if on_chunk is not None:
+                on_chunk(c, n, fit)
             j = fit.joint[0]
             u = np.einsum("ndet,et->nd", j, study.utility)
             utility[c, n : n + take] = u

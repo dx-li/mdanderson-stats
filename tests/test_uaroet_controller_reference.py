@@ -194,6 +194,8 @@ def test_native_saved_history_reconstruction_uses_last_record_newness(case):
         new_open=incomplete and new,
         old_open=incomplete and not new,
         incomplete=incomplete,
+        new_start=0,
+        old_start=0,
     )
 
 

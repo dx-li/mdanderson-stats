@@ -2168,11 +2168,25 @@ from .uaroet import (
     uaroet_parameter_names,
     uaroet_probabilities,
 )
+from .uaroet_calibration import (
+    UAROETCalibration,
+    calibrate_uaroet_prior,
+    uaroet_calibrated_prior_text,
+)
 from .uaroet_decision import UAROETAllocation, uaroet_allocation
+from .uaroet_desktop_conduct import UAROETDesktopDecision, recommend_uaroet_desktop
 from .uaroet_desktop_inference import (
     UAROETPriorESS,
     uaroet_desktop_prior_ess,
     uaroet_marginal_ess,
+)
+from .uaroet_desktop_rules import (
+    UAROETCohortState,
+    UAROETDesktopAssignment,
+    uaroet_desktop_assignment,
+    uaroet_desktop_screen,
+    uaroet_replay_cohorts,
+    uaroet_utility_cutoff,
 )
 from .uaroet_desktop_study import (
     UAROETDesktopCounts,
@@ -2184,6 +2198,11 @@ from .uaroet_desktop_study import (
 )
 from .uaroet_fit import UAROETFit, fit_uaroet
 from .uaroet_precision import UAROETPrecisionFit, fit_uaroet_desktop
+from .uaroet_reports import (
+    UAROETDistributionWriter,
+    uaroet_assignment_csv,
+    uaroet_assignment_report,
+)
 from .uaroet_simulation import (
     UAROETSimulation,
     UAROETTrial,
@@ -3037,7 +3056,21 @@ __all__ = [
     "catbub_thresholds",
     "catbub_operating_characteristics",
     "UAROETAllocation",
+    "UAROETCalibration",
+    "calibrate_uaroet_prior",
+    "uaroet_calibrated_prior_text",
+    "UAROETDesktopDecision",
+    "recommend_uaroet_desktop",
+    "UAROETCohortState",
+    "UAROETDesktopAssignment",
+    "uaroet_desktop_assignment",
+    "uaroet_desktop_screen",
+    "uaroet_replay_cohorts",
+    "uaroet_utility_cutoff",
     "UAROETPriorESS",
+    "UAROETDistributionWriter",
+    "uaroet_assignment_csv",
+    "uaroet_assignment_report",
     "UAROETPrecisionFit",
     "fit_uaroet_desktop",
     "uaroet_desktop_prior_ess",

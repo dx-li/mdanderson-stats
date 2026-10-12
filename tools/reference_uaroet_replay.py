@@ -88,6 +88,8 @@ def replay(doses, first, new, old):
         last=struct.unpack("<i", u.mem_read(obj + 0x1E0, 4))[0],
         new_open=bool(u.mem_read(obj + 0xB8, 1)[0]),
         old_open=bool(u.mem_read(obj + 0xB9, 1)[0]),
+        new_start=struct.unpack("<i", u.mem_read(obj + 0xBC, 4))[0],
+        old_start=struct.unpack("<i", u.mem_read(obj + 0xC0, 4))[0],
         incomplete=bool(u.mem_read(obj + 0xC5, 1)[0]),
     )
 

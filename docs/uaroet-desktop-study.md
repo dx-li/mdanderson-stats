@@ -115,3 +115,39 @@ utility table is handled separately. The default work budget remains2million;
 callers can explicitly raise it up to128million. Retained utilities are bounded
 at20million values and each joint-posterior chunk at2million cells. No desktop
 controller or calibration workflow is implied by this inference API.
+
+`calibrate_uaroet_prior(study, scenario, repetitions=..., rng=...)` implements the
+specified pseudo-sampling workflow:100 generated patients per dose, zero-mean
+SD100 pseudo-priors with positive increments and Uniform(-1,1) association,
+then an average of pseudo-posterior parameter means. Each replicate must satisfy
+per-chain utility precision and the explicit between-chain R-hat gate (default
+1.05). Failure raises without returning a partial prior. A callback can save
+completed replicate diagnostics. Fewer than1000 repetitions are exploratory under
+the guide; the result exposes `meets_guide_replication_minimum`, which is not a
+clinical-validation flag. `result.apply(study)` preserves the chosen prior SDs.
+`uaroet_calibrated_prior_text(result)` exports the native threshold-major ordering
+and stored association mean; the association prior remains uniform.
+
+`recommend_uaroet_desktop` combines saved patients, inference and the current
+controller. Its default `safe` profile applies posterior toxicity/futility checks
+without requiring observed bad events, never restores a toxic lowest dose,
+corrects old-cohort length and zero-width cutoff schedules, and keeps first ties.
+The explicit `legacy_1_8` profile retains the recovered event gates, toxic-lowest
+fallback, initial-cohort bypass, old-cohort closure bug, saved-history counters,
+and distinct hybrid/final tie rules. This profile is for compatibility research.
+Both profiles return a computational `hold` when precision is insufficient or
+multiple chains fail the explicit R-hat gate. These policies do not establish
+clinical validity. Final selection requires assigned patients and chooses the
+highest-mean eligible dose; request `final=True` once maximum accrual is reached.
+
+A decision retains its exact immutable input study. `uaroet_assignment_report`
+produces versioned JSON with input provenance, disjoint patient counts, decision
+and inference diagnostics; `uaroet_assignment_csv` provides the dose summary.
+Reports distinguish unevaluated posterior quantities and unavailable diagnostics.
+`UAROETDistributionWriter(stream, study)` can be passed as `on_chunk` to inference
+or conduct to stream all marginal categories and utilities. Call its
+`validate_complete(chains=..., draws_per_chain=...)` after the fit. Output from an
+interrupted fit is diagnostic only. CSV chain/draw/dose indices are1-based;
+Python API dose indices remain0-based. These are portable Python output schemas,
+not native report byte identity. Calendar simulation/aggregation integration and
+final workflow acceptance are still pending; the application remains partial.

@@ -350,3 +350,16 @@ files and29 licensing files match, and13 native files match regeneration.
 A one-chain direct-prior case also meets conduct target0.005 at50,000draws
 (maximum ratio0.00435839). See uaroet-precision-validation-2026-10-12.json.
 Next integrate the separately tested calibration and controller prototypes.
+
+Calibration and controller integration is in progress after the accepted precision
+checkpoint.44 calibration tests pass, including100-patient-per-dose orchestration,
+fail-closed precision, and27 native-coordinate export round trips. Controller
+primitives match484 screening,648 hybrid,552 cutoff,45 live-cohort and1092 replay
+references. A new native replay probe shows both start counters remain zero in
+fresh native state; the existing fixture now records these fields. The safe
+profile fixes that replay behavior, old-cohort closure and cutoff collapse,
+and never restores a toxic lowest dose.10 saved-conduct tests and4 streamed-report
+tests pass. A pre-integration dense correlated calibration pilot met0.03 after
+16,000draws/chain, maximum R-hat1.00045; an exact production rerun is underway.
+This is one exploratory replicate, not the guide's1000-replicate final design.
+No status promotion or final-code full-suite claim for these new components yet.
