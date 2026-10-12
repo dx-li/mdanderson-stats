@@ -166,6 +166,8 @@ class VM:
                 s.append(-1 if o.endswith("m1") else v if o.endswith("s") else int(o[-1]))
             elif o in ("ldc.r8", "ldc.i4"):
                 s.append(v)
+            elif o == "starg.s":
+                args[v.index] = s.pop()
             elif o.startswith("ldarg."):
                 s.append(args[v.index if o.endswith("s") else int(o[-1])])
             elif o.startswith("ldloca"):
@@ -232,8 +234,16 @@ class VM:
                 t = v.value >> 24
                 i = v.value & 0xFFFFFF
                 if t == 10:
-                    assert str(self.pe.net.mdtables.MemberRef.rows[i - 1].Name) == "Abs"
-                    s.append(abs(s.pop()))
+                    name = str(self.pe.net.mdtables.MemberRef.rows[i - 1].Name)
+                    if name == "Pow":
+                        exponent, base = s.pop(), s.pop()
+                        s.append(math.pow(base, exponent))
+                    elif name == "Log":
+                        s.append(math.log(s.pop()))
+                    elif name == "Abs":
+                        s.append(abs(s.pop()))
+                    else:
+                        raise ValueError(f"unsupported runtime math service: {name}")
                     continue
                 row = self.pe.net.mdtables.MethodDef.rows[i - 1]
                 sig = row.Signature.value

@@ -1,0 +1,85 @@
+{
+  "scope": "Completed declared desktop CRM81/132 and ToxFinder14 Python workflows; separate EffTox source checkpoint only",
+  "catalog": {
+    "implemented": 97,
+    "partial": 35,
+    "pending": 6
+  },
+  "full_regression": {
+    "passed": 34696,
+    "seconds": 863.35,
+    "warnings_as_errors": true,
+    "extras": [
+      "plot",
+      "image"
+    ],
+    "log_sha256": "0c09aff9fe82fb622b0bdc7fbeac37239f9de92f0d33959ebaf4c38add16d9d2"
+  },
+  "focused_toxfinder_tests": 97,
+  "installed_wheel": {
+    "family_tests_passed": 327,
+    "plot_image_tests_passed": 31,
+    "total_tests_passed": 358,
+    "environment": "fresh Python3.13.5 environment outside checkout; imported site-packages verified",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "pillow": "12.3.0",
+    "new_exports_verified": 12,
+    "catalog_verified": true
+  },
+  "installed_examples": {
+    "toxfinder_original_scenarios": 5,
+    "trials_per_scenario": 2,
+    "patients_per_trial": 60,
+    "all_final_outcomes_refitted": true,
+    "tmml_roundtrips": true,
+    "calibration_assessment_report": true,
+    "patient_csv_and_recommendation_report": true,
+    "draws": 8,
+    "warmup": 0,
+    "scope": "complete workflow smoke, not clinical or Monte Carlo adequacy validation"
+  },
+  "crm_checkpoint": "research/crm-conduct-validation-2026-10-12.json",
+  "independent_references": {
+    "toxfinder_R_rows": 65,
+    "toxfinder_R_max_difference": 0,
+    "toxfinder_original_x86_sets": 8,
+    "identical_x86_sets": 7,
+    "information_fixture_roundoff_differences": 2,
+    "max_information_absolute_difference": 1.4551915228366852e-10,
+    "max_information_relative_difference_below": 6e-16,
+    "original_Java_summary_and_variance_fixtures_regenerated": true,
+    "efftox_legacy_fitter_cases_unchanged": 15,
+    "efftox_original_Lp_cases": 21,
+    "efftox_Lp_equal_shape_utility_max_difference": 0
+  },
+  "quality": {
+    "ruff": true,
+    "format": true,
+    "mypy_source_files": 711,
+    "build": true,
+    "local_document_links": true,
+    "git_diff_check": true
+  },
+  "artifacts": {
+    "python_json_files_byte_identical": 715,
+    "retained_notices_byte_identical": true,
+    "original_binaries_raw_excluded": true,
+    "artifacts": {
+      "dist/mdanderson_stats-0.1.0-py3-none-any.whl": "ce07cbf1bd58906d97841304326faedb867a6759ca6657465687d572dd79b960",
+      "dist/mdanderson_stats-0.1.0.tar.gz": "0dc0158c582241418c969e566ea8098c966213ff2d8806fc2f3bc75db38b2932"
+    }
+  },
+  "constraints_preserved": [
+    "No merge, release, deployment, author contact or settings change",
+    "No reset or force push",
+    "Mixed-license notices unchanged; no packaging split",
+    "Earlier PR Forbidden remains unresolved; no bypass",
+    "Six unavailable fitted-model contracts not approximated",
+    "Native RNG/GUI identity and clinical validity are separate claims"
+  ],
+  "next_work": "research/efftox-current-workflow-contracts-2026-10-12.md",
+  "task_url": "Not exposed by the execution environment",
+  "production_manifest_sha256": "277d397051b2499c475b9e9e33f40c86945f57cfe96a5cfcff5e18a518d15775"
+}

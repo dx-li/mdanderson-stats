@@ -54,5 +54,5 @@ identity, and the original binaries remain excluded from distributed artifacts.
 Clinical validity and distribution licensing are separate, unchanged matters.
 
 Final full-suite, installed-wheel and artifact evidence is recorded in the
-completion validation manifest. Status promotion is based on the declared
+[completion validation manifest](native-workflows-validation-2026-10-12.json). Status promotion is based on the declared
 scientific/user workflows, not GUI appearance or native random bitstreams.

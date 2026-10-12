@@ -1,7 +1,8 @@
 # Community completion continuation — October 12, 2026
 
 Latest workflow scope: ARAND62, desktop CRM81/132 and ToxFinder14 now meet their
-declared Python workflows. The final ToxFinder status checkpoint is being validated.
+declared Python workflows. The final status checkpoint passed34,696 full tests
+and358 installed-wheel tests; see the native-workflows validation manifest below.
 See the final ARAND section below and the [next native contracts](next-native-completion-contracts-2026-10-12.md). Earlier dated sections retain historical counts and evidence.
 
 ## Recovered checkout and scope
@@ -339,3 +340,26 @@ The catalog remains94/38/6 at this preservation checkpoint; promotion is separat
 from code recovery. Next is the already source-recovered ToxFinder saved-prior/
 patient/report journey, then the application scope/status checkpoint. Native RNG
 identity, clinical validity and mixed-license distribution remain separate claims.
+
+
+## Completed CRM/ToxFinder scope checkpoint
+
+Desktop entries81/132 and ToxFinder14 are implemented under their explicit Python
+profiles. Current catalog: **97 implemented /35 partial /6 pending**. This is not
+a claim that all138 workflows or an unrestricted community distribution are done.
+
+Final statistical/application code passed **34,696 tests in863.35 seconds** with
+warnings as errors and plot/image extras. A fresh outside-checkout wheel passed
+**327 CRM/ToxFinder tests plus31 plot/image tests**. All five original ToxFinder
+scenarios completed two60-patient trials each, with final refit, prior assessment,
+report, TMML and patient CSV/recommendation checks. Tiny sampler counts are workflow
+smoke evidence only. Earlier CRM validation covered all six installer studies.
+Original Java, original x86, independent R, artifact/notices and export checks are
+recorded in [final validation](native-workflows-validation-2026-10-12.json).
+
+The next EffTox source pass recovered current Lp shape/utility execution and the
+nonstandard patient outcome ordering. It does not promote EffTox. Its exact next
+contracts are in [current workflow recovery](efftox-current-workflow-contracts-2026-10-12.md).
+Other partial applications retain their own per-entry contracts. The six fitted
+models still need exact unavailable artifacts; no approximate substitution,
+license change, PR bypass, merge, release, deployment or author contact occurred.
