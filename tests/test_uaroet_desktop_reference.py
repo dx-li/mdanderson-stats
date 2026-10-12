@@ -130,3 +130,34 @@ def test_native_hybrid_randomization_contract(case):
         selected = next(i for i in eligible if x["value"] <= weights.cumsum()[i])
     np.testing.assert_allclose(case["result"]["weights"], weights, atol=2e-15)
     assert case["result"]["selected"] == selected
+
+
+JOINT = json.loads((Path(__file__).parent / "fixtures/uaroet-desktop-joint.json").read_text())
+
+
+@pytest.mark.parametrize("case", JOINT["cases"])
+def test_native_gaussian_joint_with_explicit_legacy_numerical_tolerance(case):
+    d, e, t = case["doses"], case["efficacy_levels"], case["toxicity_levels"]
+    native = np.array(case["parameters"][:30]).reshape(2, 3, 5)
+    values = np.r_[
+        native[0, : e - 1, :d].ravel(), native[1, : t - 1, :d].ravel(), case["parameters"][-1]
+    ]
+    parameters, rho = uaroet_desktop_prior_coordinates(
+        values, dose_count=d, efficacy_levels=e, toxicity_levels=t
+    )
+    logits = uaroet_logits(parameters, dose_count=d, efficacy_levels=e, toxicity_levels=t)
+    model = uaroet_probabilities(*logits, association=rho)
+    # Native normal approximations fail marginal preservation at about 1e-6.
+    # Python keeps the more accurate mathematical model; no bitwise parity claim.
+    np.testing.assert_allclose(model.joint, case["joint"], atol=2e-6, rtol=0)
+    np.testing.assert_allclose(model.joint.sum(-1), model.efficacy, atol=2e-12, rtol=0)
+    np.testing.assert_allclose(model.joint.sum(-2), model.toxicity, atol=2e-12, rtol=0)
+
+
+@pytest.mark.parametrize("case", JOINT["normal_quantiles"])
+def test_native_normal_quantile_approximation_is_not_used_as_scientific_default(case):
+    from scipy.special import ndtri
+
+    assert abs(case["value"] - ndtri(case["probability"])) < 2e-6
+    if case["probability"] in (0.01, 0.99):
+        assert abs(case["value"] - ndtri(case["probability"])) > 1e-6

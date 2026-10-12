@@ -1,0 +1,20 @@
+{
+  "scope": "two baseline logistic-normal prior information checks",
+  "draws": 100000,
+  "seed": 1002,
+  "checks": [
+    {
+      "endpoint": "efficacy",
+      "reference": 9.017039256732524,
+      "python": 9.043877678947386,
+      "relative_error": 0.00297641181885977
+    },
+    {
+      "endpoint": "toxicity",
+      "reference": 10.5342530822056,
+      "python": 10.48331029136669,
+      "relative_error": 0.004835918640018422
+    }
+  ],
+  "clinical_validation": false
+}

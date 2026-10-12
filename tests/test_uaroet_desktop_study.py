@@ -218,3 +218,17 @@ def test_study_count_bookkeeping_matches_original_instructions(bundle, case):
         assert not getattr(actual, field).flags.writeable
     assert actual.highest_assigned == expected["highest_assigned"]
     assert actual.legacy_highest_allowed == expected["highest_allowed"]
+
+
+def test_both_native_distribution_spellings_canonicalize_identically(bundle):
+    bundle["UAROET_SimulationParams.txt"] += "\nDistributionSave 1"
+    a = read_uaroet_desktop_bundle(bundle)
+    bundle["UAROET_SimulationParams.txt"] = bundle["UAROET_SimulationParams.txt"].replace(
+        "DistributionSave 1", "DistributionSaveOption 1"
+    )
+    b = read_uaroet_desktop_bundle(bundle)
+    assert a.to_json() == b.to_json()
+    assert a.simulation_parameters["DistributionSaveOption"] == 1
+    bundle["UAROET_SimulationParams.txt"] += "\nDistributionSave 1"
+    with pytest.raises(ValueError, match="duplicate distribution"):
+        read_uaroet_desktop_bundle(bundle)

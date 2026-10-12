@@ -1,0 +1,82 @@
+{
+  "schema": "mdanderson-stats.uaroet-study",
+  "version": 1,
+  "dose_count": 2,
+  "efficacy_levels": 2,
+  "toxicity_levels": 2,
+  "prior_mean": [
+    0.0,
+    0.3,
+    -1.0,
+    0.3
+  ],
+  "prior_sd": [
+    0.7,
+    0.4,
+    0.7,
+    0.4
+  ],
+  "utility": [
+    [
+      30.0,
+      0.0
+    ],
+    [
+      100.0,
+      50.0
+    ]
+  ],
+  "trial_parameters": {
+    "NumPatients": 30.0,
+    "CohortSize_First": 3.0,
+    "CohortSize_NewDose": 1.0,
+    "CohortSize_OldDose": 1.0,
+    "DoseStart": 1.0,
+    "LowestUnacceptableToxLevel": 1.0,
+    "MaxProbTox": 0.2,
+    "UpperAcceptablePiToxCutoff": 0.8,
+    "LowestAcceptableEffLevel": 1.0,
+    "MinProbEff": 0.2,
+    "UpperAcceptablePiEffCutoff": 1.0,
+    "MinProbUtilityIsHighest": 0.1,
+    "MinUtilityGoodSet": 50.0,
+    "UseHybridGreedyArandAssignment": 1.0,
+    "NumPatientSurplusBeforeRandomize": 1.0,
+    "RandomizeByMeanUtility": 1.0,
+    "InitialUtilityCutoffToRandomize": 100.0,
+    "FinalUtilityCutoffToRandomize": 0.0,
+    "NumTimesToShrinkUtilityCutoff": 10.0,
+    "MinDaysToEfficacy": 1.0,
+    "MaxDaysToEfficacy": 42.0,
+    "MinDaysToToxicity": 1.0,
+    "MaxDaysToToxicity": 42.0,
+    "MeanDaysBetweenArrivals": 45.0
+  },
+  "simulation_parameters": {
+    "NumChains": 4.0,
+    "BurnInSamples": 1000.0
+  },
+  "scenarios": [],
+  "patients": [
+    [
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      2,
+      1,
+      -1,
+      1
+    ],
+    [
+      3,
+      1,
+      1,
+      -1
+    ]
+  ],
+  "input_notes": [],
+  "native_association_mean": 0.0
+}

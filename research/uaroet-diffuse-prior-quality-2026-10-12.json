@@ -1,0 +1,14 @@
+{
+  "scope": "one-dose binary diffuse-prior posterior, fixed independence",
+  "reference_mean": 0.5000000000000002,
+  "reference_variance": 0.0024752376238021956,
+  "posterior_mean": 0.49966905944552925,
+  "posterior_variance": 0.0023863751899066963,
+  "probability_mcse": 0.0009108578301867319,
+  "probability_split_rhat": 1.0008402589096432,
+  "maximum_parameter_rhat": 1.0008528014454288,
+  "draws": 2000,
+  "chains": 4,
+  "warmup": 500,
+  "clinical_validation": false
+}

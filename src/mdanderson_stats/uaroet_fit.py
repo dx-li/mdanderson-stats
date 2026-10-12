@@ -6,6 +6,7 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 from ._cdflib import _freeze
+from ._uaroet_bounds import _likelihood_upper_bound
 from ._validation import FloatArray
 from .hierarchical_binomial import ChainSummary, summarize_chains
 from .u2oet_prior import _positive_normal
@@ -99,6 +100,8 @@ def fit_uaroet(
     prior_mean: ArrayLike,
     prior_sd: ArrayLike,
     toxicity_only_counts: ArrayLike | None = None,
+    initial_parameters: ArrayLike | None = None,
+    initial_association: float | None = None,
     monotone_efficacy: bool = True,
     monotone_toxicity: bool = True,
     association: float | None = None,
@@ -120,6 +123,13 @@ def fit_uaroet(
     normal coordinates are untruncated. If association is omitted, rho has
     the Uniform(-1,1) prior and an independent-uniform Metropolis update. With
     no observations, exact independent prior draws replace MCMC burn-in.
+
+    Optional initial_parameters is one parameter vector or a chain-by-parameter
+    matrix; initial_association starts an inferred correlation at a supplied
+    interior value. These affect initialization only, not the prior/model.
+    Analytic likelihood upper bounds can reject extreme proposals without
+    evaluating unrepresentable cells. Every accepted state still uses the
+    actual Gaussian-copula likelihood; unexplained numerical failures propagate.
     """
     if not isinstance(rng, np.random.Generator):
         raise ValueError("rng must be an explicit NumPy Generator")
@@ -174,6 +184,30 @@ def fit_uaroet(
     if retained_cells > _MAX_RETAINED:
         raise ValueError("retained joint posterior exceeds 2 million cells")
     direct = not bool(np.any(observed) or np.any(partial))
+    starts: FloatArray | None = None
+    if initial_parameters is not None:
+        starts = _real_matrix(initial_parameters, "initial_parameters")
+        if starts.shape == (len(names),):
+            starts = np.broadcast_to(starts, (chain_count, len(names))).copy()
+        if starts.shape != (chain_count, len(names)) or np.any(starts[:, positive] < 0):
+            raise ValueError(
+                "initial_parameters must match chains/coordinates and increment support"
+            )
+    start_rho: float | None = None
+    if initial_association is not None:
+        rho_start = np.asarray(initial_association)
+        if (
+            rho_start.ndim != 0
+            or rho_start.dtype.kind not in "iuf"
+            or not np.isfinite(rho_start)
+            or not -1 < float(rho_start) < 1
+        ):
+            raise ValueError("initial_association must lie strictly inside (-1,1)")
+        if fixed_rho is not None:
+            raise ValueError("initial_association applies only to an inferred correlation")
+        start_rho = float(rho_start)
+    if direct and (starts is not None or start_rho is not None):
+        raise ValueError("initial values are only meaningful with observed data")
     minimum_likelihood_calls = chain_count * (
         draw_count
         if direct
@@ -191,7 +225,9 @@ def fit_uaroet(
     budget = [0, 0]
     likelihood_calls = 0
 
-    def evaluate(theta: FloatArray, rho: float) -> tuple[float, FloatArray]:
+    def evaluate(
+        theta: FloatArray, rho: float, rejection_threshold: float | None = None
+    ) -> tuple[float, FloatArray | None]:
         nonlocal likelihood_calls
         if budget[0] >= evaluation_limit:
             raise RuntimeError("UAROET likelihood/rectangle work exceeded max_evaluations")
@@ -207,6 +243,11 @@ def fit_uaroet(
         )
         log_e = _marginal_log_probabilities(e_theta)
         log_t = _marginal_log_probabilities(t_theta)
+        if (
+            rejection_threshold is not None
+            and _likelihood_upper_bound(log_e, log_t, observed, partial) < rejection_threshold
+        ):
+            return -np.inf, None
         with np.errstate(under="ignore"):
             e, t = np.exp(log_e), np.exp(log_t)
         e_sums, t_sums = e.sum(axis=1, keepdims=True), t.sum(axis=1, keepdims=True)
@@ -223,6 +264,12 @@ def fit_uaroet(
         observed_mask = observed > 0
         missing = observed_mask & ~np.isfinite(log_joint)
         if np.any(missing):
+            if (
+                rejection_threshold is not None
+                and _likelihood_upper_bound(log_e, log_t, observed, partial, rho)
+                < rejection_threshold
+            ):
+                return -np.inf, None
             if abs(rho) < 1:
                 raise ArithmeticError(
                     "an observed UAROET outcome has unrepresentable Gaussian-copula probability"
@@ -251,17 +298,25 @@ def fit_uaroet(
                 rho_draws[chain] = rho_for_shape
             for draw in range(draw_count):
                 likelihood, joint = evaluate(parameter_draws[chain, draw], rho_draws[chain, draw])
+                assert joint is not None
                 joint_draws[chain, draw] = joint
                 likelihood_draws[chain, draw] = likelihood
             continue
 
-        state = _draw_prior(mean, sd, positive, 1, rng)[0]
-        rho = float(fixed_rho) if fixed_rho is not None else float(2 * rng.random() - 1)
+        state = (
+            _draw_prior(mean, sd, positive, 1, rng)[0] if starts is None else starts[chain].copy()
+        )
+        rho = (
+            float(fixed_rho)
+            if fixed_rho is not None
+            else (start_rho if start_rho is not None else float(2 * rng.random() - 1))
+        )
         while abs(rho) == 1:
             rho = float(2 * rng.random() - 1)
         likelihood, joint = evaluate(state, rho)
         if not np.isfinite(likelihood):
             raise ArithmeticError("prior initialization has zero likelihood")
+        assert joint is not None
         accepted_rho = 0
         total_iterations = warmup_count + draw_count
         for iteration in range(total_iterations):
@@ -275,11 +330,12 @@ def fit_uaroet(
                 if np.any(proposal[positive] < 0):
                     proposal_likelihood = -np.inf
                 else:
-                    proposal_likelihood, proposal_joint = evaluate(proposal, rho)
+                    proposal_likelihood, proposal_joint = evaluate(proposal, rho, float(height))
                 if proposal_likelihood >= height:
                     state = proposal
                     likelihood = proposal_likelihood
                     if not np.any(proposal[positive] < 0):
+                        assert proposal_joint is not None
                         joint = proposal_joint
                     break
                 if angle < 0:
@@ -294,8 +350,10 @@ def fit_uaroet(
                 proposal_rho = float(2 * rng.random() - 1)
                 while abs(proposal_rho) == 1:
                     proposal_rho = float(2 * rng.random() - 1)
-                proposal_likelihood, proposal_joint = evaluate(state, proposal_rho)
-                if np.log1p(-rng.random()) < proposal_likelihood - likelihood:
+                threshold = float(likelihood + np.log1p(-rng.random()))
+                proposal_likelihood, proposal_joint = evaluate(state, proposal_rho, threshold)
+                if threshold < proposal_likelihood:
+                    assert proposal_joint is not None
                     rho, likelihood, joint = proposal_rho, proposal_likelihood, proposal_joint
                     if iteration >= warmup_count:
                         accepted_rho += 1
@@ -303,6 +361,7 @@ def fit_uaroet(
                 draw = iteration - warmup_count
                 parameter_draws[chain, draw] = state
                 rho_draws[chain, draw] = rho
+                assert joint is not None
                 joint_draws[chain, draw] = joint
                 likelihood_draws[chain, draw] = likelihood
         acceptance[chain] = accepted_rho / draw_count

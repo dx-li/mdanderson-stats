@@ -2169,6 +2169,11 @@ from .uaroet import (
     uaroet_probabilities,
 )
 from .uaroet_decision import UAROETAllocation, uaroet_allocation
+from .uaroet_desktop_inference import (
+    UAROETPriorESS,
+    uaroet_desktop_prior_ess,
+    uaroet_marginal_ess,
+)
 from .uaroet_desktop_study import (
     UAROETDesktopCounts,
     UAROETDesktopScenario,
@@ -3031,6 +3036,9 @@ __all__ = [
     "catbub_thresholds",
     "catbub_operating_characteristics",
     "UAROETAllocation",
+    "UAROETPriorESS",
+    "uaroet_desktop_prior_ess",
+    "uaroet_marginal_ess",
     "UAROETDesktopCounts",
     "UAROETDesktopScenario",
     "UAROETDesktopStudy",

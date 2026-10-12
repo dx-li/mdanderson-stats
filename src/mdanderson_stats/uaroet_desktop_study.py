@@ -161,6 +161,14 @@ class UAROETDesktopStudy:
         D = _integer(self.dose_count, "dose_count", 2, 5)
         E = _integer(self.efficacy_levels, "efficacy_levels", 2, 4)
         T = _integer(self.toxicity_levels, "toxicity_levels", 2, 4)
+        if not isinstance(self.simulation_parameters, Mapping):
+            raise ValueError("simulation settings must be a mapping")
+        simulation = dict(self.simulation_parameters)
+        if "DistributionSave" in simulation:
+            if "DistributionSaveOption" in simulation:
+                raise ValueError("duplicate distribution-save setting")
+            simulation["DistributionSaveOption"] = simulation.pop("DistributionSave")
+        object.__setattr__(self, "simulation_parameters", simulation)
         _validate_settings(self.trial_parameters, self.simulation_parameters, D, E, T)
         try:
             object.__setattr__(self, "scenarios", tuple(self.scenarios))
@@ -498,7 +506,6 @@ def read_uaroet_desktop_bundle(
             )
         trial[canonical] = trial.pop(alias)
     simulation = _keywords(required("UAROET_SimulationParams.txt"))
-    _validate_settings(trial, simulation, D, E, T)
     scenarios = []
     for name, text in sorted(files.items()):
         match = re.fullmatch(r"UAROET_Scenario_(\d+)\.txt", name)

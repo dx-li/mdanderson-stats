@@ -206,3 +206,28 @@ bound and invalid inputs are rejected before random draws. The source screening,
 cohort, hybrid-randomization, parser and prior-ESS contracts are recovered but
 remain separate from a completed current-desktop workflow. See the
 [continuation evidence](../research/uaroet-current-recovery-2026-10-12.md).
+
+## Diffuse-prior initialization
+
+`fit_uaroet` accepts optional `initial_parameters` (one vector or a
+chain-by-parameter matrix) and `initial_association` (an interior starting value
+for an inferred correlation). They change starting values, not the prior or
+posterior model. In particular, `initial_association=0` starts correlation sampling
+at zero; `association=0` fixes correlation at zero throughout the fit. Starting
+values are validated before random draws and are rejected for a no-data direct
+prior calculation, where they have no meaning.
+
+This supports diffuse pseudo-priors without requiring a random prior draw to be
+a usable posterior starting point. It does not replace burn-in or convergence
+checks, nor does it complete the pseudo-trial calibration workflow by itself.
+
+Extreme rejected proposals need not have every joint cell numerically evaluated.
+A joint-cell probability cannot exceed either marginal. Additionally, a Gaussian
+rectangle is contained in each halfspace formed by `±X ±Y` and its matching
+corner sum; those sums have variance `2*(1 ± rho)`. These give analytic upper
+bounds on a proposal's likelihood. If the bound is already below the sampled
+slice/Metropolis threshold, the proposal is rejected. A small positive numerical
+margin makes this comparison conservative for ordinary rounding; this is not
+interval-certified arithmetic. Every accepted state uses the actual copula
+likelihood. A numerical failure that cannot be resolved by the bound still fails
+explicitly. No arbitrary small probability is inserted into an observed cell.

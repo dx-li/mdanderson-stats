@@ -244,3 +244,48 @@ plot/image), plus both examples. Ruff, formatting of2,656 files, mypy751 source
 files, build,755 packaged-source byte matches and29 retained notice files pass.
 All11 native reference files regenerate byte-identically. See the saved-study
 validation manifest for exact artifact hashes. Status remains101/31/6.
+
+## Prior ESS integration and joint-law reference
+
+The guide's DistributionSave alias is now canonicalized without a repair flag;
+both spellings execute the same native parser assignment. Duplicate alias/canonical
+keys fail. Prior ESS now samples explicit prior coordinates and applies the
+verified active-marginal reduction, independently of observations. Forty-five
+focused tests include all36 native reductions, invalid/degenerate inputs and
+independent logistic-normal quadrature. The100,000-draw baseline checks give
+relative errors0.0029764 (efficacy) and0.0048359 (toxicity); see the quality JSON.
+This closes prior ESS, not pseudo-trial prior calibration or sampling precision.
+
+New `reference_uaroet_joint.py` executes native2d450 Gaussian quadrature-table
+initialization,3c150 marginal construction,36f00/39960 copula values,84ea0/85110
+normal quantiles,2cce0 Gaussian quadrature, and37130 joint-cell differencing.
+Only CRT exp/log/asin/sin/sqrt and stack-cookie handling are supplied. There are
+324 joint cases across dose/category grids and six associations, plus seven
+normal-quantile probes. Native normal approximations leave joint-cell differences
+up to1.6820539787687494e-6 and marginal discrepancies up to1.2137726460581533e-6
+on this tested grid. At probability.01 its quantile differs from the high-accuracy
+value by-1.4197663689152762e-6. Tests use an explicit2e-6 absolute native comparison
+and separate2e-12 mathematical marginal checks. This is not a universal error
+bound or bitwise identity. Python does not adopt the lower-accuracy approximation.
+
+Calibration preflight exposed a remaining numerical issue: zero-mean SD100
+pseudo-priors can initialize correlated models with unrepresentable observed-cell
+probabilities. Two of three short seeded two-dose checks fail explicitly; the
+one completing run has poor short-chain diagnostics. Before exposing calibration,
+add data-informed initialization and rigorously bounded proposal rejection,
+then test posterior accuracy and precision. Do not mask these failures or silently
+replace the Gaussian law with independence.
+
+Diffuse-prior fitting now accepts explicit parameter/correlation starts and
+rejects numerically extreme proposals using analytic likelihood upper bounds
+from marginal probabilities and Gaussian rectangle-containing halfspaces. Every
+accepted state retains the actual likelihood; unexplained failures still raise.
+Three previously fragile seeded pseudo-prior cases run from compatible starts,
+without claiming precision from their short chains. A bounded-versus-unbounded
+seeded-chain test gives identical retained parameters, correlations and log
+likelihoods;335 focused tests also check the bounds over the native joint grid
+and invalid-start rejection before RNG advancement. Independent scalar integration
+for a one-dose SD100 posterior gives mean0.5 versus0.49966905944552925, reference
+variance0.0024752376238021956 versus0.0023863751899066963, MCSE0.0009108578301867319,
+and split R-hat1.0008402589096432. This is a fixed-independence reference case,
+not a claim of higher-dimensional calibration or per-chain precision acceptance.

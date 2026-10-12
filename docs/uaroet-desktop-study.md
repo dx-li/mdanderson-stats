@@ -71,3 +71,25 @@ importing a file or running a fixed short chain**. Remaining current-version sco
 includes prior calibration/ESS, precision-controlled inference, safe and explicit
 legacy controllers, as-of conduct, calendars, simulation aggregation and reports.
 See [recovery evidence](../research/uaroet-current-recovery-2026-10-12.md).
+
+## Prior effective sample size
+
+`uaroet_desktop_prior_ess(study, draws=10000, rng=rng)` draws the documented
+independent normal/truncated-normal prior coordinates and matches each ordinal
+marginal's mean and sample variance to beta shapes. It reports per-category
+information plus efficacy, toxicity and combined means, minimum and maximum.
+The calculation ignores patient observations. Association does not change these
+marginals, so no copula integration is needed. This is prior-information ESS,
+not MCMC sampling efficiency or prior calibration from elicited scenarios.
+
+`uaroet_marginal_ess(efficacy, toxicity)` applies the same reduction to supplied
+sample-by-dose-by-category probability draws. Zero-variance marginals have no
+finite beta moment match and are rejected. Negative finite-sample estimates are
+reported unchanged; they are not valid positive beta-prior information measures.
+Thirty-six original reduction cases and an independent logistic-normal integral
+check support these calculations.
+
+Both native-recognized distribution keywords, `DistributionSave` and
+`DistributionSaveOption`, now canonicalize to the latter. Supplying both is an
+error; no preference is silently chosen. Capturing an export setting still does
+not imply that the complete desktop export workflow is implemented.
