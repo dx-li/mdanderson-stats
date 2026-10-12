@@ -66,9 +66,10 @@ class WFMMStudy:
 
     The JSON schema is not a native MAT-file format. Initializer quality holds
     stop execution before MCMC; there is no automatic compatibility fallback.
-    Predictions here are fixed-effect population curves, optionally with new
-    residual noise. Existing/new random-level prediction remains available via
-    the returned coefficient fit and wfmm_predict_coefficients.
+    Predictions combine fixed effects, retained existing random levels, optional
+    new random levels and optional residual noise. Effect contrasts apply only
+    to fixed-effect summaries; time contrasts also apply to random/predictive
+    summaries. Covariance functions retain the original time grid.
     """
 
     curves: ArrayLike
@@ -102,6 +103,16 @@ class WFMMStudy:
     prediction_residual: bool = False
     prediction_strata: ArrayLike | None = None
     boundary: str = "periodic"
+    summarize_random_effects: bool = False
+    include_covariance: bool = False
+    effect_contrast: ArrayLike | None = None
+    time_contrast: ArrayLike | None = None
+    confidence: float = 0.95
+    quantiles: ArrayLike = (0.025, 0.5, 0.975)
+    effect_sizes: ArrayLike = (0.0,)
+    prediction_existing_random_design: ArrayLike | None = None
+    prediction_new_random_design: ArrayLike | None = None
+    prediction_new_random_strata: ArrayLike | None = None
 
     def __post_init__(self):
         y = _matrix(self.curves, "curves")
@@ -195,16 +206,94 @@ class WFMMStudy:
             ):
                 raise ValueError(f"invalid {name}")
             object.__setattr__(self, name, float(raw))
+        if type(self.include_covariance) is not bool:
+            raise ValueError("include_covariance must be boolean")
+        if type(self.summarize_random_effects) is not bool:
+            raise ValueError("summarize_random_effects must be boolean")
+        if self.summarize_random_effects and (z is None or z.shape[1] > 128):
+            raise ValueError("random-effect summaries require 1..128 fitted levels")
+        if self.effect_contrast is not None:
+            contrast = _matrix(self.effect_contrast, "effect_contrast", columns=x.shape[1])
+            if contrast.shape[0] > 128:
+                raise ValueError("effect_contrast exceeds 128 output effects")
+            object.__setattr__(self, "effect_contrast", contrast)
+        if self.time_contrast is not None:
+            contrast = _matrix(self.time_contrast, "time_contrast", rows=t)
+            if contrast.shape[1] > t:
+                raise ValueError("time_contrast cannot expand the time dimension")
+            object.__setattr__(self, "time_contrast", contrast)
+        raw_confidence = np.asarray(self.confidence)
+        if (
+            raw_confidence.ndim != 0
+            or raw_confidence.dtype.kind not in "iuf"
+            or not np.isfinite(raw_confidence)
+            or not 0 < float(raw_confidence) < 1
+        ):
+            raise ValueError("confidence must lie strictly between zero and one")
+        object.__setattr__(self, "confidence", float(raw_confidence))
+        for name in ("quantiles", "effect_sizes"):
+            raw = np.asarray(getattr(self, name))
+            if name == "effect_sizes" and raw.ndim == 0:
+                raw = raw.reshape(1)
+            if (
+                raw.ndim != 1
+                or raw.dtype.kind not in "iuf"
+                or not 1 <= raw.size <= 128
+                or not np.all(np.isfinite(raw))
+            ):
+                raise ValueError(f"{name} must be a bounded finite real vector")
+            if name == "quantiles":
+                if np.any((raw <= 0) | (raw >= 1)) or np.any(np.diff(raw) <= 0):
+                    raise ValueError("quantiles must increase strictly within (0,1)")
+            elif np.any(raw < 0):
+                raise ValueError("effect_sizes must be nonnegative")
+            object.__setattr__(self, name, tuple(float(value) for value in raw))
         if type(self.prediction_residual) is not bool:
             raise ValueError("prediction_residual must be boolean")
         if self.prediction_design is None:
-            if self.prediction_strata is not None or self.prediction_residual:
+            if (
+                self.prediction_strata is not None
+                or self.prediction_residual
+                or self.prediction_existing_random_design is not None
+                or self.prediction_new_random_design is not None
+                or self.prediction_new_random_strata is not None
+            ):
                 raise ValueError("prediction controls require prediction_design")
         else:
             design = _matrix(self.prediction_design, "prediction_design", columns=x.shape[1])
-            if design.shape[0] > 500:
-                raise ValueError("prediction design exceeds 500 rows")
+            if design.shape[0] > 128:
+                raise ValueError("prediction summary exceeds 128 rows")
             object.__setattr__(self, "prediction_design", design)
+            for name in ("prediction_existing_random_design", "prediction_new_random_design"):
+                value = getattr(self, name)
+                if value is not None:
+                    if z is None:
+                        raise ValueError("random prediction requires a fitted random design")
+                    matrix = _matrix(
+                        value,
+                        name,
+                        rows=design.shape[0],
+                        columns=z.shape[1] if name == "prediction_existing_random_design" else None,
+                    )
+                    if matrix.shape[1] > 500:
+                        raise ValueError("random prediction exceeds 500 level columns")
+                    object.__setattr__(self, name, matrix)
+            if self.prediction_new_random_design is not None:
+                new_labels = np.asarray(self.prediction_new_random_strata)
+                count = np.asarray(self.prediction_new_random_design).shape[1]
+                groups = int(np.max(np.asarray(self.random_strata))) + 1
+                if (
+                    new_labels.shape != (count,)
+                    or new_labels.dtype.kind not in "iu"
+                    or np.any(new_labels < 0)
+                    or np.any(new_labels >= groups)
+                ):
+                    raise ValueError("prediction_new_random_strata must index fitted random strata")
+                object.__setattr__(
+                    self, "prediction_new_random_strata", tuple(int(i) for i in new_labels)
+                )
+            elif self.prediction_new_random_strata is not None:
+                raise ValueError("new random strata require a new random design")
             if self.prediction_residual:
                 lab = np.asarray(self.prediction_strata)
                 groups = max(labels) + 1
@@ -248,7 +337,20 @@ def read_wfmm_study(text: str) -> WFMMStudy:
         data = json.loads(text, object_pairs_hook=unique, parse_constant=invalid_constant)
         if isinstance(data, dict):
             # Version 1 studies saved before extended boundaries used periodic defaults.
-            data.setdefault("boundary", "periodic")
+            for name, default in {
+                "boundary": "periodic",
+                "summarize_random_effects": False,
+                "include_covariance": False,
+                "effect_contrast": None,
+                "time_contrast": None,
+                "confidence": 0.95,
+                "quantiles": [0.025, 0.5, 0.975],
+                "effect_sizes": [0.0],
+                "prediction_existing_random_design": None,
+                "prediction_new_random_design": None,
+                "prediction_new_random_strata": None,
+            }.items():
+                data.setdefault(name, default)
         if (
             not isinstance(data, dict)
             or data.pop("schema", None) != "mdanderson_stats.wfmm.study"
@@ -272,6 +374,7 @@ class WFMMStudyResult:
     summary: WFMMPosteriorSummary | None
     covariance: WFMMCovarianceSummary | None
     prediction: WFMMPosteriorSummary | None
+    random_effects: WFMMPosteriorSummary | None = None
 
     def report_json(self) -> str:
         """Save summaries and diagnostics; null diagnostic values are explicitly unavailable."""
@@ -303,7 +406,11 @@ class WFMMStudyResult:
                 variance_proposals=fit.variance_proposals,
                 likelihood_evaluations=fit.likelihood_evaluations,
             )
-            for name, summary in (("curves", self.summary), ("prediction", self.prediction)):
+            for name, summary in (
+                ("curves", self.summary),
+                ("prediction", self.prediction),
+                ("random_effects", self.random_effects),
+            ):
                 if summary is not None:
                     data[name] = dict(
                         mean=summary.mean,
@@ -313,11 +420,22 @@ class WFMMStudyResult:
                         simultaneous_lower=summary.simultaneous_lower,
                         simultaneous_upper=summary.simultaneous_upper,
                         simbas=summary.simbas_probability,
+                        effect_sizes=summary.effect_sizes,
+                        effect_size_probability=summary.effect_size_probability,
+                        sign_tail_score=summary.sign_tail_score,
+                        confidence=summary.confidence,
+                        effect_contrast=summary.effect_contrast,
+                        time_contrast=summary.time_contrast,
                     )
             if self.covariance is not None:
                 data["variance_functions"] = dict(
                     mean=self.covariance.variance_function_mean,
                     sd=self.covariance.variance_function_standard_deviation,
+                    quantiles=self.covariance.variance_function_quantiles,
+                    quantile_probabilities=self.covariance.quantile_probabilities,
+                    coordinate_system="original_time_grid",
+                    covariance_mean=self.covariance.covariance_mean,
+                    correlation_from_mean_variance=self.covariance.correlation_from_mean_variance,
                 )
         text = json.dumps(_json_value(data), sort_keys=True, allow_nan=False) + "\n"
         if len(text.encode()) > _MAX_JSON_BYTES:
@@ -330,7 +448,14 @@ class WFMMStudyResult:
         output = io.StringIO(newline="")
         writer = csv.writer(output, lineterminator="\n")
         writer.writerow(
-            ("effect", "time_index", "mean", "sd", "simultaneous_lower", "simultaneous_upper")
+            (
+                "effect",
+                "region_index" if self.study.time_contrast is not None else "time_index",
+                "mean",
+                "sd",
+                "simultaneous_lower",
+                "simultaneous_upper",
+            )
         )
         for effect, row in enumerate(self.summary.mean):
             for time, value in enumerate(row):
@@ -418,6 +543,8 @@ def run_wfmm_study(study: WFMMStudy) -> WFMMStudyResult:
         * t
         * max(
             np.asarray(study.fixed_design).shape[1],
+            0 if study.effect_contrast is None else np.asarray(study.effect_contrast).shape[0],
+            0 if not study.summarize_random_effects else np.asarray(study.random_design).shape[1],
             initialization.conditional.proposal_sd.shape[0],
             0 if study.prediction_design is None else np.asarray(study.prediction_design).shape[0],
         )
@@ -445,19 +572,60 @@ def run_wfmm_study(study: WFMMStudy) -> WFMMStudyResult:
         sample_random_effects=study.random_design is not None,
         rng=np.random.Generator(np.random.PCG64(seeds[0])),
     )
-    summary = wfmm_summarize(wfmm_restore_coefficients(fit.coefficients, selection), basis)
+    summary = wfmm_summarize(
+        wfmm_restore_coefficients(fit.coefficients, selection),
+        basis,
+        effect_contrast=study.effect_contrast,
+        time_contrast=study.time_contrast,
+        confidence=study.confidence,
+        quantiles=study.quantiles,
+        effect_sizes=study.effect_sizes,
+    )
+    random_summary = None
+    if study.summarize_random_effects and fit.random_effects is not None:
+        random_summary = wfmm_summarize(
+            wfmm_restore_coefficients(fit.random_effects, selection),
+            basis,
+            time_contrast=study.time_contrast,
+            confidence=study.confidence,
+            quantiles=study.quantiles,
+            effect_sizes=study.effect_sizes,
+        )
     variances = np.concatenate((fit.random_variances, fit.residual_variances), axis=2)
-    covariance = wfmm_summarize_covariance(wfmm_restore_coefficients(variances, selection), basis)
+    covariance = wfmm_summarize_covariance(
+        wfmm_restore_coefficients(variances, selection),
+        basis,
+        quantiles=study.quantiles,
+        include_covariance=study.include_covariance,
+    )
     prediction = None
     if study.prediction_design is not None:
         predicted = wfmm_predict_coefficients(
             fit,
             study.prediction_design,
+            existing_random_design=study.prediction_existing_random_design,
+            new_random_design=study.prediction_new_random_design,
+            new_random_strata=study.prediction_new_random_strata,
             include_residual=study.prediction_residual,
             residual_strata=study.prediction_strata,
             rng=np.random.Generator(np.random.PCG64(seeds[1])),
         )
-        prediction = wfmm_summarize(wfmm_restore_coefficients(predicted, selection), basis)
+        prediction = wfmm_summarize(
+            wfmm_restore_coefficients(predicted, selection),
+            basis,
+            time_contrast=study.time_contrast,
+            confidence=study.confidence,
+            quantiles=study.quantiles,
+            effect_sizes=study.effect_sizes,
+        )
     return WFMMStudyResult(
-        study, basis, compression, initialization, fit, summary, covariance, prediction
+        study,
+        basis,
+        compression,
+        initialization,
+        fit,
+        summary,
+        covariance,
+        prediction,
+        random_summary,
     )

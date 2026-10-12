@@ -149,3 +149,37 @@ unchanged. Redundant coefficients use an explicit independent-coefficient
 working model. Source comparisons establish numerical convention agreement,
 not bitwise filter or RNG identity; details and tolerances are in
 [the boundary checkpoint](../research/wfmm-boundary-checkpoint-2026-10-12.md).
+
+## Contrasts, fitted random functions and future curves
+
+Saved studies accept `effect_contrast` (output effects by fitted fixed effects)
+and `time_contrast` (original time points by output regions), using
+`L @ curve @ LT`. Fixed summaries apply both. Random-function and prediction
+summaries apply the time contrast; prediction rows already specify their fixed
+linear combination through `prediction_design`. CSV uses `region_index` when a
+time contrast is present. Reports retain the contrast matrices.
+
+`confidence`, increasing `quantiles` in (0,1), and nonnegative `effect_sizes`
+control curve reports. Quantiles also control covariance-function summaries.
+`include_covariance=True` requests full covariance and plug-in correlation
+matrices on the **original time grid**, subject to existing memory/work bounds.
+`summarize_random_effects=True` reports retained fitted random functions for up
+to 128 fitted levels. Fixed summaries support up to 128 output contrasts, and
+prediction summaries up to 128 rows. Studies fail early on invalid designs or
+stratum labels. Older complete version-1 studies reopen with historical defaults
+for omitted additive reporting controls.
+
+`prediction_existing_random_design` has the same random-level columns as the
+fitted design. `prediction_new_random_design` has one column per new random
+level; rows sharing a column share that random effect. Its
+`prediction_new_random_strata` maps columns to fitted random-variance groups.
+Either design can be supplied, or both. With neither, predictions are population
+fixed-effect curves. `prediction_residual=True` adds independent row-specific
+residual noise using `prediction_strata`. Prediction uses its separate saved RNG
+stream. See [the example](../examples/wfmm_reporting.py).
+
+The manual documents fitted functions and covariance output, not a native
+predicted-curve file interface. These explicit prediction targets follow the
+published model. Python reports keep real-valued standardized deviations,
+empirical-tail SimBaS and linear quantiles; they do not copy the native
+[integer-truncation defect](../research/wfmm-postprocess-audit-2026-10-12.md).

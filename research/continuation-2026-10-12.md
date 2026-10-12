@@ -906,3 +906,15 @@ Boundary acceptance: 76,739 full tests / 428.39s, 607 focused, 635 installed
 wheel tests and three examples passed. Source/test snapshots stayed unchanged.
 See wfmm-boundary-validation-2026-10-12.json. Interrupted earlier acceptance
 was not counted; the final run includes the legacy saved-schema regression.
+
+
+WFMM70 saved studies now compose contrasts, regional summaries, effect
+probabilities, optional fitted-random/full covariance reports and existing/new
+random-level prediction designs. Historical version-1 studies retain defaults.
+76,760 full tests / 368.02s, 628 focused and 656 fresh-wheel checks plus four
+examples passed; see wfmm-reporting-validation-2026-10-12.json. The guide does
+not advertise a native predicted-curve file, so that is not a promotion gate.
+Native quantile/zero-SD defects and an unresolved conditional-U variance
+discrepancy are documented in wfmm-report-edges-audit-2026-10-12.md. Remaining
+advertised families/boundaries/dimensions and hyperparameter contracts keep
+WFMM partial. No changes to notices, permissions or distribution restrictions.
