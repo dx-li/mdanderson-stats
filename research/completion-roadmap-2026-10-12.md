@@ -123,3 +123,10 @@ proper-prior five-model evidence and MAP inference, strict decisions and audited
 reports pass72 focused tests and independent reference integrations. Full-code
 acceptance follows. Original defaults and dynamic platform contracts remain
 explicit gaps. Next resume PRT controller/calendar/simulation/report integration.
+
+PRT69 saved conduct is integrated with explicit paper/native profiles, bounded
+fitting, projection/moment/mixing/precision/chain-stability holds and JSON/CSV
+reports. Native compatibility fixtures now cover18 independently regenerated
+files, including full conduct/output-dispatch defects. Entry69 remains partial.
+Next close generated-calendar and simulation batch/operating-characteristic
+reports; do not reuse conduct rule4 or6.0 as a complete simulation controller.

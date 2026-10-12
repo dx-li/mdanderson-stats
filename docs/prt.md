@@ -282,3 +282,51 @@ dispatch probes, alongside existing projection, predictive, simulation, final
 selection and screening fixtures. These close supplied-input arithmetic and
 branch contracts, not posterior RNG, full desktop file formatting, complete trial
 simulation or clinical validity.
+
+## Saved conduct analysis and reports
+
+`analyze_prt_conduct(study, rng=..., profile="paper_2008")` now connects a
+nonempty saved conduct history to posterior inference, predictive criteria and
+conduct rules. The current dose is the last patient's dose. Use
+`dataclasses.replace` to edit or append immutable `PRTPatient` records, then
+save/reopen with `to_json`/`read_prt_study`. See
+[the executable example](../examples/prt_conduct.py).
+
+The default paper profile projects all conditional-risk draws and integrates
+aligned pending-outcome probabilities. Explicit `legacy_1_0` projects total risk
+only, uses raw marginal patient-risk means and the recovered conduct controller.
+It still uses the independently validated Python posterior sampler; it does not
+claim native random-stream identity. Legacy arithmetic defects never become
+unlabelled defaults. The native simulation screening rules are not added to
+conduct, because these are distinct source workflows.
+
+A `PRTConductResult` exports a versioned JSON report with the saved study, initial
+NumPy RNG state, profile, counts, numerical results, quality thresholds and
+warnings. Its CSV contains one row per dose plus status/action/profile metadata.
+Native PN/PE values for doses other than current and next are blank, because that
+controller does not calculate them. JSON uses null for unavailable diagnostics;
+it never emits NaN or infinity. Failed fits report an unknown evaluation count.
+
+The analysis returns `numerical_hold` with no recommended dose if projection or
+moments are invalid, fitting fails, any monitored R-hat is undefined/above the
+configured limit, estimated risk/exceedance MCSE exceeds its limit, or separate
+chain projections/decisions disagree. Default limits are1.05 and.02. Individual
+chains reestimate covariance, beta moments and predictions, so the agreement
+check includes those nonlinear steps. Native missing-output, out-of-design and
+unspecified-de-escalation branches also hold. A provisional result is diagnostic,
+not a recommendation. A `computed` status means these screening checks passed;
+it is not a convergence, posterior precision or clinical-validity guarantee.
+
+Work is bounded before drawing randomness: eight million estimated array cells,
+one hundred million estimated fit/projection/prediction work units and an explicit
+likelihood-evaluation cap. Inputs rejected at that stage leave RNG state unchanged.
+These limits and checks are Python workflow safeguards, not recovered native rules.
+The legacy profile does not apply invalid moment fallback or endpoint jitter.
+
+The six-patient bundled guide history, using four chains with2,000 retained and
+1,000 warmup draws (seed20261012), illustrates both holds: the paper projection
+reaches approximately-.013319; the legacy pooled result provisionally escalates
+under6.21 but separate chain calculations disagree. Low R-hat alone is insufficient.
+The published and native calculations must not silently substitute for each other.
+Complete native generated-calendar, simulation-batch and operating-characteristic
+report acceptance remain open; catalog69 is still partial.

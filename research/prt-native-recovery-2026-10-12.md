@@ -240,3 +240,28 @@ betaRhat1.00035 and raw-riskRhat1.00050 but paper projection minimum-0.010342.
 No silent clipping or profile substitution is supported by this evidence.
 Saved-conduct execution, quality holds and full calendar/batch/report integration
 remain required before entry69 can be promoted.
+
+## Combined enrollment/calendar traces
+
+The19th native fixture `prt-desktop-enrollment.json` adds18 supplied-delay paths
+(72 trace steps). `reference_prt_enrollment.py` runs original instructions36ab–3f2f
+and4000–4045, skipping only the already separately checked event-delay generation
+and supplying explicit doses/delays. An independent Fraction/integer calendar
+check reproduces every record. First analysis occurs at the **next candidate's**
+arrival after the enrolled cohort, not at its last enrollment. Suspension skips
+that candidate before evaluating at the following arrival. Resumption enrolls
+from the then-current candidate index. Final cohorts shrink3 to1/2 as required.
+The final clock still considers only the last three enrolled patients.
+
+These composed traces also expose x87 timing precision: with arrival7 and delay.1,
+the stored final clock7.1 can compare below the extended-precision sum of the two
+binary64 inputs. That patient remains censored with observed time
+.09999999999999964 at this source boundary. Do not rewrite the comparison as
+binary64 `clock >= arrival + delay` and claim identical native boundary behavior.
+The independent exact-sum check agrees on this fixture grid; it is not a proof
+that unrounded rational addition reproduces every x87 input. Complete simulation
+must declare its arithmetic profile and preserve this boundary caveat.
+
+This evidence composes enrollment and as-of conversion, not posterior/controller
+or whole-trial execution. The saved-conduct implementation and its frozen769-file
+acceptance snapshot do not include a generated native simulation runner yet.

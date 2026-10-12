@@ -1599,6 +1599,7 @@ from .prt import (
     prt_predictive_risk,
 )
 from .prt_calendar import PRTCalendarAnalysis, PRTCalendarResult, run_prt_calendar
+from .prt_conduct import PRTConductResult, analyze_prt_conduct
 from .prt_fit import (
     PRTIsotonicProjection,
     PRTModelFit,
@@ -2308,6 +2309,8 @@ __all__ = [
     "PRTLegacyPredictive",
     "PRTLegacyDecision",
     "PRTLegacyScreening",
+    "PRTConductResult",
+    "analyze_prt_conduct",
     "prt_legacy_projection",
     "prt_legacy_beta_moments",
     "prt_legacy_predictive",
