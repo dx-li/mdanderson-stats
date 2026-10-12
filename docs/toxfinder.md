@@ -144,7 +144,7 @@ recovered from the original executable: expected determinant of observed
 negative-log-posterior Hessians with eigenvalues floored at 0.1. The existing
 paper helper above remains unchanged.
 
-Native prior-solver/MCMC/RNG identity, full original file/GUI parity remain unverified; the recovered GUI SD/SEM discrepancy is documented. No missing coefficients or substitute
+Original stochastic-stream/MCMC identity, full original file/GUI parity remain unverified; the recovered GUI SD/SEM discrepancy is documented. No missing coefficients or substitute
 information criterion have been invented.
 
 ## Numerical evidence and resource bounds

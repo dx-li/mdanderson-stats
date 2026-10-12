@@ -1,0 +1,5 @@
+{"input": {"probabilities": [0.05, 0.03], "statuses": [0, 0]}, "native": {"calls": [["status", "0", 1], ["status", "1", 1]], "statuses": [1, 1]}}
+{"input": {"probabilities": [0.95, 0.05], "statuses": [0, 0]}, "native": {"calls": [], "statuses": [0, 0]}}
+{"input": {"probabilities": [0.96, 0.04], "statuses": [0, 0]}, "native": {"calls": [["status", "1", 2]], "statuses": [0, 2]}}
+{"input": {"probabilities": [0.05, 0.05], "statuses": [0, 0]}, "native": {"calls": [], "statuses": [0, 0]}}
+{"input": {"probabilities": [0.96, 0.96], "statuses": [0, 0]}, "native": {"calls": [["status", "1", 2], ["status", "0", 2]], "statuses": [2, 2]}}

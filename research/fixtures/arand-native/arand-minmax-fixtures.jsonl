@@ -1,0 +1,11 @@
+{"input": {"max_time": 5, "now": 5, "statuses": [0, 0]}, "native": {"calls": [], "completed": 0, "statuses": [0, 0], "time": 5}}
+{"input": {"followup": 2, "max_time": 5, "now": 5.1, "statuses": [0, 0]}, "native": {"calls": [["evaluate", 7.1], ["stop_all"]], "completed": 1, "statuses": [0, 0], "time": 7.1}}
+{"input": {"followup": 2, "max_count": 5, "now": 5, "statuses": [0, 0]}, "native": {"calls": [["evaluate", 7], ["stop_all"]], "completed": 1, "statuses": [0, 0], "time": 7}}
+{"input": {"max_count": 5, "min_time": 10, "now": 5, "statuses": [0, 0]}, "native": {"calls": [["stop", 0]], "completed": 0, "statuses": [0, 0], "time": 5}}
+{"input": {"statuses": [0, 2]}, "native": {"calls": [["stop_group", "group"], ["stop", 1], ["stop_all"]], "completed": 0, "statuses": [0, 2], "time": 5}}
+{"input": {"statuses": [1, 2], "stop_one": false}, "native": {"calls": [["stop", 1], ["stop_all"]], "completed": 0, "statuses": [1, 2], "time": 5}}
+{"input": {"arm_count": [2, 2], "arm_min": [3, 0], "statuses": [3, 0]}, "native": {"calls": [["armstatus", 0, 0], ["groupstatus", 0, 0]], "completed": 0, "statuses": [0, 0], "time": 5}}
+{"input": {"duration": [5, 0], "start": [10, 0], "statuses": [0, 0]}, "native": {"calls": [["groupstatus", 0, 5], ["stop_group", "group"], ["stop", 1], ["stop_all"]], "completed": 0, "statuses": [5, 0], "time": 5}}
+{"input": {"duration": [5, 0], "now": 10, "start": [10, 0], "statuses": [5, 0]}, "native": {"calls": [["groupstatus", 0, 0]], "completed": 0, "statuses": [0, 0], "time": 10}}
+{"input": {"duration": [5, 0], "now": 15.1, "start": [10, 0], "statuses": [0, 0]}, "native": {"calls": [["groupstatus", 0, 9], ["stop_group", "group"], ["stop", 1], ["stop_all"]], "completed": 0, "statuses": [9, 0], "time": 15.1}}
+{"input": {"group_count": [0, 0], "group_min": [2, 0], "statuses": [4, 0]}, "native": {"calls": [["groupstatus", 0, 0]], "completed": 0, "statuses": [0, 0], "time": 5}}

@@ -39,9 +39,22 @@ final contour pairs for all 250 archived trials exactly. Original Java confirms
 posterior sample SD and reveals across-trial GUI columns mislabeled SD that
 actually report SEM; Python labels its summaries correctly.
 
+The native stochastic prior calibrator additionally preserves its nine-start
+precheck, refreshed-simplex and retry rules. Original control and supplied-Gamma
+fixtures validate the implementation; independent Gamma-density integration
+checks its estimates. It reports calibration quality separately because original
+convergence can accept a poor objective. The published-equation elicitor stays
+separate, and failed calibration never substitutes a fallback prior.
+
 The native ToxFinder lower-boundary out-of-bounds case becomes a safe lowest-dose
-choice. Native prior-solver/MCMC/RNG identity and full original file/GUI parity
+choice. Original stochastic-stream/MCMC identity and full original file/GUI parity
 remain explicit limitations.
+
+ARAND source recovery is preserved in a portable, hash-pinned original-instruction
+reference harness with 98 fixtures. It establishes native monitoring/status/final
+selection, all-arm posterior ranking and TTE censor handling. The named Python
+native controller is still engineering work; this evidence does not promote its
+coverage label or claim complete Windows simulation equivalence.
 
 Live catalog membership still matches all 138 preserved entries. Coverage remains
 93 implemented, 39 partial and six pending. Updated guides, 19 repaired guide

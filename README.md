@@ -1630,12 +1630,15 @@ log-parameter draws that preserve the paper's very small interaction exponents.
 It also supplies first-stage dose decisions and posterior target contours.
 [Physician-prior elicitation](docs/toxfinder-prior-elicitation.md) solves the
 published probability and odds-moment constraints with independent integration
-checks; the documented Table 1 discrepancy is preserved.
+checks; the documented Table 1 discrepancy is preserved. The separate
+[native stochastic calibrator](docs/toxfinder-native-elicitation.md) reproduces
+original start/precheck/simplex control with independent Gamma draws and reports
+calibration quality separately from optimizer convergence.
 Independent base-R calculations verify published scenario surfaces and a reduced
 posterior. The [recovered native workflow](docs/toxfinder-native-workflow.md) adds
 both stage-two allocation modes, observed-patient recommendations, paired-cohort
 simulations, TMML/CSV readers and reports. Original executable fixtures establish
-the information criterion; native prior-solver/MCMC/RNG and full GUI/file identity
+the information criterion; original stochastic-stream/MCMC and full GUI/file identity
 remain explicit limits.
 
 [bCRM single-outcome dose finding](docs/bcrm.md) adds the fixed-intercept

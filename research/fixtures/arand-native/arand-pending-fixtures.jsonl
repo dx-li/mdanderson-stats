@@ -1,0 +1,6 @@
+{"input": [], "native_observed": 0, "native_pending": 0}
+{"input": [[0], [1]], "native_observed": 2, "native_pending": 0}
+{"input": [[0], [-1]], "native_observed": 1, "native_pending": 1}
+{"input": [[0, 1], [1, 0]], "native_observed": "unsupported: native throws", "native_pending": 0}
+{"input": [[0, 1], [1, -1]], "native_observed": "unsupported: native throws", "native_pending": 1}
+{"input": [[0, -1], [1, 0]], "native_observed": "unsupported: native throws", "native_pending": 1}

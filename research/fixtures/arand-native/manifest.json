@@ -1,0 +1,57 @@
+{
+  "library_sha256": "a11d60157236bdf2e3395de39909dbb029b22bae52bcee5dd6d8ee4eebb3a6e3",
+  "families": {
+    "x86": {
+      "count": 7,
+      "fixture_sha256": "6813b7c909b1fdf27d3e66a208f769bc8643d57392fd3c28b5c8b5e3b92c8629"
+    },
+    "scheduler": {
+      "count": 8,
+      "fixture_sha256": "86ea25d8021dcca53c6a20066532b98d1ed6d762f77b01aabd2b45b8f3cd9986"
+    },
+    "outcome": {
+      "count": 15,
+      "fixture_sha256": "c468fc39c329581b32f2e3586ce4a047f7ee750649e5b256646e4983351d7b11"
+    },
+    "pending": {
+      "count": 6,
+      "fixture_sha256": "b45c40f717e8996f3a7bee637504713fc991970663ae01f3f9c4159451aa424f"
+    },
+    "status": {
+      "count": 7,
+      "fixture_sha256": "885a87745352dde1a79c9b955faeaa18145f09e5a6aa274246f0929dc7134b2b"
+    },
+    "mincriteria": {
+      "count": 6,
+      "fixture_sha256": "b60bcf0b04f735cbb8f88316b5483f48c45526c0c9ca0a1465ff1753562d6b0c"
+    },
+    "minmax": {
+      "count": 11,
+      "fixture_sha256": "b5786162244b8e49dbccb1d6821069380dd995e6f0d67863caad6a114b87f5b3"
+    },
+    "final": {
+      "count": 8,
+      "fixture_sha256": "59f2a81f54294123ff5134ff3bfcbbef35c7e9d685d6fd1a6e489233ab9dd00e"
+    },
+    "groupfinal": {
+      "count": 5,
+      "fixture_sha256": "647f9fddb418e154812decc9b91b428484c1f67e11be3d00a8aa32b139f759d1"
+    },
+    "allocation": {
+      "count": 4,
+      "fixture_sha256": "2b85e437237ff7d326a4e9911f8791c1ee02b50ba626e539e19a5e058fc8e515"
+    },
+    "predictive": {
+      "count": 5,
+      "fixture_sha256": "e7bc4b437aca713d92792614eabc031ee142293f49b10086b765543719f1edcf"
+    },
+    "integrated": {
+      "count": 6,
+      "fixture_sha256": "f3d3ba8c7526c0243c96c9c4d3ecda56500b364a25a47b93cf9e734aa1febf61"
+    },
+    "tte_stats": {
+      "count": 10,
+      "fixture_sha256": "5484b74658554f0c11c0838543acc5f62e4a8a3e8709503c35f7d8da3486af7b"
+    }
+  }
+}

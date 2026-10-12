@@ -1,0 +1,8 @@
+{"input": {"count": 5, "mode": 0, "now": 2.5}, "native": {"calls": [["look", 2.5]], "index": 0, "next_enrollment": 1, "next_outcome": 1, "next_time": 1}}
+{"input": {"count": 5, "mode": 1, "now": 2.5}, "native": {"calls": [["look", 2.5]], "index": 0, "next_enrollment": 1, "next_outcome": 1, "next_time": 3}}
+{"input": {"count": 5, "mode": 1, "now": 1}, "native": {"calls": [["look", 1]], "index": 0, "next_enrollment": 1, "next_outcome": 1, "next_time": 1}}
+{"input": {"count": 5, "mode": 2, "now": 2.5}, "native": {"calls": [["look", 2.5]], "index": 2, "next_enrollment": 1, "next_outcome": 1, "next_time": 3}}
+{"input": {"count": 4, "mode": 3, "now": 0, "step": 2, "threshold": 3}, "native": {"calls": [["look", 0]], "index": 0, "next_enrollment": 6, "next_outcome": 3, "next_time": 3}}
+{"input": {"count": 3, "mode": 4, "now": 5, "pending": true, "threshold": 3}, "native": {"calls": [["status", 1]], "index": 0, "next_enrollment": 3, "next_outcome": 3, "next_time": 3}}
+{"input": {"count": 3, "mode": 4, "now": 5, "pending": false, "threshold": 3}, "native": {"calls": [["status", 0], ["look", 5]], "index": 0, "next_enrollment": 4, "next_outcome": 3, "next_time": 3}}
+{"input": {"count": 5, "mode": 5, "now": 5, "observed": 2, "threshold": 1}, "native": {"calls": [["look", 5]], "index": 1, "next_enrollment": 1, "next_outcome": 2, "next_time": 1}}

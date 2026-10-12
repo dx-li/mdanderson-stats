@@ -1,0 +1,6 @@
+{"input": {"arm_count": [1, 0], "arm_min": [1, 5], "group_count": [0, 0], "group_min": [1, 5], "statuses": [0, 0]}, "native": true}
+{"input": {"arm_count": [0, 0], "arm_min": [1, 5], "group_count": [1, 0], "group_min": [1, 5], "statuses": [0, 0]}, "native": true}
+{"input": {"arm_count": [0, 0], "arm_min": [1, 5], "group_count": [0, 0], "group_min": [1, 5], "statuses": [0, 0]}, "native": false}
+{"input": {"arm_count": [1, 0], "arm_min": [1, 5], "check_group_min": false, "statuses": [0, 0]}, "native": true}
+{"input": {"min_count": 6, "statuses": [0, 0]}, "native": false}
+{"input": {"min_time": 6, "statuses": [0, 0]}, "native": false}

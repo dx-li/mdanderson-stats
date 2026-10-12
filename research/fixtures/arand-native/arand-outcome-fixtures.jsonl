@@ -1,0 +1,15 @@
+{"arrival": 2, "event_time": 5, "followup": 0.0, "now": 2.0, "outcome": 0.0, "visible": -1.0}
+{"arrival": 2, "event_time": 5, "followup": 2.999999999, "now": 4.999999999, "outcome": 0.0, "visible": -1.0}
+{"arrival": 2, "event_time": 5, "followup": 3.0, "now": 5.0, "outcome": 0.0, "visible": 0.0}
+{"arrival": 2, "event_time": 5, "followup": 3.0, "now": 5.000000001, "outcome": 0.0, "visible": 0.0}
+{"arrival": 2, "event_time": 5, "followup": 3.0, "now": 9.0, "outcome": 0.0, "visible": 0.0}
+{"arrival": 2, "event_time": 5, "followup": 0.0, "now": 2.0, "outcome": 1.0, "visible": -1.0}
+{"arrival": 2, "event_time": 5, "followup": 2.999999999, "now": 4.999999999, "outcome": 1.0, "visible": -1.0}
+{"arrival": 2, "event_time": 5, "followup": 3.0, "now": 5.0, "outcome": 1.0, "visible": 1.0}
+{"arrival": 2, "event_time": 5, "followup": 3.0, "now": 5.000000001, "outcome": 1.0, "visible": 1.0}
+{"arrival": 2, "event_time": 5, "followup": 3.0, "now": 9.0, "outcome": 1.0, "visible": 1.0}
+{"arrival": 2, "event_time": 5, "followup": 0.0, "now": 2.0, "outcome": -1.0, "visible": -1.0}
+{"arrival": 2, "event_time": 5, "followup": 2.999999999, "now": 4.999999999, "outcome": -1.0, "visible": -1.0}
+{"arrival": 2, "event_time": 5, "followup": 3.0, "now": 5.0, "outcome": -1.0, "visible": -1.0}
+{"arrival": 2, "event_time": 5, "followup": 3.0, "now": 5.000000001, "outcome": -1.0, "visible": -1.0}
+{"arrival": 2, "event_time": 5, "followup": 3.0, "now": 9.0, "outcome": -1.0, "visible": -1.0}

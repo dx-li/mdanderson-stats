@@ -9,6 +9,7 @@ probes supply declared probability/score callbacks. This is not Windows/RNG pari
 import argparse
 import hashlib
 import json
+import math
 import struct
 from pathlib import Path
 
@@ -424,6 +425,171 @@ def surface(grid, x, y):
     return r.get(tmp, "d")[0]
 
 
+def elicitor_control(mode="success"):
+    r = Native()
+    prior = r.alloc(40)
+    config = r.alloc(256)
+    shape = r.vec([0.0] * 6)
+    rate = r.vec([0.0] * 6)
+    r.put(prior + 4, "3I", 6, shape, rate)
+    r.put(config + 0x18, "d", 0.3)
+    r.put(config + 0xA0, "2d", 0.5, 350 / 600)
+    r.put(config + 0xB0, "d", 0.05)
+    r.put(config + 0xB8, "2d", 1400 / 1200, 700 / 600)
+    r.put(config + 0xC8, "d", 0.6)
+    r.put(config + 0xD0, "2d", 2000 / 1200, 800 / 600)
+    r.handlers[0x42091D] = lambda st: r.ret(val=r.alloc(r.get(st + 4, "I")[0]))
+    r.handlers[0x42085F] = lambda st: r.ret()
+    r.handlers[0x4208BA] = lambda st: r.ret(val=0)
+    records = []
+    optimizers = []
+    attempts = []
+    errors = []
+
+    def err(st):
+        addr = r.get(st + 4, "I")[0]
+        msg = bytes(r.u.mem_read(addr, 128)).split(b"\0")[0].decode()
+        errors.append(msg)
+        r.u.emu_stop()
+
+    r.handlers[0x404DA0] = err
+
+    def probs(st):
+        la, lb, o1, o2 = r.get(st + 4, "2d2I")
+        obj = r.u.reg_read(UC_X86_REG_ECX)
+        if mode == "success":
+            p1, p2 = 0.99 + 0.002 * (la - math.log(0.12)), 0.99 + 0.002 * (lb - math.log(2))
+        elif mode == "precheck_failure":
+            p1, p2 = 0.0, 1.0
+        elif mode == "constant_plateau_success":
+            p1, p2 = 0.5, 0.5
+        elif mode == "optimizer_failure":
+            p1, p2 = (
+                0.3 + 0.3 * ((len(records) * 7) % 11) / 11,
+                0.4 + 0.2 * ((len(records) * 3) % 7) / 7,
+            )
+        elif mode == "interior_success":
+            p1, p2 = (
+                0.99 - 0.08 * math.tanh(la - math.log(0.12)) ** 2,
+                0.99 - 0.08 * math.tanh(lb - math.log(2)) ** 2,
+            )
+        r.put(o1, "d", p1)
+        r.put(o2, "d", p2)
+        records.append(
+            {
+                "log_variances": [la, lb],
+                "probabilities": [p1, p2],
+                "objective_parameters": list(r.get(obj + 8, "6d")),
+            }
+        )
+        r.ret(24)
+
+    r.handlers[0x4052E0] = probs
+
+    def optimizer(st):
+        obj, n, start, step, out = r.get(st + 4, "5I")
+        opt = r.u.reg_read(UC_X86_REG_ECX)
+        optimizers.append(
+            {
+                "start": list(r.get(start, "2d")),
+                "step": list(r.get(step, "2d")),
+                "attempts": r.get(opt + 8, "I")[0],
+                "iteration_budget": r.get(opt + 12, "I")[0],
+                "cutoff": r.get(opt + 24, "d")[0],
+                "tolerance": r.get(opt + 32, "d")[0],
+                "refresh": r.get(opt + 40, "B")[0],
+            }
+        )
+
+    r.handlers[0x4075A0] = optimizer
+
+    def attempt(st):
+        obj, n, start, step, out = r.get(st + 4, "5I")
+        attempts.append({"start": list(r.get(start, "2d")), "step": list(r.get(step, "2d"))})
+
+    r.handlers[0x407660] = attempt
+    try:
+        r.call(0x405DE0, struct.pack("<3Id", config, 0, 3, 0.3 / 0.7), prior)
+    except AssertionError:
+        if not errors:
+            raise
+    return {
+        "mode": mode,
+        "shapes": list(r.get(shape, "6d")),
+        "rates": list(r.get(rate, "6d")),
+        "calls": records,
+        "optimizers": optimizers,
+        "attempts": attempts,
+        "errors": errors,
+    }
+
+
+def elicitation_probability(tape, zlow, zhigh, qlow, target):
+    r = Native()
+    obj = r.alloc(80)
+    r.call(0x4051F0, struct.pack("<6d", 0.4, 8, zlow, zhigh, qlow, target), obj)
+    tmp = 0x105000
+    stub = 0x104300
+    r.u.mem_write(
+        stub,
+        b"\xdd\x1d"
+        + struct.pack("<I", tmp)
+        + b"\xdd\x1d"
+        + struct.pack("<I", tmp + 8)
+        + b"\x90\xdd\x05"
+        + struct.pack("<I", tmp + 16)
+        + b"\xc3",
+    )
+    r.handlers[0x421070] = lambda st: r.u.reg_write(UC_X86_REG_EIP, stub)
+
+    def power(st):
+        ex, ba = r.get(tmp, "dd")
+        r.put(tmp + 16, "d", ba**ex)
+
+    r.handlers[stub + 12] = power
+    gamstub = 0x104400
+    r.u.mem_write(gamstub, b"\xdd\x05" + struct.pack("<I", tmp + 32) + b"\xc3")
+    calls = []
+
+    def gamma(st):
+        ix = len(calls)
+        sh, ra = r.get(st + 4, "2d")
+        calls.append((sh, ra))
+        r.put(tmp + 32, "d", tape[(ix // 2) % len(tape)][ix % 2])
+        r.u.reg_write(UC_X86_REG_EIP, gamstub)
+
+    r.handlers[0x406330] = gamma
+    out0, out1 = r.alloc(8), r.alloc(8)
+    r.call(0x4052E0, struct.pack("<2d2I", math.log(0.1), math.log(4), out0, out1), obj)
+    ps = [r.get(out0, "d")[0], r.get(out1, "d")[0]]
+    calls.clear()
+    logvars = r.vec([math.log(0.1), math.log(4)])
+    retcode = 0x104500
+    r.u.mem_write(
+        retcode,
+        b"\xdd\x1d"
+        + struct.pack("<I", tmp + 48)
+        + b"\xe9"
+        + struct.pack("<i", r.stop - (retcode + 11)),
+    )
+    r.u.mem_write(r.sp, struct.pack("<II", retcode, logvars))
+    r.u.reg_write(UC_X86_REG_ESP, r.sp)
+    r.u.reg_write(UC_X86_REG_ECX, obj)
+    r.u.emu_start(0x405290, r.stop, count=20000000)
+    assert r.u.reg_read(UC_X86_REG_EIP) == r.stop
+    native_obj = r.get(tmp + 48, "d")[0]
+    return {
+        "tape": tape,
+        "doses": [zlow, zhigh],
+        "thresholds": [qlow, target],
+        "probabilities": ps,
+        "gamma_call_count": len(calls),
+        "first_shape_rate_pairs": calls[:2],
+        "objective": native_obj,
+        "independent_objective": sum((x - 0.99) ** 2 for x in ps),
+    }
+
+
 def main():
     global p
     parser = argparse.ArgumentParser(description=__doc__)
@@ -436,7 +602,16 @@ def main():
         raise ValueError("ToxFinder executable hash mismatch")
     p = pefile.PE(str(args.executable))
     args.output_directory.mkdir(parents=True, exist_ok=True)
-    for name in ("simplex", "map", "information", "stage1", "allocation30", "surface"):
+    for name in (
+        "simplex",
+        "map",
+        "information",
+        "stage1",
+        "allocation30",
+        "surface",
+        "elicitor-control",
+        "elicitation-probability",
+    ):
         file = f"toxfinder-native-{name}.json"
         rows = json.loads((args.fixture_directory / file).read_text())
         results = []
@@ -480,6 +655,14 @@ def main():
                     row["allocate"],
                     row["levels"],
                 )
+            elif name == "elicitor-control":
+                result = elicitor_control(row["mode"])
+                result["probability_calls"] = [
+                    {"log_variances": r["log_variances"], "probabilities": r["probabilities"]}
+                    for r in result.pop("calls")
+                ]
+            elif name == "elicitation-probability":
+                result = elicitation_probability(row["tape"], *row["doses"], *row["thresholds"])
             else:
                 result = {
                     "dose": row["dose"],

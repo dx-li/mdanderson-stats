@@ -1,0 +1,113 @@
+[
+  {
+    "tape": [
+      [
+        1,
+        1
+      ]
+    ],
+    "doses": [
+      1,
+      1
+    ],
+    "thresholds": [
+      0.5,
+      0.5
+    ],
+    "probabilities": [
+      0.0,
+      0.0
+    ],
+    "gamma_call_count": 60000,
+    "first_shape_rate_pairs": [
+      [
+        1.5999999999999999,
+        3.9999999999999996
+      ],
+      [
+        16.0,
+        2.0
+      ]
+    ],
+    "objective": 1.9602,
+    "independent_objective": 1.9602
+  },
+  {
+    "tape": [
+      [
+        0.25,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        4,
+        1
+      ]
+    ],
+    "doses": [
+      1,
+      1
+    ],
+    "thresholds": [
+      0.5,
+      0.5
+    ],
+    "probabilities": [
+      0.33333333333333337,
+      0.33333333333333337
+    ],
+    "gamma_call_count": 60000,
+    "first_shape_rate_pairs": [
+      [
+        1.5999999999999999,
+        3.9999999999999996
+      ],
+      [
+        16.0,
+        2.0
+      ]
+    ],
+    "objective": 0.8624222222222221,
+    "independent_objective": 0.8624222222222221
+  },
+  {
+    "tape": [
+      [
+        0.1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "doses": [
+      0.5,
+      2
+    ],
+    "thresholds": [
+      0.1,
+      0.4
+    ],
+    "probabilities": [
+      0.5,
+      0.5
+    ],
+    "gamma_call_count": 60000,
+    "first_shape_rate_pairs": [
+      [
+        1.5999999999999999,
+        3.9999999999999996
+      ],
+      [
+        16.0,
+        2.0
+      ]
+    ],
+    "objective": 0.48019999999999996,
+    "independent_objective": 0.48019999999999996
+  }
+]

@@ -9,7 +9,7 @@
     "modified_at": "2005-10-30",
     "download": "ToxFinder_V1.1.1.zip"
   },
-  "evidence": "Primary paper/guides plus recovered official 1.1.1 archive. Hash-pinned original x86 routines executed with disclosed runtime substitutions; independent Python sampler, no native RNG or prior-solver identity claim.",
+  "evidence": "Primary paper/guides plus recovered official 1.1.1 archive. Hash-pinned original x86 routines executed with disclosed runtime substitutions; independent Python sampler, native calibration control recovered, without original RNG/MCMC stream identity.",
   "sources": [
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14",
@@ -44,5 +44,6 @@
     }
   ],
   "stage_two_limitation": "Resolved for advertised modes 1 and 4: original code uses expected determinant of observed negative-log-posterior Hessians with eigenvalue floor 0.1, at the original-history MAP. This differs from the paper/guide simplification. Native solver/MCMC/RNG identity, full GUI/file parity and the documented GUI SD/SEM discrepancy remain separate limits.",
-  "validation_reference": "tools/reference_toxfinder.R independently evaluates official example surfaces, integrates a nonconjugate scalar posterior, and calculates analytic log-gamma prior moments in base R. The script contains no original program source. tools/reference_toxfinder_native.py executes original bounded optimizer, full information chain, stage-one and grid controllers and bilinear surface. Original archived trial-zero report calculations checked independently at 60 decimal digits."
+  "validation_reference": "tools/reference_toxfinder.R independently evaluates official example surfaces, integrates a nonconjugate scalar posterior, and calculates analytic log-gamma prior moments in base R. The script contains no original program source. tools/reference_toxfinder_native.py executes original bounded optimizer, full information chain, stage-one and grid controllers and bilinear surface. Original archived trial-zero report calculations checked independently at 60 decimal digits.",
+  "native_elicitation": "Recovered fixed beta-mean formula, 30000 Gamma-pair criterion, nine starts, stochastic refreshed simplex with retries and acceptance/failure. Named Python implementation uses independent NumPy Gamma RNG (native float32 shape narrowing), and reports independent target-quality assessment. Original control and supplied-draw fixtures do not establish unmodified native RNG/seed equivalence."
 }

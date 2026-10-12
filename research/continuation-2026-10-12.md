@@ -189,3 +189,43 @@ on the frozen production code and test set. Ruff lint/format (2,442 files), mypy
 (703 source files), build, local documentation links and all 138 catalog/status
 rows passed. The fresh installed-wheel checks and native/independent numerical
 references above supplement this full run. No head-specific hosted CI is claimed.
+
+## ToxFinder native stochastic calibration and durable ARAND recovery
+
+The named native ToxFinder elicitor now implements the recovered fixed-mean
+formula, 30,000-pair Gamma objective, nine-start precheck, refreshed simplex,
+three-attempt retry and native acceptance/failure contract. It uses independent
+NumPy random draws and preserves native float32 Gamma-shape narrowing. The
+published-equation elicitor remains distinct. Original convergence can accept a
+poor objective; a separate assessment therefore exposes tail probabilities,
+Monte Carlo errors, residuals and cutoff status without changing the fitted prior.
+No failed fit silently substitutes a fallback.
+
+Validation on the frozen production code and tests:
+
+- **34,105 passed in 813.88 seconds**, full suite with warnings as errors.
+- **89 affected tests passed**; the same **89 passed in 9.13 seconds** outside
+  the checkout in a new Python 3.13 environment against the installed wheel.
+- The installed calibration-to-simulation guide example completed successfully.
+- All eight original x86 fixture families regenerated as identical JSON values,
+  including every call in the 27-attempt, 2,675-evaluation failure path. Independent
+  Gamma-density integration checks the seeded Monte Carlo probabilities.
+- Ruff lint/format, mypy (704 source files), build, changed documentation links,
+  all 138 catalog/status rows and artifact checks passed. Wheel production bytes
+  match tested sources; wheel/sdist contain no original EXE/DLL/MSI or raw assets.
+
+ARAND recovery is now durable: a portable, hash-pinned original-instruction
+runner regenerates **98 fixtures across 13 families**, including integrated
+controller ordering and native TTE censor sufficient statistics. The source audit
+also establishes exposed desktop scope, fixed binary delay, TTE scenario defaults
+and all-arm posterior ranking. This is reference evidence for the next named
+Python workflow, not a completed native controller or a coverage promotion.
+See [ARAND recovery](arand-controller-recovery-2026-10-12.md).
+
+Coverage remains **93 implemented / 39 partial / 6 pending**. Remaining work is
+listed per application in the [status report](per-application-checkpoint-2026-10-12.md)
+and ordered in the [roadmap](completion-roadmap-2026-10-12.md). Exact unavailable
+fitted models and distribution licensing still block a complete, unrestricted
+community release. No head-specific hosted CI, original RNG identity or verified
+task URL is claimed. No PR permission-denial workaround, merge, registry release,
+settings activation or third-party contact was performed.

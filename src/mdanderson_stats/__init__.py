@@ -1880,6 +1880,11 @@ from .toxfinder_native_decision import (
     toxfinder_native_allocation,
     toxfinder_native_stage1,
 )
+from .toxfinder_native_elicitation import (
+    ToxFinderNativeAgentElicitation,
+    ToxFinderNativeElicitation,
+    elicit_toxfinder_native_prior,
+)
 from .toxfinder_native_information import (
     ToxFinderNativeInformation,
     ToxFinderNativeMAP,
@@ -2300,6 +2305,9 @@ __all__ = [
     "bcrm_log_probabilities",
     "bcrm_log_likelihood",
     "fit_bcrm",
+    "ToxFinderNativeAgentElicitation",
+    "ToxFinderNativeElicitation",
+    "elicit_toxfinder_native_prior",
     "ToxFinderNativeMAP",
     "ToxFinderNativeInformation",
     "fit_toxfinder_native_map",

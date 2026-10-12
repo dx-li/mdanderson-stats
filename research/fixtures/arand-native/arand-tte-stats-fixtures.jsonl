@@ -1,0 +1,10 @@
+{"arrival": 1.0, "now": 2.0, "original": {"event": 0, "followup": 1.0}, "record_time": 5.0, "stored_indicator": 0.0}
+{"arrival": 1.0, "now": 4.999999999, "original": {"event": 0, "followup": 3.999999999}, "record_time": 5.0, "stored_indicator": 0.0}
+{"arrival": 1.0, "now": 5.0, "original": {"event": 0, "followup": 4.0}, "record_time": 5.0, "stored_indicator": 0.0}
+{"arrival": 1.0, "now": 5.000000001, "original": {"event": 0, "followup": 4.0}, "record_time": 5.0, "stored_indicator": 0.0}
+{"arrival": 1.0, "now": 9.0, "original": {"event": 0, "followup": 4.0}, "record_time": 5.0, "stored_indicator": 0.0}
+{"arrival": 1.0, "now": 2.0, "original": {"event": 0, "followup": 1.0}, "record_time": 5.0, "stored_indicator": 1.0}
+{"arrival": 1.0, "now": 4.999999999, "original": {"event": 0, "followup": 3.999999999}, "record_time": 5.0, "stored_indicator": 1.0}
+{"arrival": 1.0, "now": 5.0, "original": {"event": 1, "followup": 4.0}, "record_time": 5.0, "stored_indicator": 1.0}
+{"arrival": 1.0, "now": 5.000000001, "original": {"event": 1, "followup": 4.0}, "record_time": 5.0, "stored_indicator": 1.0}
+{"arrival": 1.0, "now": 9.0, "original": {"event": 1, "followup": 4.0}, "record_time": 5.0, "stored_indicator": 1.0}

@@ -4,7 +4,8 @@ The named `toxfinder_native_*` APIs implement the recovered ToxFinder 1.1.1
 allocation mathematics and controller. The existing `toxfinder_stage1` remains
 the separately documented paper helper: native stage-one behavior differs.
 Python posterior inference uses the existing, independently checked log-coordinate
-slice sampler. Native MCMC, prior-solver and random-stream identity are not claimed.
+slice sampler. The [native stochastic prior calibrator](toxfinder-native-elicitation.md) is also
+available. Native MCMC and random-stream identity are not claimed.
 
 ## Complete simulation
 
@@ -92,8 +93,10 @@ run = simulate_toxfinder_native(
 )
 ```
 
-Native physician inputs can be used with the separately validated published
-`elicit_toxfinder_prior` equations; its native solver equivalence remains open.
+Native physician inputs can be used with either explicitly named formulation:
+`elicit_toxfinder_prior` solves published equations;
+`elicit_toxfinder_native_prior` uses the recovered stochastic native contract,
+with independent RNG and a separate assessment of calibration quality.
 The TMML reader preserves native elicitation and MCMC controls as metadata and
 never silently maps them to a different solver or sampler.
 

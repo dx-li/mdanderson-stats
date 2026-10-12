@@ -3,8 +3,8 @@
 The package can fit the paper's four Gamma-prior constraints for either
 single-agent toxicity curve and combine the two fits with explicitly supplied
 interaction moments. This is separate from the [recovered native allocation workflow](toxfinder-native-workflow.md);
-the published elicitation equations and native prior-solver identity remain
-distinct validation contracts.
+the published elicitation equations and [native stochastic calibrator](toxfinder-native-elicitation.md)
+are distinct validated contracts. Native random-stream identity is not claimed.
 
 ```python
 from mdanderson_stats import elicit_toxfinder_prior

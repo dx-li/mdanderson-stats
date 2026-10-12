@@ -1,0 +1,4 @@
+{"input": {"probabilities": [[0.8, 0.2], [0.1, 0.9]], "weights": [0.25, 0.75]}, "native": {"native_tuned": [0.275, 0.725], "raw": [0.275, 0.7250000000000001]}}
+{"input": {"probabilities": [[0.8, 0.2], [0.1, 0.9]], "weights": [1, 1]}, "native": {"native_tuned": [0.45, 0.55], "raw": [0.9, 1.1]}}
+{"input": {"count": 4, "probabilities": [[0.8, 0.2], [0.1, 0.9]], "runin": 5, "weights": [0.25, 0.75]}, "native": {"native_tuned": [0.5, 0.5], "raw": [0.5, 0.5]}}
+{"input": {"floor": 0.2, "power": 2, "probabilities": [[0.05, 0.15, 0.8], [0.1, 0.1, 0.8]], "weights": [0.5, 0.5]}, "native": {"native_tuned": [0.2, 0.2, 0.6], "raw": [0.07500000000000001, 0.125, 0.8]}}

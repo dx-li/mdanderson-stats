@@ -339,14 +339,16 @@
         "Posterior target contours within explicit bounds, including endpoint crossings and residual-checked roots",
         "Physician-elicited independent Gamma priors solve the published probability and odds-moment constraints, with residual-checked fits and explicit interaction moments; see docs/toxfinder-prior-elicitation.md",
         "Recovered native 1.1.1 MAP/simplex, expected observed-information determinant, exact 30-point grid allocation in both advertised modes, native stage-one profile, pending-aware recommendations, paired-cohort simulations and explicit legacy/refit final posterior policy; docs/toxfinder-native-workflow.md.",
-        "Bounded TMML settings, subject and archived-simulation CSV readers; repeated-trial HTML summaries with explicit sample SD and MCSE. Native prior-solver, MCMC/RNG and complete file/GUI identity remain unverified."
+        "Bounded TMML settings, subject and archived-simulation CSV readers; repeated-trial HTML summaries with explicit sample SD and MCSE. Native prior-solver, MCMC/RNG and complete file/GUI identity remain unverified.",
+        "Named native stochastic physician-prior calibration: recovered fixed means, 30000-pair Gamma criterion, all starts/retries/refresh/acceptance and no-fallback failure; independent RNG and separate calibration-quality assessment. Published-equation API remains distinct."
       ],
       "validation": [
         "Independent base-R evaluation of four official case-study surfaces and zero-alpha scenarios; scalar nonconjugate posterior quadrature and analytic log-gamma moments",
         "Analytic workflow checks of offset L1 interpolation, direct higher-midpoint predictions, starting dose, revisited levels, no-skip and contour endpoints",
         "Focused numerical checks for subnormal doses, interaction-exponent cancellation, reproducibility and allocation limits; native MCMC/random-seed identity is not claimed",
         "Independent adaptive Gamma-density integration checks both agents against the probability constraints; bounded solver and finite-moment checks fail explicitly. The disagreement between the printed equations and Table 1 moments is documented in research/toxfinder-prior-elicitation-audit.md.",
-        "Hash-pinned original x86 optimizer, full information chain, stage-one, production-grid/tie and bilinear-surface fixtures; independent 40-digit Hessians and 60-digit archived report calculation; end-to-end paired-cohort and pending-history tests."
+        "Hash-pinned original x86 optimizer, full information chain, stage-one, production-grid/tie and bilinear-surface fixtures; independent 40-digit Hessians and 60-digit archived report calculation; end-to-end paired-cohort and pending-history tests.",
+        "Original full elicitor/optimizer controlled-probability fixtures match every call, including all27 failed attempts; original30000-pair strict-tail tapes and independent Gamma-density integration validate separate scopes."
       ]
     },
     {
