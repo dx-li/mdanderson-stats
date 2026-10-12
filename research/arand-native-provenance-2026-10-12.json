@@ -33,7 +33,7 @@
     },
     {
       "path": "src/mdanderson_stats/arand_native_study.py",
-      "sha256": "0a9662908ce52082e5d61918f4aa8453b81ad71e05a1b2c566c76ad829f1293a",
+      "sha256": "cce75dd4411401e027a131368c71771bbad963b971a11c5bf378b06f308fdf3f",
       "authorship": "newly authored source-informed compatibility implementation; not a clean-room claim",
       "evidence": "research/arand-native-integration-2026-10-12.md",
       "notice": "THIRD_PARTY_NOTICES.md#arand-native-profile-continuation-october-12-2026",

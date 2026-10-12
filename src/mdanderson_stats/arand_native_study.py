@@ -154,15 +154,19 @@ def read_arand_native_study(text: str) -> ArandNativeStudy:
 def simulate_arand_native_trial(study: ArandNativeStudy, *, seed: int) -> ArandNativeTrial:
     """Generate fixed-window binary or exponential/censored TTE candidate tapes.
 
-    Independent NumPy child streams generate Poisson arrivals, outcomes and
+    Independent NumPy child streams generate interarrival gaps, outcomes and
     assignments. Mean/median conversion affects survival times, not months.
-    The first candidate has an exponential gap from zero. No native RNG identity
-    or native seed mapping is asserted.
+    The first candidate starts at zero; later gaps are exponential. No native
+    RNG identity or native seed mapping is asserted.
     """
     seed = _nonnegative_seed(seed)
     arrival_rng, outcome_rng, assignment_rng = _trial_seed_streams(seed)
     n, k = study.max_candidates, len(study.rules.arms)
-    arrivals = np.cumsum(arrival_rng.exponential(1 / study.accrual_rate, size=n))
+    # Original SimulateSingleTrial starts the first candidate at zero, then
+    # draws a new exponential gap after each enrollment/attempt.
+    arrivals = np.concatenate(
+        ([0.0], np.cumsum(arrival_rng.exponential(1 / study.accrual_rate, size=n - 1)))
+    )
     u = assignment_rng.random(n)
     if study.family == "binary":
         values = (outcome_rng.random((n, k)) < np.asarray(study.true_parameters)).astype(int)

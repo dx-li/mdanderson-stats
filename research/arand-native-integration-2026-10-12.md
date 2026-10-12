@@ -46,7 +46,7 @@ permission, clean-room status, unrestricted bundle or clinical validation.
 - Exact beta polynomial integration gives 5/6 after a success/failure history;
   independent reciprocal-Gamma ordering gives 11/16 for a censor/event history.
   Seeded mean/median trials agree. A 512-replicate one-arm simulation agrees within
-  six analytical MCSEs with Poisson(.5) enrollment and .75-month expected stopping
+  six analytical MCSEs with the then-used Poisson(.5) enrollment and .75-month expected stopping
   time, including exponential candidate overshoot beyond the .25-month horizon.
 
 ## Additional report-source recovery
@@ -331,3 +331,21 @@ workflow targeted suite:427 passed; final full regression is running on frozen
 production logic. Earlier exploratory runs were stopped as report work continued
 and are not counted as passing results. Original managed XML normalization now
 uses numeric0 for current_time, preserving a valid numeric field in fixtures.
+
+## First-candidate timing correction
+
+Final source review of the actual shared `SimulateSingleTrial` body0x59360
+found that IL92–105 initializes its clock to0, and the first GetTreatment call
+at407 precedes the gap draw at469 and clock update at482. The native profile
+now starts its first candidate at0. The earlier positive first-gap assumption
+was wrong for this profile; the separately named policy simulator is unchanged.
+Four original instruction-slice fixtures execute initialization and updates
+with supplied gaps (`arand_clock_reference.py`, `desktop-clock.jsonl`). They
+do not claim execution of the entire single-trial body or its RNG.
+
+The corrected independent duration-limited identity is enrollment
+1+Poisson(rate*horizon), with terminal time horizon+Exponential(rate).
+A second check uses a four-patient cap: terminal time is Gamma(4,rate)+followup
+because the original controller tests the cap at the next candidate. Both mean
+checks pass within six analytical MCSEs. All443 ARAND tests pass on corrected
+code. Full final-code regression and installed-artifact results follow below.

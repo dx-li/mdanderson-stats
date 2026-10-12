@@ -349,3 +349,39 @@ def test_legacy_report_profile_is_explicit():
     )
     with pytest.raises(ValueError, match="percentile_profile"):
         arand_native_report(summary, percentile_profile="unknown")
+
+
+def test_native_first_arrival_and_terminal_clock_distribution():
+    import numpy as np
+
+    from mdanderson_stats import (
+        ArandNativeStudy,
+        simulate_arand_native,
+        simulate_arand_native_trial,
+    )
+
+    study = ArandNativeStudy(
+        rules=ArandNativeRules(
+            (ArandNativeArmLimits(),),
+            maximum_enrollment=4,
+            stop_when_one_arm=False,
+            lower=0,
+            upper=1,
+            final_followup=2,
+        ),
+        monitor=ArandNativeMonitor(0),
+        prior=((1, 1),),
+        true_parameters=(0.5,),
+        accrual_rate=2,
+        binary_delay=0,
+        max_candidates=6,
+    )
+    trial = simulate_arand_native_trial(study, seed=123)
+    assert trial.records[0].arrival == 0
+    assert len(trial.records) == 4
+    # Four independent gaps follow the four enrollments, including the final
+    # candidate that triggers the cap. Gamma(4, rate=2) + fixed follow-up.
+    summary = simulate_arand_native(study, trials=1000, seed=319)
+    expected = 4 / 2 + 2
+    theoretical_mcse = np.sqrt(4) / 2 / np.sqrt(1000)
+    assert abs(summary.duration_mean - expected) < 6 * theoretical_mcse

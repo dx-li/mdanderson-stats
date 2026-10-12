@@ -212,3 +212,8 @@ For a multi-scenario original document, run each `document.studies[i]` with
 HTML result. The original wrapper uses base seed plus scenario index; Python
 uses independent NumPy replicate streams and records every replay seed. This
 preserves reproducibility without claiming the original RNG sequence.
+
+The native-profile simulator places its first candidate at time zero, then uses
+independent exponential gaps. A maximum-enrollment stop is checked at the next
+candidate, so its duration includes that final gap before fixed follow-up.
+This differs from the separately named policy simulator's positive first gap.

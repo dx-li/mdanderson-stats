@@ -85,6 +85,13 @@
       "count": 5,
       "scope": "actual wrapper SetSeed IL with scenario seed-write service",
       "runner": "tools/arand_native_reference/arand_desktop_seed_reference.py"
+    },
+    {
+      "file": "desktop-clock.jsonl",
+      "sha256": "b42ca547a0e18c6ce2397b8d38ba233418975544c2affe14a32430d8536283f0",
+      "count": 4,
+      "scope": "original single-trial initialization and clock-update slices with supplied gaps; not full trial execution",
+      "runner": "tools/arand_native_reference/arand_clock_reference.py"
     }
   ]
 }

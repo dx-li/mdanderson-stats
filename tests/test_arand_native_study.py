@@ -114,7 +114,7 @@ def test_candidate_and_work_budgets():
 
 
 def test_poisson_duration_overshoot_identity():
-    # For rate 2, horizon .25, enrollment ~Poisson(.5); the first candidate
+    # With a candidate at zero, enrollment ~1+Poisson(.5); the first candidate
     # beyond the horizon stops the trial, so mean stopping time is .25+1/2.
     config = ArandNativeStudy(
         prior=((1, 1),),
@@ -132,6 +132,6 @@ def test_poisson_duration_overshoot_identity():
         max_candidates=30,
     )
     result = simulate_arand_native(config, trials=512, seed=81)
-    assert abs(result.mean_enrollment[0] - 0.5) < 6 * np.sqrt(0.5 / 512)
+    assert abs(result.mean_enrollment[0] - 1.5) < 6 * np.sqrt(0.5 / 512)
     assert abs(result.duration_mean - 0.75) < 6 * 0.5 / np.sqrt(512)
     assert result.completed == 512
