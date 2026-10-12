@@ -68,3 +68,13 @@ No Python simulation default is changed based on these defects.
 Arrival code2e8c–2ed3 draws800 uniforms on[0,800*mean_interarrival] and sorts them;
 it does not sample independent exponential inter-arrivals. This has been located
 in source but still requires executable fixtures and calendar/controller recovery.
+
+Six actual arrival generation/sort fixtures now verify all800 calendar points per
+job, across means1/7.5/45 and two supplied random tapes. Another88 count fixtures
+execute conduct223d–2441 with patient triples: third-column1 is censoring, not
+an event. A censored record at intervalC is fully assessed; an event at any
+interval1..C is fully assessed. All assignments count even when observed interval
+is zero. The guide's C therefore counts assessed intervals in these inputs;
+do not silently treat its column as the paper's current Y category.
+Independent count/arrival checks pass94 cases. The arrival and hazard files still
+do not establish exact native suspension/reconsideration or full trial parity.

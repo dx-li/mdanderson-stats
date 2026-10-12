@@ -1046,6 +1046,12 @@ doi:10.1093/biostatistics/kxm044. The PRT Windows archive and guides were inspec
 no original program, data file or paper is redistributed. The archive has no
 explicit general redistribution grant. This notice does not license those files.
 
+Independently authored reference tools execute hash-pinned local copies on synthetic
+inputs to characterize native projection, hazard calibration/event generation,
+patient counting and arrival sorting. Only those synthetic inputs/results and
+independently written probes are included; no executable bytes are redistributed.
+Native defects are documented separately from the published mathematical method.
+
 Archive: https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PRT/PRT_V1.0.exe
 SHA-256: `0a3de4fee7c6cd0f113aa214c863f84ead79ef08a2ec2259b9f5d7cc2e3b4dd0`.
 
