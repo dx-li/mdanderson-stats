@@ -145,5 +145,367 @@
         "flag": true
       }
     }
+  ],
+  "distribution_cases": [
+    {
+      "word": "DistributionSave",
+      "value": -1,
+      "initial_option": 0,
+      "result": {
+        "matched": true,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSave",
+      "value": -1,
+      "initial_option": 1,
+      "result": {
+        "matched": true,
+        "option": 1
+      }
+    },
+    {
+      "word": "DistributionSave",
+      "value": 0,
+      "initial_option": 0,
+      "result": {
+        "matched": true,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSave",
+      "value": 0,
+      "initial_option": 1,
+      "result": {
+        "matched": true,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSave",
+      "value": 1,
+      "initial_option": 0,
+      "result": {
+        "matched": true,
+        "option": 1
+      }
+    },
+    {
+      "word": "DistributionSave",
+      "value": 1,
+      "initial_option": 1,
+      "result": {
+        "matched": true,
+        "option": 1
+      }
+    },
+    {
+      "word": "DistributionSave",
+      "value": 4,
+      "initial_option": 0,
+      "result": {
+        "matched": true,
+        "option": 4
+      }
+    },
+    {
+      "word": "DistributionSave",
+      "value": 4,
+      "initial_option": 1,
+      "result": {
+        "matched": true,
+        "option": 4
+      }
+    },
+    {
+      "word": "DistributionSave",
+      "value": 5,
+      "initial_option": 0,
+      "result": {
+        "matched": true,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSave",
+      "value": 5,
+      "initial_option": 1,
+      "result": {
+        "matched": true,
+        "option": 1
+      }
+    },
+    {
+      "word": "DistributionSaveOption",
+      "value": -1,
+      "initial_option": 0,
+      "result": {
+        "matched": true,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSaveOption",
+      "value": -1,
+      "initial_option": 1,
+      "result": {
+        "matched": true,
+        "option": 1
+      }
+    },
+    {
+      "word": "DistributionSaveOption",
+      "value": 0,
+      "initial_option": 0,
+      "result": {
+        "matched": true,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSaveOption",
+      "value": 0,
+      "initial_option": 1,
+      "result": {
+        "matched": true,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSaveOption",
+      "value": 1,
+      "initial_option": 0,
+      "result": {
+        "matched": true,
+        "option": 1
+      }
+    },
+    {
+      "word": "DistributionSaveOption",
+      "value": 1,
+      "initial_option": 1,
+      "result": {
+        "matched": true,
+        "option": 1
+      }
+    },
+    {
+      "word": "DistributionSaveOption",
+      "value": 4,
+      "initial_option": 0,
+      "result": {
+        "matched": true,
+        "option": 4
+      }
+    },
+    {
+      "word": "DistributionSaveOption",
+      "value": 4,
+      "initial_option": 1,
+      "result": {
+        "matched": true,
+        "option": 4
+      }
+    },
+    {
+      "word": "DistributionSaveOption",
+      "value": 5,
+      "initial_option": 0,
+      "result": {
+        "matched": true,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSaveOption",
+      "value": 5,
+      "initial_option": 1,
+      "result": {
+        "matched": true,
+        "option": 1
+      }
+    },
+    {
+      "word": "distributionSave",
+      "value": -1,
+      "initial_option": 0,
+      "result": {
+        "matched": false,
+        "option": 0
+      }
+    },
+    {
+      "word": "distributionSave",
+      "value": -1,
+      "initial_option": 1,
+      "result": {
+        "matched": false,
+        "option": 1
+      }
+    },
+    {
+      "word": "distributionSave",
+      "value": 0,
+      "initial_option": 0,
+      "result": {
+        "matched": false,
+        "option": 0
+      }
+    },
+    {
+      "word": "distributionSave",
+      "value": 0,
+      "initial_option": 1,
+      "result": {
+        "matched": false,
+        "option": 1
+      }
+    },
+    {
+      "word": "distributionSave",
+      "value": 1,
+      "initial_option": 0,
+      "result": {
+        "matched": false,
+        "option": 0
+      }
+    },
+    {
+      "word": "distributionSave",
+      "value": 1,
+      "initial_option": 1,
+      "result": {
+        "matched": false,
+        "option": 1
+      }
+    },
+    {
+      "word": "distributionSave",
+      "value": 4,
+      "initial_option": 0,
+      "result": {
+        "matched": false,
+        "option": 0
+      }
+    },
+    {
+      "word": "distributionSave",
+      "value": 4,
+      "initial_option": 1,
+      "result": {
+        "matched": false,
+        "option": 1
+      }
+    },
+    {
+      "word": "distributionSave",
+      "value": 5,
+      "initial_option": 0,
+      "result": {
+        "matched": false,
+        "option": 0
+      }
+    },
+    {
+      "word": "distributionSave",
+      "value": 5,
+      "initial_option": 1,
+      "result": {
+        "matched": false,
+        "option": 1
+      }
+    },
+    {
+      "word": "DistributionSaveOptions",
+      "value": -1,
+      "initial_option": 0,
+      "result": {
+        "matched": false,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSaveOptions",
+      "value": -1,
+      "initial_option": 1,
+      "result": {
+        "matched": false,
+        "option": 1
+      }
+    },
+    {
+      "word": "DistributionSaveOptions",
+      "value": 0,
+      "initial_option": 0,
+      "result": {
+        "matched": false,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSaveOptions",
+      "value": 0,
+      "initial_option": 1,
+      "result": {
+        "matched": false,
+        "option": 1
+      }
+    },
+    {
+      "word": "DistributionSaveOptions",
+      "value": 1,
+      "initial_option": 0,
+      "result": {
+        "matched": false,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSaveOptions",
+      "value": 1,
+      "initial_option": 1,
+      "result": {
+        "matched": false,
+        "option": 1
+      }
+    },
+    {
+      "word": "DistributionSaveOptions",
+      "value": 4,
+      "initial_option": 0,
+      "result": {
+        "matched": false,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSaveOptions",
+      "value": 4,
+      "initial_option": 1,
+      "result": {
+        "matched": false,
+        "option": 1
+      }
+    },
+    {
+      "word": "DistributionSaveOptions",
+      "value": 5,
+      "initial_option": 0,
+      "result": {
+        "matched": false,
+        "option": 0
+      }
+    },
+    {
+      "word": "DistributionSaveOptions",
+      "value": 5,
+      "initial_option": 1,
+      "result": {
+        "matched": false,
+        "option": 1
+      }
+    }
   ]
 }

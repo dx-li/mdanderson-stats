@@ -212,3 +212,35 @@ complete observations default3 at1fda8 (parameter+1e8e8) transfers through
 11017/5fd30 to selector15c. Parser24d0d can override the latter. Selector158's
 futility gate initializes to3 at5e0dd. This narrows the previous default-transfer
 gap but is not a full executed application initialization trace.
+
+The simulation parser accepts both `DistributionSave` (guide) and
+`DistributionSaveOption` (bundled file):23750–23774 compare both names and
+23c4b–23c5a accept integer options0–4. Forty added keyword cases also cover
+unknown spellings and rejected out-of-range values. The current importer uses
+the bundled spelling; canonicalizing the documented alias remains the next small
+input correction. Native options beyond the guide's0/1 are not a completed
+Python distribution-export contract.
+
+Precision integration must use the guide's **per-chain** batch-means MCSE/SD of
+lowest/middle/highest-dose utilities, not a pooled MCSE divided by pooled SD.
+The targets are .03 for simulation and .005 for conduct. A pooled four-chain
+ratio can look approximately twice as precise while failing the required
+individual-chain target. Current fixed-draw inference does not claim this target.
+
+Further static controller trace: utility-cutoff shrinking at5d38d–5d407 reads
+post1af0, which4a214–4a220 and50e9e–50eaa copy from model f8: the total number
+contributing to likelihood, not all assignments. With K positive shrink steps
+and N planned patients, its block width is integer floor(N/(K+1)); it applies
+min(K,floor(observed/block)) decrements when block is positive. If K=N, the
+block is zero and the cutoff becomes final immediately. This kernel still needs
+portable execution cases before integration; no guide-correct replacement is
+silently inferred from this trace.
+
+The saved-study checkpoint passed64,137 full tests in922.97s with all extras
+and warnings as errors. Production-source hashes were unchanged during that run.
+An additional1,282 native-reference tests were added after collection and passed
+separately; the final fresh wheel passed4,259 tests (4,231 UAROET and28
+plot/image), plus both examples. Ruff, formatting of2,656 files, mypy751 source
+files, build,755 packaged-source byte matches and29 retained notice files pass.
+All11 native reference files regenerate byte-identically. See the saved-study
+validation manifest for exact artifact hashes. Status remains101/31/6.

@@ -1,0 +1,55 @@
+{
+  "scope": "UAROET saved-study and observation-accounting checkpoint; catalog92 remains partial",
+  "code_commit": "de8d38346855a2a02036f513a2094d0cad7b5d23",
+  "full_suite": {
+    "passed": 64137,
+    "seconds": 922.97,
+    "warnings_as_errors": true,
+    "all_extras": true,
+    "additional_reference_tests_added_after_collection": 1282
+  },
+  "installed_wheel": {
+    "passed": 4259,
+    "uaroet": 4231,
+    "plot_image": 28,
+    "examples": [
+      "uaroet_pending.py",
+      "uaroet_saved_study.py"
+    ],
+    "environment": "/tmp/uaroet-study-env",
+    "outside_checkout": true
+  },
+  "independent_native_references": {
+    "files": 11,
+    "regenerated_identically": true,
+    "counts_cases": 184,
+    "final_selection_cases": 135,
+    "saved_history_cases": 1092,
+    "live_cohort_paths": 45,
+    "hybrid_keyword_cases": 16,
+    "distribution_keyword_cases": 40
+  },
+  "static_checks": {
+    "ruff": true,
+    "format_files": 2656,
+    "mypy_source_files": 751
+  },
+  "artifacts": {
+    "source_wheel_byte_matched_files": 755,
+    "notices_identical": true,
+    "raw_binaries_excluded": true,
+    "wheel_sha256": "60346e205479c82d4df73ad4b10ebcd2667b9248c11e536d12943bca3416acf4",
+    "sdist_sha256": "eb49c7659b62b2002c84bffd1ffb8e505129619bac85bba7b4f83f1320ca4af8"
+  },
+  "notices_retained": 29,
+  "original_assets_excluded": true,
+  "production_source_sha256": "1f183e1819edcf3e5be0c5420ed6abb340840dd67d935d3679594567282c7f76",
+  "remaining": [
+    "DistributionSave alias canonicalization",
+    "Prior calibration and ESS integration",
+    "Per-chain adaptive utility precision",
+    "Current safe/legacy controllers and conduct",
+    "Calendar simulations, aggregation, reports and final workflow-quality acceptance"
+  ],
+  "clinical_validation": false
+}

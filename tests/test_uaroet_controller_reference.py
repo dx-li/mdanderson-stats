@@ -195,3 +195,10 @@ def test_native_saved_history_reconstruction_uses_last_record_newness(case):
         old_open=incomplete and not new,
         incomplete=incomplete,
     )
+
+
+@pytest.mark.parametrize("case", KEYWORDS["distribution_cases"])
+def test_native_distribution_keyword_aliases_and_value_bounds(case):
+    matched = case["word"] in ("DistributionSave", "DistributionSaveOption")
+    expected = case["value"] if matched and 0 <= case["value"] <= 4 else case["initial_option"]
+    assert case["result"] == dict(matched=matched, option=expected)

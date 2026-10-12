@@ -75,3 +75,10 @@ remains partial, counts101/31/6 unchanged. See uaroet-current-recovery-2026-10-1
 and the pending-data validation manifest. Next integrate saved-study/prior mapping,
 then the complete calibrated-prior, precision, conduct/calendar and report workflow.
 Native live-cohort defects and distinct tie rules must remain explicit profiles.
+
+UAROET saved-study and count contracts are integrated and preserved at de8d3834;
+no status promotion. Eleven native-reference files now cover independent final
+selection and saved-history replay as well. Next canonicalize the guide's
+DistributionSave alias, integrate prior ESS/calibration, and implement precision
+using per-chain utility MCSE ratios. Preserve first-tie plain/final selection
+versus last-tie hybrid selection and distinct live versus saved-history cohorts.
