@@ -127,3 +127,24 @@ def clear_boin_desktop_patients(study: BOINDesktopStudy) -> BOINDesktopStudy:
     for child in container.findall("Patient"):
         container.remove(child)
     return _save(root)
+
+
+def review_boin_desktop_patient(study: BOINDesktopStudy, patient_id: int, *, seed: int):
+    """Return the preceding saved rows and their freshly computed safe decision.
+
+    Native row review uses current outcomes of preceding patients, excluding the
+    selected row and all subsequent rows. This is a recalculation, not a recovery
+    of the original decision or of outcomes known on the original entry date.
+    Random ties use the explicitly supplied seed. The original file is unchanged.
+    """
+    identifier = _integer(patient_id, "patient_id")
+    matches = [i for i, patient in enumerate(study.patients) if patient.patient_id == identifier]
+    if len(matches) != 1:
+        raise ValueError("patient_id must identify exactly one existing patient")
+    root = ET.fromstring(study.xml)
+    container = root.find("SimDat/Patients")
+    assert container is not None
+    for node in container.findall("Patient")[matches[0] :]:
+        container.remove(node)
+    prefix = _save(root)
+    return prefix, recommend_boin_desktop(prefix, seed=seed)

@@ -10,8 +10,8 @@ links current scope and each remaining statistical contract.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 98 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 34 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 99 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 33 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 6 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -129,7 +129,7 @@ some legacy adaptations retain commercial-use restrictions.
 | Bayes Factor TTE | [desktop #89](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/89) | [Guide](bayes-factor-survival.md); [Native schedule](bayes-factor-survival-enrollment.md) |
 | CI of Interaction Index | [desktop #65](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/65) | [Interaction indices](interaction-index.md); [Recovered studies](interaction-index-fixed-ray-study.md) |
 | EffTox | [desktop #2](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2) | [Current workflow](efftox-desktop.md), [Guide](efftox.md), [native legacy fitter](efftox-native-contour.md), [trinary calibration](efftox-trinary-calibration.md) |
-
+| BOIN Design Desktop Program | [desktop #99](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99) | [Guide](boin-desktop.md) |
 
 ## Partially implemented
 
@@ -145,7 +145,6 @@ some legacy adaptations retain commercial-use restrictions.
 | Bayesian Optimal Interval Design with Informative Prior (iBOIN) for Phase I Clinical Trials | [online #145](https://biostatistics.mdanderson.org/shinyapps/iBOIN) | [Guide](iboin.md), [saved reports and replay](iboin-report.md) |
 | Bayesian Phase 2 Design with Delayed Outcomes | [online #141](https://biostatistics.mdanderson.org/shinyapps/Phase2Delay) | [Guide](phase2delay.md) |
 | bCRM | [desktop #15](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/15) | [Guide](bcrm.md) |
-| BOIN Design Desktop Program | [desktop #99](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99) | [Guide](boin-desktop.md) |
 | BOIN12: Bayesian Optimal Interval Phase I/II Trial Design for Utility-Based Dose Finding | [online #148](https://biostatistics.mdanderson.org/shinyapps/BOIN12) | [Guide](boin12.md) |
 | CiBolus | [desktop #86](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/86) | [Guide](cibolus.md), [Prior calibration](cibolus-calibration.md) |
 | CondiS: Imputation of Censored Lifetimes for Machine Learning-Based Survival Analysis | [online #157](https://biostatistics.mdanderson.org/shinyapps/CondiS/) | [Guide](condis.md), [curve comparison](condis-survival-comparison.md) |

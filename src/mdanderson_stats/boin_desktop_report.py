@@ -7,6 +7,7 @@ import numpy as np
 
 from .boin_desktop import BOINDesktopStudy, read_boin_desktop_project
 from .boin_desktop_controller import BOINDesktopRecommendation
+from .boin_desktop_summary import summarize_boin_desktop
 
 
 def _table(headers, rows):
@@ -267,11 +268,70 @@ def boin_desktop_simulation_html(batch) -> str:
     for index in dict.fromkeys(r.scenario_index for r in batch.results):
         scenario = study.scenarios[index]
         result = batch.aggregate(index)
+        summary = summarize_boin_desktop(batch, index)
         parts.append(f"<h2>Scenario {index}: {escape(scenario.name)}</h2>")
         parts.append(
             f"<p>{result['trials']} trials. Selection probabilities are per dose; "
             "a contour may select several doses in one trial.</p>"
         )
+        summary_rows = [
+            ("Mean reported enrollment", summary.mean_reported_patients),
+            ("Mean actual enrollment", summary.mean_actual_patients),
+            ("Mean actual DLT", summary.mean_actual_toxicities),
+            ("No selection probability", summary.no_selection_probability),
+        ]
+        for label, value in (
+            ("Recorded safety-stop probability", summary.recorded_safety_stop_probability),
+            (
+                "Exact-target selection probability (native console)",
+                summary.exact_target_selection_probability,
+            ),
+            ("Actual fraction at exact target", summary.actual_fraction_at_exact_target),
+            (
+                "Native console fraction at exact target",
+                summary.native_console_fraction_at_exact_target,
+            ),
+            (
+                "Nearest-target selection probability (returned R definition)",
+                summary.closest_target_selection_probability,
+            ),
+            ("Actual fraction at nearest target", summary.actual_fraction_at_closest_target),
+            (
+                "Native exact reference-contour selection probability",
+                summary.native_contour_selection_probability,
+            ),
+            (
+                "Actual fraction at reference contour points",
+                summary.actual_fraction_at_reference_points,
+            ),
+            ("Actual incomparable fraction", summary.actual_incomparable_fraction),
+            (
+                "Conventional duration approximation (months)",
+                summary.conventional_duration_approximation,
+            ),
+        ):
+            if value is not None:
+                summary_rows.append((label, value))
+        parts.append(
+            _table(
+                ["Scenario summary", "Value"],
+                [(label, _number(value)) for label, value in summary_rows],
+            )
+        )
+        if summary.reference_contour:
+            parts.append("<p>Reference contour: " + escape(str(summary.reference_contour)) + "</p>")
+        for label, regions in (
+            ("Reported native geometric fractions", summary.native_reported_contour_regions),
+            ("Actual native geometric fractions", summary.native_actual_contour_regions),
+        ):
+            if regions is not None:
+                parts.append(
+                    _table(
+                        [label, "Residual (includes incomparable)", "Above", "Below"],
+                        [("Fraction", *(_number(v) for v in regions))],
+                    )
+                )
+        parts.extend("<p>" + escape(note) + "</p>" for note in summary.qualifications)
         rows = []
         for a, b in np.ndindex(study.shape):
             rows.append(
@@ -327,3 +387,110 @@ def boin_desktop_workflow_html(workflow) -> str:
     comparison = boin_desktop_simulation_html(workflow.comparator)
     body = comparison.split("<body>", 1)[1].split("</body>", 1)[0]
     return primary.replace("</body>", "<hr>" + body + "</body>", 1)
+
+
+def boin_desktop_pending_table_html(study, table, *, language="en") -> str:
+    """Render exact stored thresholds, a decision flow and saved-input replay."""
+    if language not in ("en", "zh"):
+        raise ValueError("language must be en or zh")
+    if table.study_sha256 != hashlib.sha256(study.xml.encode()).hexdigest():
+        raise ValueError("pending table does not match saved study")
+    if read_boin_desktop_project(study.xml) != study:
+        raise ValueError("saved inputs do not match retained XML")
+
+    def text(english, chinese):
+        return english if language == "en" else chinese
+
+    title = text("Desktop TITE pending-outcome table", "桌面 TITE 待观察结局表")
+    parts = [
+        "<!doctype html><html><head><meta charset='utf-8'>",
+        f"<title>{title}</title><style>body{{font:16px sans-serif;margin:2em}}"
+        "table{border-collapse:collapse}td,th{border:1px solid #aaa;padding:.4em}"
+        "pre{white-space:pre-wrap}</style></head><body>",
+        f"<h1>{title}</h1>",
+        f"<p>{escape(table.profile)}; {'WSTFT' if table.weighted else 'STFT'}.</p>",
+    ]
+    if table.profile == "desktop_table_legacy":
+        parts.append(
+            "<p><strong>"
+            + text(
+                "Explicit native-table compatibility: two-decimal thresholds, strict integer "
+                "de-escalation and no simulation run-in override. Native table behavior can "
+                "differ from the calendar and can mark elimination without meeting posterior "
+                "safety. This is not the safe simulation rule.",
+                "显式原生表兼容模式：阈值保留两位小数，整数降量采用严格边界，不采用模拟导入覆盖规则。"
+                "原生表可能与日历不同，并可能在未满足后验安全阈值时标记排除。此表不是安全模拟规则。",
+            )
+            + "</strong></p>"
+        )
+    parts.append(
+        "<p>"
+        + text(
+            "At the lowest dose, apply the lowest-stop flag first. At other doses, elimination "
+            "excludes that and higher doses. Otherwise use the fixed action, or escalate at "
+            "STFT/WSTFT ≥ the upper threshold and de-escalate at STFT/WSTFT ≤ the lower "
+            "threshold; stay between thresholds. A dash means that action is unavailable. "
+            "Pending totals range from zero to the pending count. Unrounded thresholds are "
+            "printed with round-trip precision. Dose exclusions and convergence still apply.",
+            "最低剂量先应用最低剂量停止标记；其他剂量的排除同时排除更高剂量。否则执行固定动作，"
+            "或 STFT/WSTFT 不低于升量阈值时升量、不高于降量阈值时降量，中间维持。横线表示无该动作。"
+            "待观察总随访量介于零与待观察人数之间。未舍入阈值按可还原精度显示。仍需应用剂量排除及收敛规则。",
+        )
+        + "</p>"
+    )
+    steps = [
+        text("Observed safety", "已观察安全性"),
+        text("Observed DLT rule", "已观察 DLT 规则"),
+        text("Pending cap", "待观察比例上限"),
+        text("Imputed toxicity", "插补毒性"),
+    ]
+    diagram = ['<svg viewBox="0 0 1000 90" role="img" aria-label="Decision order">']
+    for i, label in enumerate(steps):
+        x = 10 + 250 * i
+        diagram.append(
+            f'<rect x="{x}" y="10" width="225" height="45" rx="5" fill="#eef3fa" stroke="#345"/>'
+        )
+        diagram.append(
+            f'<text x="{x + 112}" y="38" text-anchor="middle" font-size="17">{escape(label)}</text>'
+        )
+        if i < 3:
+            diagram.append(
+                f'<path d="M{x + 225} 32 h20 m-5 -5 l5 5 -5 5" fill="none" stroke="#345"/>'
+            )
+    diagram.append("</svg>")
+    parts.append("".join(diagram))
+    parts.append(
+        _table(
+            [
+                text("Patients", "例数"),
+                text("DLT", "DLT"),
+                text("Pending", "待观察"),
+                text("Fixed action", "固定动作"),
+                text("Escalate ≥", "升量 ≥"),
+                text("De-escalate ≤", "降量 ≤"),
+                text("Lowest stop", "最低剂量停止"),
+                text("Posterior elimination", "后验排除"),
+            ],
+            [
+                (
+                    r.patients,
+                    r.toxicities,
+                    r.pending,
+                    r.action or "—",
+                    repr(r.escalate_at_least) if r.escalate_at_least is not None else "—",
+                    repr(r.deescalate_at_most) if r.deescalate_at_most is not None else "—",
+                    r.lowest_stop,
+                    r.safety_eliminated,
+                )
+                for r in table.rows
+            ],
+        )
+    )
+    parts.append(
+        "<details><summary>"
+        + text("Complete saved inputs", "完整保存输入")
+        + "</summary><pre>"
+        + escape(study.xml)
+        + "</pre></details></body></html>"
+    )
+    return study.to_html("".join(parts))

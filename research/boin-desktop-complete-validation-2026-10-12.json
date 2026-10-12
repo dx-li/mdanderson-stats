@@ -1,0 +1,77 @@
+{
+  "scope": "Current BOIN desktop1.1.0 four-mode guide-defined Python workflow; application99 implemented",
+  "full_suite": {
+    "passed": 52790,
+    "seconds": 865.4,
+    "all_extras": true,
+    "warnings_as_errors": true,
+    "production_python_unchanged_during_and_after_run": true,
+    "log_sha256": "e5bc870c0c5ea41562f7cfef1c08001cce795f5daf7810de9592b36944744917"
+  },
+  "tested_package_tree_sha256": "900bc1111c529d404a5f6f26d186286ba6871d94514424bc497b032a923c95cc",
+  "delivered_package_tree_sha256": "ae017d493c57d8b82d047223d791ab2788baad6e4155183b8f16d66873cb0e2a",
+  "delivered_python_tree_sha256": "0b1c74f544ae13a21e31ee659ad02dae8a13b18fec0ac88fb072b8acb6a596c4",
+  "tree_hash_algorithm": "SHA256 of sorted relative path, NUL, bytes, NUL for every package Python/JSON file (or Python only)",
+  "post_full_suite_change": "Only catalog99 scope/status/validation metadata in catalog.json; all production Python unchanged. Final rebuilt wheel independently rechecked.",
+  "fresh_wheel": {
+    "desktop_tests": 17396,
+    "optional_plot_image_tests": 100,
+    "retained_review_regressions": 7,
+    "original_saved_defaults": 4,
+    "additional_derived_contour_workflow": true,
+    "all_new_standalone_and_protocol_reports_reopened": true,
+    "import_location": "/tmp/boin-complete-env/lib/python3.13/site-packages/mdanderson_stats/__init__.py",
+    "final_rebuilt_wheel_desktop_tests": 17396,
+    "final_rebuilt_wheel_seconds": 24.39,
+    "all_746_source_installed_files_identical_after_catalog_update": true
+  },
+  "quality": {
+    "record": "boin-desktop-complete-quality-2026-10-12.json",
+    "trials": 40000,
+    "seconds": 23.665401336002105,
+    "maximum_selection_mcse": 0.015677212762477903,
+    "scope": "Five original scenarios, two500-trial batches, primary and comparator, single-agent and three TITE event distributions; not clinical validity"
+  },
+  "reference_regeneration": {
+    "R_files_byte_identical": 15,
+    "relevant_property_original_managed_serializer_byte_identical": true,
+    "log_sha256": "251fc5fb7160e37e899863c0f0ccc1b1269001db042808598446b7d481575dc7"
+  },
+  "new_reference_coverage": {
+    "pending_table_rows": 7124,
+    "pending_table_requests": 64,
+    "pending_table_high_target_edge_cases": 2,
+    "score_table_requests": 16,
+    "scenario_summary_requests": 256,
+    "combination_final_counts_serializer": "Original two relevant jagged-array properties; unrelated properties ignored, not full native project XML round-trip identity"
+  },
+  "lint": "passed",
+  "format": "1859 files passed",
+  "types": "742 source files passed",
+  "artifacts": {
+    "package_python_json_files": 746,
+    "wheel_sdist_notices_preserved": 29,
+    "original_assets_excluded": true,
+    "hashes": "Recorded in preservation commit message to avoid a self-referential sdist manifest"
+  },
+  "catalog": {
+    "implemented": 99,
+    "partial": 33,
+    "pending": 6
+  },
+  "remaining": [
+    "Integrate recovered mTPI72 native/R controller, final ranking, saved inputs and scenario/report workflow, then validate independently",
+    "Continue dependency-ordered recoverable partial applications",
+    "Six unavailable exact fitted-model contracts; no approximations",
+    "Mixed-license distribution decision remains with parent; no split or relicense",
+    "PR creation Forbidden unresolved; no bypass, merge, release or deployment"
+  ],
+  "limitations": [
+    "Source compatibility, mathematical correctness and clinical validity are separate",
+    "Explicit legacy defects never become silent scientific defaults",
+    "Native RNG/Iso floating identity and original GUI/template layout not promised",
+    "Detailed simulation diagnostic labels remain English in Chinese methods reports"
+  ],
+  "test_harness_correction": "Initial full attempt restarted after fixing a fixture CSV handle under warnings-as-errors; production unchanged",
+  "catalog_index_membership_consistent": true
+}

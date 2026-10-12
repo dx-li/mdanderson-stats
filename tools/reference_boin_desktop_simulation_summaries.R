@@ -44,9 +44,10 @@ console_value<-function(lines,label) {
 rows<-list()
 for (mode in c('single','contour')) for (cap in c(2L,3L)) {
  for (titration in c(FALSE,TRUE)) for (runin in c(FALSE,TRUE)) {
-  for (safe in c(FALSE,TRUE)) for (upper in c(.35,.5)) for (truth in c('none','all','gradient')) {
+  for (safe in c(FALSE,TRUE)) for (upper in c(.35,.5)) for (truth in c('none','all','gradient','target')) {
    p<-switch(truth,none=matrix(0,2,3),all=matrix(1,2,3),
-             gradient=matrix(c(.1,.2,.3,.4,.5,.6),2,3,byrow=TRUE))
+             gradient=matrix(c(.1,.2,.3,.4,.5,.6),2,3,byrow=TRUE),
+             target=matrix(c(.1,.2,.25,.4,.5,.6),2,3,byrow=TRUE))
    call<-list(target=.25,p.true=p,ncohort=if(mode=='single') 6L else c(4L,2L),
               cohortsize=3L,n.earlystop=12L,ntrial=2L,seed=91L,
               titration=titration,RunIn=runin,titration.cap=cap,extrasafe=safe,p.tox=upper)

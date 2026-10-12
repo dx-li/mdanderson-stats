@@ -115,17 +115,61 @@ assignments, and raises if a native over-enrollment loop exceeds six per dose.
 Failed simulations are never silently discarded. Arrival-gap budgets are recorded
 and preflighted across the complete comparison request.
 
-## What remains
+## Validation and limits
 
-Entry 99 remains **partial**. Saved simulations, comparisons, calendar replay,
-STFT, final selection, bilingual methods and reports are integrated. Remaining
-closure work is the source-specific TITE pending-outcome decision-table and
-flowchart contract, scenario-level native operating-characteristic summaries,
-saved standalone analysis/report coverage, and a final crosswalk of all advertised desktop workflows. The complete-outcome table in
-the methods document explicitly does not substitute for the pending-outcome table.
+Entry99 is implemented for the current1.1.0 guide-defined Python workflow.
+The [complete crosswalk and acceptance evidence](../research/boin-desktop-complete-checkpoint-2026-10-12.md)
+cover all four design modes, saved inputs, decisions, simulation/comparators,
+standalone analyses and captured-input statistical documents.
 
 Source compatibility, correct mathematical implementation and clinical validity
 are separate claims. Native RNG/Iso solver identity, historical GUI appearance,
 and exact proprietary template layout are not promised. The original program
 is not redistributable and none of its executable/source/template assets are
-bundled. See the [current evidence and remaining contracts](../research/boin-desktop-univariate-checkpoint-2026-10-12.md).
+bundled. See the [current evidence and remaining contracts](../research/boin-desktop-complete-checkpoint-2026-10-12.md).
+
+## Complete captured-input documents and decision tables
+
+`boin_desktop_protocol_html(workflow, language="en")` binds authored methods,
+conduct tables and operating characteristics to the exact saved inputs in a safe
+simulation workflow. Chinese methods and decision tables are available with
+`language="zh"`; detailed diagnostic labels remain English. The report can be
+reopened as a saved project. Legacy simulation diagnostics cannot silently be
+paired with safe protocol methods.
+
+`boin_desktop_pending_rule(study, patients, toxicities, pending)` returns an
+unrounded TITE decision rule. Apply its `lowest_stop` flag first at the lowest
+dose, then call `rule.decide(stft)`. The full `boin_desktop_pending_table` and its
+HTML renderer enumerate cohort states and explain decision precedence. The
+explicit `desktop_table_legacy` profile preserves native two-decimal thresholds,
+strict integer de-escalation, ignored run-in and a high-target false-elimination
+fallback. An undefined native extra-safe flag raises an error. These are
+compatibility behaviors, not scientific defaults.
+
+`boin_desktop_score_table` ranks combination candidates across the full planned
+maximum before filtering displayed rows at EarlyStop. Safe ranks use the
+controller's interval probability plus `.0005*n`; native-table compatibility
+ranks raw interval probability and eliminates at equality with the cutoff.
+`boin_desktop_score_table_html` documents both conventions. Neither score table
+replaces admissible-dose, sticky-exclusion or lowest-dose stopping rules.
+
+`boin_desktop_single_selection_html` and
+`boin_desktop_combination_selection_html` recompute standalone final analyses
+with explicit `outcomes_complete=True`. Combination counts use the native
+jagged arrays: `boin_desktop_combination_counts` reads them and
+`set_boin_desktop_combination_counts` edits or resets them. They are separate from
+patient conduct history. Final isotonic transforms of marginal beta intervals
+are not simultaneous credible bands.
+
+`set_boin_desktop_followup(study, days)` edits calculator observations (an empty
+array resets them); `boin_desktop_stft_html` reports individual weights and their
+sum. Zero follow-up is supported mathematically, unlike the old GUI entry gate.
+`review_boin_desktop_patient(study, patient_id, seed=...)` returns the preceding
+patient rows and their recomputed decision using current outcomes. It does not
+reconstruct outcomes known on the historical entry date or the original RNG.
+
+`summarize_boin_desktop` distinguishes exact-target console truth from nearest-
+target returned metrics, actual from reported enrollment, and no selection from
+recorded safety stopping. The native contour residual includes incomparable
+combinations; exact reference-point allocation is also reported. The conventional
+TITE comparator duration is an approximation, not a simulated calendar.

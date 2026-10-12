@@ -38,3 +38,10 @@ STFT and bilingual reports. Finish BOIN99's source-specific pending table and
 standalone analysis/report crosswalk next. Its64 source table requests are
 recovered, so this remains immediately actionable. Then revisit source-recoverable
 partial rows in dependency order, including72's preserved controller/XLL contracts.
+
+BOIN99 current1.1.0 guide-defined workflow is now closed; counts99/33/6.
+See [complete acceptance](boin-desktop-complete-checkpoint-2026-10-12.md).
+Continue immediately with72 mTPI: current Excel monitoring and XLL/R controller
+contracts are newly recoverable, including distinct final-ranking offsets.
+No arbitrary stopping target follows99 closure. Preserve all six unavailable
+fitted-model contracts and the separate distribution/PR blockers.

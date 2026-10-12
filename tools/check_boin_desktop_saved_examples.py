@@ -56,3 +56,77 @@ for path in sorted(root.glob("Default*.html")):
             == patient_study
         )
         print(path.name, "bilingual methods and patient conduct report passed", flush=True)
+
+    # Bind full authored methods, decisions and results to the captured study.
+    workflow = m.simulate_boin_desktop_workflow(study, trials=2, seed=841)
+    for language in ("en", "zh"):
+        assert (
+            m.read_boin_desktop_project(m.boin_desktop_protocol_html(workflow, language=language))
+            == study
+        )
+    if study.mode in ("single", "tite"):
+        assert (
+            m.read_boin_desktop_project(
+                m.boin_desktop_single_selection_html(study, outcomes_complete=True)
+            )
+            == study
+        )
+        if study.mode == "tite":
+            edited = m.set_boin_desktop_followup(study, [0, 1])
+            assert m.read_boin_desktop_project(m.boin_desktop_stft_html(edited)) == edited
+            for profile in ("safe", "desktop_table_legacy"):
+                table = m.boin_desktop_pending_table(study, profile=profile)
+                assert (
+                    m.read_boin_desktop_project(m.boin_desktop_pending_table_html(study, table))
+                    == study
+                )
+    else:
+        counts = np.full(study.shape, 3)
+        final = m.set_boin_desktop_combination_counts(study, counts, np.zeros(study.shape))
+        assert (
+            m.read_boin_desktop_project(
+                m.boin_desktop_combination_selection_html(final, outcomes_complete=True)
+            )
+            == final
+        )
+        for profile in ("safe", "desktop_table_legacy"):
+            assert (
+                m.read_boin_desktop_project(m.boin_desktop_score_table_html(study, profile=profile))
+                == study
+            )
+        prefix, decision = m.review_boin_desktop_patient(patient_study, 1, seed=17)
+        assert not prefix.patients and decision.status == "go"
+        # The four original defaults do not include contour: exercise a derived input.
+        import xml.etree.ElementTree as ET
+
+        root_xml = ET.fromstring(study.xml)
+        design = root_xml.find("SimDat/TrialDesign")
+        design.find("FindContours").text = "true"
+        cap = design.find("MaximumSampleSizeForSubTrials")
+        if cap is None:
+            cap = ET.SubElement(design, "MaximumSampleSizeForSubTrials")
+        cap.clear()
+        for _ in range(study.shape[0]):
+            ET.SubElement(cap, "int").text = "12"
+        contour = m.read_boin_desktop_project(ET.tostring(root_xml, encoding="unicode"))
+        workflow = m.simulate_boin_desktop_workflow(contour, trials=2, seed=841)
+        for language in ("en", "zh"):
+            assert (
+                m.read_boin_desktop_project(
+                    m.boin_desktop_protocol_html(workflow, language=language)
+                )
+                == contour
+            )
+        final = m.set_boin_desktop_combination_counts(contour, counts, np.zeros(study.shape))
+        assert (
+            m.read_boin_desktop_project(
+                m.boin_desktop_combination_selection_html(final, outcomes_complete=True)
+            )
+            == final
+        )
+        print(path.name, "derived contour complete protocol and final analysis passed", flush=True)
+    print(
+        path.name,
+        "captured protocol, standalone analyses and decision appendices passed",
+        flush=True,
+    )

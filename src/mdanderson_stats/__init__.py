@@ -385,19 +385,44 @@ from .boin_desktop import (
 from .boin_desktop_batch import BOINDesktopBatch, simulate_boin_desktop_scenarios
 from .boin_desktop_comparison import BOINDesktopWorkflow, simulate_boin_desktop_workflow
 from .boin_desktop_controller import BOINDesktopRecommendation, recommend_boin_desktop
+from .boin_desktop_documents import (
+    boin_desktop_combination_selection_html,
+    boin_desktop_protocol_html,
+    boin_desktop_score_table_html,
+    boin_desktop_single_selection_html,
+    boin_desktop_stft_html,
+)
+from .boin_desktop_final import (
+    boin_desktop_combination_counts,
+    select_boin_desktop_combination_counts,
+    set_boin_desktop_combination_counts,
+)
 from .boin_desktop_patients import (
     add_boin_desktop_patient,
     clear_boin_desktop_patients,
     delete_last_boin_desktop_patient,
+    review_boin_desktop_patient,
     update_boin_desktop_patient,
+)
+from .boin_desktop_pending import (
+    BOINDesktopPendingRule,
+    BOINDesktopPendingTable,
+    boin_desktop_pending_rule,
+    boin_desktop_pending_table,
 )
 from .boin_desktop_protocol import boin_desktop_combination_protocol
 from .boin_desktop_report import (
     boin_desktop_conduct_html,
+    boin_desktop_pending_table_html,
     boin_desktop_simulation_html,
     boin_desktop_workflow_html,
 )
 from .boin_desktop_rolling import BOINDesktopRollingTrial, replay_boin_desktop_rolling_six
+from .boin_desktop_score import (
+    BOINDesktopScoreRow,
+    BOINDesktopScoreTable,
+    boin_desktop_score_table,
+)
 from .boin_desktop_selection import BOINDesktopSelection, select_boin_desktop_mtd
 from .boin_desktop_simulation import (
     BOINDesktopSimulation,
@@ -410,11 +435,13 @@ from .boin_desktop_single import (
     select_boin_desktop_single,
     set_boin_desktop_single_counts,
 )
+from .boin_desktop_summary import BOINDesktopScenarioSummary, summarize_boin_desktop
 from .boin_desktop_tite import (
     BOINDesktopFollowup,
     BOINDesktopTITESettings,
     boin_desktop_stft,
     desktop_tite_settings,
+    set_boin_desktop_followup,
 )
 from .boin_desktop_tite_calendar import BOINDesktopTITETrial, replay_boin_desktop_tite
 from .boin_desktop_univariate_protocol import boin_desktop_univariate_protocol
@@ -4252,6 +4279,26 @@ __all__ += [
     "delete_last_boin_desktop_patient",
     "update_boin_desktop_patient",
     "boin_desktop_combination_protocol",
+    "boin_desktop_protocol_html",
+    "boin_desktop_single_selection_html",
+    "boin_desktop_stft_html",
+    "BOINDesktopPendingRule",
+    "BOINDesktopPendingTable",
+    "boin_desktop_pending_rule",
+    "review_boin_desktop_patient",
+    "set_boin_desktop_followup",
+    "boin_desktop_combination_selection_html",
+    "boin_desktop_score_table_html",
+    "boin_desktop_combination_counts",
+    "set_boin_desktop_combination_counts",
+    "select_boin_desktop_combination_counts",
+    "BOINDesktopScoreRow",
+    "BOINDesktopScoreTable",
+    "boin_desktop_score_table",
+    "boin_desktop_pending_table",
+    "boin_desktop_pending_table_html",
+    "BOINDesktopScenarioSummary",
+    "summarize_boin_desktop",
     "BOINDesktopWorkflow",
     "simulate_boin_desktop_workflow",
     "boin_desktop_workflow_html",

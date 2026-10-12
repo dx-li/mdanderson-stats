@@ -79,8 +79,10 @@ def desktop_tite_settings(study: BOINDesktopStudy) -> BOINDesktopTITESettings:
     months, days = _windows(design)
     accrual = _number(design, "AccrualRate")
     pending = _number(design, "MaxPendingOutcomePercent") / 100
-    if accrual <= 0 or not 0 <= pending <= 0.65:
-        raise ValueError("require positive monthly accrual and pending fraction in [0,.65]")
+    if accrual <= 0 or not np.isfinite(1 / accrual) or not 0 <= pending <= 0.65:
+        raise ValueError(
+            "require representable positive monthly accrual and pending fraction in [0,.65]"
+        )
     raw = _prior(design)
     weights = None if raw is None else tuple(v / sum(raw) for v in raw)
     distribution = {
@@ -113,3 +115,31 @@ def boin_desktop_stft(study: BOINDesktopStudy) -> BOINDesktopFollowup:
         raise ValueError("calculator supports at most 1000 pending follow-up records")
     weights = toxicity_followup_weights(followup, days, trimester_probabilities=_prior(design))
     return BOINDesktopFollowup(_owned(followup), _owned(weights), float(weights.sum()), days)
+
+
+def set_boin_desktop_followup(study: BOINDesktopStudy, followup_days) -> BOINDesktopStudy:
+    """Replace saved calculator observations in days; an empty array resets them.
+
+    Zero follow-up is mathematically supported (including newly accrued patients),
+    unlike the original GUI's positive-value entry restriction. Values cannot
+    exceed the assessment window. Unrelated study settings remain unchanged.
+    """
+    from .boin_desktop import read_boin_desktop_project
+
+    _, design = _nodes(study)
+    _, days = _windows(design)
+    values = np.asarray(followup_days, dtype=float)
+    if values.ndim != 1 or len(values) > 1000:
+        raise ValueError("follow-up requires at most 1000 one-dimensional observations")
+    toxicity_followup_weights(values, days, trimester_probabilities=_prior(design))
+    root = ET.fromstring(study.xml)
+    sim = root.find("SimDat")
+    assert sim is not None
+    nodes = sim.findall("TITE_BOIN_PendingPatientData")
+    if len(nodes) > 1:
+        raise ValueError("duplicate pending-patient follow-up arrays")
+    node = nodes[0] if nodes else ET.SubElement(sim, "TITE_BOIN_PendingPatientData")
+    node.clear()
+    for value in values:
+        ET.SubElement(node, "double").text = repr(float(value))
+    return read_boin_desktop_project(ET.tostring(root, encoding="unicode"))

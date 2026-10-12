@@ -4,7 +4,7 @@ Catalog membership was rechecked against both official API lists: 80 desktop +
 58 online entries, with identical response hashes to the preserved inventory.
 No entry was added or dropped. See [membership evidence](catalog-membership-2026-10-12.json).
 
-Current counts are **98 implemented / 34 partial / 6 pending**. ARAND62 now
+Current counts are **99 implemented / 33 partial / 6 pending**. ARAND62 now
 meets the guide-defined simulation workflow; see its scope crosswalk below. This continuation
 adds the mTPI R final estimator, recovered EffTox contour fitter, CRM desktop
 study/controller workflow, ToxFinder native allocation/simulation workflow, and
@@ -98,7 +98,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 96 | Beta Binomial Distribution Demo | implemented | Declared recovered workflow implemented; [Guide](../docs/beta-binomial-demo.md) retains scope and compatibility limits. |
 | 97 | CATBUB Design | implemented | Declared recovered workflow implemented; [Guide](../docs/catbub.md) retains scope and compatibility limits. |
 | 98 | One Arm Time to Event Simulator | implemented | Declared recovered workflow implemented; [Guide](../docs/one-arm-tte.md) retains scope and compatibility limits. |
-| 99 | BOIN Design Desktop Program | partial | Saved four-mode simulation, 3+3/Rolling Six comparisons, desktop calendars, STFT, final selection, bilingual methods and reports integrated. Source-specific pending decision table/flowchart and standalone analysis report crosswalk remain. [Current checkpoint](boin-desktop-univariate-checkpoint-2026-10-12.md). |
+| 99 | BOIN Design Desktop Program | implemented | Current1.1.0 four-mode saved design, conduct, simulation/comparators, pending and score tables, STFT/WSTFT, standalone final analyses and captured-input bilingual methods/results are complete under documented safe/legacy profiles. Source compatibility, numerical identity and clinical validity remain separate. [Complete crosswalk/evidence](boin-desktop-complete-checkpoint-2026-10-12.md). |
 | 100 | Bayesian Toxicity Monitoring | implemented | Declared recovered workflow implemented; [Guide](../docs/bayesian-monitoring.md) retains scope and compatibility limits. |
 | 101 | Bayesian Update for a Beta-Binomial Distribution | implemented | Declared recovered workflow implemented; [Guide](../docs/beta-updating.md) retains scope and compatibility limits. |
 | 102 | Bayesian Update for Two Beta-Binomial Distributions | implemented | Declared recovered workflow implemented; [Guide](../docs/beta-updating.md) retains scope and compatibility limits. |

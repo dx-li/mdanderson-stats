@@ -3518,22 +3518,20 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
-        "Shared single-agent BOIN conduct, safety, isotonic selection, titration and 3+3 comparison; documented desktop capability map in docs/boin-desktop.md",
-        "TITE-BOIN and Rolling Six calendar simulations with common-scenario comparison, allocation/toxicity/duration summaries, Monte Carlo errors and Markdown reporting",
-        "Ordinary combination simulation, final contour selection and interactive waterfall subtrial planning",
-        "Standardized or informative-prior toxicity follow-up weights and single-agent English/Chinese statistical protocol text",
-        "Complete waterfall replay and serial simulation with optional first-subtrial accelerated titration, including special same-row/fallback transitions, actual observations, contour diagnostics and Monte Carlo errors; docs/boin-waterfall.md",
-        "Remaining: native combination titration/run-in equivalence, TITE/combination protocols, native Word/HTML and saved-project formats; desktop executable equivalence is not verified"
+        "Saved desktop XML/HTML inputs for single-agent, TITE, combination single-MTD and waterfall contour workflows; active settings, scenario batches and bounded simulation retain seeds and full observations.",
+        "Source-recovered desktop calendars, titration/run-in, safety and final-selection rules, with native defects isolated in explicit legacy profiles; safe defaults retain actual counts and capacity.",
+        "Saved 3+3/Rolling Six comparisons, per-scenario operating characteristics, actual/reported enrollment, source truth definitions, duration approximation and Monte Carlo qualifications.",
+        "Complete pending TITE decision tables/flowchart, combination score tables, saved STFT/WSTFT editing and reports, standalone final data/selection reports, and captured-input English/Chinese statistical methods with simulation appendices.",
+        "Combination patient add/edit/delete/reset and selected-row decision review using current preceding outcomes; original historical RNG/outcome reconstruction is not claimed.",
+        "Current1.1.0 guide-defined Python workflows are complete within documented bounds. Native RNG/Iso floating identity, original GUI/template layout and clinical validity remain separate claims; mixed-license notices and original-program redistribution restrictions remain."
       ],
       "validation": [
-        "Capability specification from desktop 1.1.0 and TITE-BOIN guide; docs/boin-desktop-sources.json links shared method source records",
-        "Existing published and original-R BOIN/combination references, published TITE-BOIN thresholds, and exhaustive published Rolling Six decision-table states",
-        "Focused comparison safety/highest-dose/reproducibility/preflight checks; independent aggregation/MCSE, 1e100 time rescaling and finite 1e308 duration summaries; tests/test_boin_time_comparison.py",
-        "Documented STFT example yields 1.7; comparison usage executed with bounded serial simulations",
-        "Six original-R subtrial and six full-workflow references, independent exhaustive isotonic oracle, source count-loss regression and bounded simulation aggregation; research/boin-waterfall-workflow-audit.md",
-        "Seven original BOIN 2.7.2 titration reference workflows retain 43 assignments, 11 subtrial snapshots and final exclusion masks, including top-up, enrollment overshoot, global-budget suffix elimination and cohort-size-one disabling. Native dropped observations are preserved in Python. research/boin-waterfall-titration-audit.md."
+        "Complete advertised-workflow crosswalk and source qualifications: research/boin-desktop-complete-checkpoint-2026-10-12.md; numerical and artifact evidence: research/boin-desktop-complete-validation-2026-10-12.json.",
+        "Native references include2304 TITE traces,238 complete Rolling Six traces plus two guarded loops,192 single-agent simulation cases,7124 pending-table rows,256 complete scenario-summary requests,16 ranked-table requests,960 single/TITE final report cases, and prior combination/controller/isotonic references.",
+        "Fresh installed wheel:17396 desktop tests,100 optional plot/image tests,seven retained review regressions,all four original saved defaults plus derived contour workflow,40000 quality trials;15 R reference files and original relevant-property serializer output regenerate identically.",
+        "Full unchanged-production suite passed52790 tests in865.40s with all extras and warnings as errors. Catalog status metadata was updated afterward and independently checked; code remained unchanged."
       ]
     },
     {

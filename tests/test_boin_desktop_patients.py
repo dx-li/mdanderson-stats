@@ -95,3 +95,26 @@ def test_contour_saved_caps_and_safe_invalid_native_branch():
         ).action
         == "error"
     )
+
+
+def test_review_uses_current_preceding_outcomes_and_does_not_mutate_file():
+    from mdanderson_stats.boin_desktop_patients import review_boin_desktop_patient
+
+    saved = study()
+    for identifier in range(1, 5):
+        saved = add_boin_desktop_patient(
+            saved, patient_id=identifier, date_entered="2026-10-12", seed=2, outcome=0
+        )
+    original = saved.xml
+    prefix, decision = review_boin_desktop_patient(saved, 4, seed=2)
+    assert len(prefix.patients) == 3 and decision.status == "go"
+    for identifier in range(1, 4):
+        saved = update_boin_desktop_patient(saved, identifier, outcome=1, date_updated="2026-10-13")
+    revised, result = review_boin_desktop_patient(saved, 4, seed=2)
+    assert result.status == "stop_early" and result.reason == "stop_safety"
+    assert len(saved.patients) == 4 and len(revised.patients) == 3
+    assert read_boin_desktop_project(original).patients[0].outcome == 0
+    first, result = review_boin_desktop_patient(saved, 1, seed=2)
+    assert not first.patients and result.status == "go"
+    with pytest.raises(ValueError, match="exactly one"):
+        review_boin_desktop_patient(saved, 999, seed=2)

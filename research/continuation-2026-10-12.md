@@ -545,3 +545,24 @@ trials pass;13 R fixture files regenerate identically. See the linked manifest
 for exact qualifications. Newly recovered report sources distinguish native
 console versus returned MTD definitions; pending-table and report-summary
 integration remain the next authorized work, not a completed application claim.
+
+### BOIN99 complete-workflow acceptance; continue mTPI72
+
+The [complete crosswalk](boin-desktop-complete-checkpoint-2026-10-12.md) closes
+pending decision/flowchart, score-table, operating-characteristic summary,
+standalone final/calculator and captured-input protocol workflows. All four
+modes have installed examples; native defects remain explicit compatibility
+profiles. Catalog99 is implemented for this declared scope; counts99/33/6.
+The linked validation manifest records full final-code regression and package
+acceptance. Clinical validity, native RNG/Iso floating identity and original
+GUI/template layout are separate claims. All notices remain unchanged.
+
+Continue mTPI72 immediately. Native XLL decision instructions now match2496
+archivedR cases, and495 original cached monitoring cells match Python. A draft
+complete replay agrees with source-controlled trial tapes. XLL final offsets
+use zero-based index*1e-10 whereas archivedR uses one-based indices; exact ties
+also differ. These must not be conflated. Current research lives in
+`/tmp/mtpi-next-contracts.md`, with paths to native probes, fixtures and drafts.
+The original archive is in ignored `research/raw/mtpi-2026-10-12/`. Integrate
+bounded saved inputs, safe/legacy controllers, native final profile and
+scenario/report workflow before any72 promotion. No full mTPI acceptance yet.

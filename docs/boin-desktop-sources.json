@@ -46,5 +46,12 @@
     "docs/rolling-six-sources.json",
     "docs/boin-combination-source.md"
   ],
-  "limitations": "Current desktop integration evidence in research/boin-desktop-univariate-checkpoint-2026-10-12.md. Native RNG/Iso identity, clinical validity and historical GUI identity unclaimed; pending decision-table/flowchart and standalone-analysis crosswalk remain."
+  "limitations": "Four-mode workflow integration and final acceptance tracked in research/boin-desktop-complete-checkpoint-2026-10-12.md. Source compatibility, mathematical correctness and clinical validity are separate; native RNG/Iso floating identity and original GUI/template layout are not claimed.",
+  "desktop_reference_contracts": {
+    "R/get.scoretable.R": "905d4665e9a72a921628c4580cc91826124991f0f17c825f66b71350c57c95ed",
+    "R/get.boundary.tite.R": "4c87d5c93aac5fafea794d2ca79c2f65be43f7b96dadfc21545a66bd571773bd",
+    "BOIN.exe": "184b8c6b61a0d2d89815a895e3f27004587f7fbbebbbaf4cc1c813f94fe23997",
+    "BOIN_Data.dll": "c8045dd491b33f78d845d87da9bee75cbf68f50df7aca27ac54e1e7caeec24a1",
+    "BOIN_Calculations.dll": "5651ac132ae977b0026afd5110edfce13e9e8b200e24db599eb18c94900f772c"
+  }
 }

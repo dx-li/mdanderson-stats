@@ -83,3 +83,25 @@ def test_calculator_does_not_require_inactive_simulation_choices():
     assert boin_desktop_stft(study).total > 0
     with pytest.raises(ValueError):
         desktop_tite_settings(study)
+
+
+def test_unrepresentable_accrual_gap_is_rejected_before_simulation():
+    study = read_boin_desktop_project(
+        saved_tite().xml.replace("<AccrualRate>1", "<AccrualRate>1e-320")
+    )
+    with pytest.raises(ValueError, match="representable"):
+        desktop_tite_settings(study)
+
+
+def test_saved_followup_edit_and_reset_preserve_active_study():
+    from mdanderson_stats.boin_desktop_tite import set_boin_desktop_followup
+
+    saved = saved_tite(window=90, unit="Days")
+    edited = set_boin_desktop_followup(saved, [30, 48, 75])
+    assert boin_desktop_stft(edited).total == pytest.approx(1.7)
+    assert edited.scenarios == saved.scenarios
+    assert boin_desktop_stft(set_boin_desktop_followup(edited, [])).total == 0
+    assert boin_desktop_stft(set_boin_desktop_followup(edited, [0, 90])).total == 1
+    for values in ([91], [-1], [float("nan")], [[30]], [0] * 1001):
+        with pytest.raises(ValueError):
+            set_boin_desktop_followup(saved, values)

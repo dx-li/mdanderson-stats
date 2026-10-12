@@ -1,0 +1,1695 @@
+{
+  "scope": "synthetic operating-characteristic precision and workflow invariants, not clinical validity",
+  "import_location": "/tmp/boin-complete-env/lib/python3.13/site-packages/mdanderson_stats/__init__.py",
+  "seconds": 23.665401336002105,
+  "master_seed": 712,
+  "batches": 2,
+  "trials_per_batch": 500,
+  "total_trials": 40000,
+  "records": [
+    {
+      "file": "DefaultSingleAgent.html",
+      "distribution": "eUniform",
+      "method": "BOIN",
+      "scenario": 0,
+      "trials": 1000,
+      "selection": [
+        [
+          0.71
+        ],
+        [
+          0.176
+        ],
+        [
+          0.022
+        ],
+        [
+          0.005
+        ],
+        [
+          0.001
+        ]
+      ],
+      "max_mcse": 0.014349216006458332,
+      "mean_patients": [
+        [
+          11.178
+        ],
+        [
+          6.009
+        ],
+        [
+          1.443
+        ],
+        [
+          0.264
+        ],
+        [
+          0.051
+        ]
+      ]
+    },
+    {
+      "file": "DefaultSingleAgent.html",
+      "distribution": "eUniform",
+      "method": "BOIN",
+      "scenario": 1,
+      "trials": 1000,
+      "selection": [
+        [
+          0.24
+        ],
+        [
+          0.603
+        ],
+        [
+          0.136
+        ],
+        [
+          0.012
+        ],
+        [
+          0.001
+        ]
+      ],
+      "max_mcse": 0.01547226550961429,
+      "mean_patients": [
+        [
+          8.256
+        ],
+        [
+          10.266
+        ],
+        [
+          4.974
+        ],
+        [
+          1.014
+        ],
+        [
+          0.159
+        ]
+      ]
+    },
+    {
+      "file": "DefaultSingleAgent.html",
+      "distribution": "eUniform",
+      "method": "BOIN",
+      "scenario": 2,
+      "trials": 1000,
+      "selection": [
+        [
+          0.016
+        ],
+        [
+          0.244
+        ],
+        [
+          0.594
+        ],
+        [
+          0.142
+        ],
+        [
+          0.004
+        ]
+      ],
+      "max_mcse": 0.015529455882290275,
+      "mean_patients": [
+        [
+          4.335
+        ],
+        [
+          7.848
+        ],
+        [
+          9.591
+        ],
+        [
+          4.641
+        ],
+        [
+          0.78
+        ]
+      ]
+    },
+    {
+      "file": "DefaultSingleAgent.html",
+      "distribution": "eUniform",
+      "method": "BOIN",
+      "scenario": 3,
+      "trials": 1000,
+      "selection": [
+        [
+          0.0
+        ],
+        [
+          0.021
+        ],
+        [
+          0.225
+        ],
+        [
+          0.568
+        ],
+        [
+          0.186
+        ]
+      ],
+      "max_mcse": 0.01566448211719749,
+      "mean_patients": [
+        [
+          3.417
+        ],
+        [
+          4.329
+        ],
+        [
+          7.299
+        ],
+        [
+          9.0
+        ],
+        [
+          4.464
+        ]
+      ]
+    },
+    {
+      "file": "DefaultSingleAgent.html",
+      "distribution": "eUniform",
+      "method": "BOIN",
+      "scenario": 4,
+      "trials": 1000,
+      "selection": [
+        [
+          0.0
+        ],
+        [
+          0.012
+        ],
+        [
+          0.047
+        ],
+        [
+          0.258
+        ],
+        [
+          0.683
+        ]
+      ],
+      "max_mcse": 0.014714312760030622,
+      "mean_patients": [
+        [
+          3.273
+        ],
+        [
+          3.942
+        ],
+        [
+          4.737
+        ],
+        [
+          6.9
+        ],
+        [
+          9.072
+        ]
+      ]
+    },
+    {
+      "file": "DefaultSingleAgent.html",
+      "distribution": "eUniform",
+      "method": "3+3",
+      "scenario": 0,
+      "trials": 1000,
+      "selection": [
+        [
+          0.426
+        ],
+        [
+          0.107
+        ],
+        [
+          0.028
+        ],
+        [
+          0.007
+        ],
+        [
+          0.0
+        ]
+      ],
+      "max_mcse": 0.015637263187655313,
+      "mean_patients": [
+        [
+          5.283
+        ],
+        [
+          3.021
+        ],
+        [
+          0.897
+        ],
+        [
+          0.207
+        ],
+        [
+          0.045
+        ]
+      ]
+    },
+    {
+      "file": "DefaultSingleAgent.html",
+      "distribution": "eUniform",
+      "method": "3+3",
+      "scenario": 1,
+      "trials": 1000,
+      "selection": [
+        [
+          0.414
+        ],
+        [
+          0.367
+        ],
+        [
+          0.086
+        ],
+        [
+          0.02
+        ],
+        [
+          0.002
+        ]
+      ],
+      "max_mcse": 0.015575750383207868,
+      "mean_patients": [
+        [
+          4.833
+        ],
+        [
+          4.719
+        ],
+        [
+          2.442
+        ],
+        [
+          0.627
+        ],
+        [
+          0.123
+        ]
+      ]
+    },
+    {
+      "file": "DefaultSingleAgent.html",
+      "distribution": "eUniform",
+      "method": "3+3",
+      "scenario": 2,
+      "trials": 1000,
+      "selection": [
+        [
+          0.145
+        ],
+        [
+          0.38
+        ],
+        [
+          0.361
+        ],
+        [
+          0.093
+        ],
+        [
+          0.006
+        ]
+      ],
+      "max_mcse": 0.015349267083479915,
+      "mean_patients": [
+        [
+          3.678
+        ],
+        [
+          4.701
+        ],
+        [
+          4.563
+        ],
+        [
+          2.415
+        ],
+        [
+          0.537
+        ]
+      ]
+    },
+    {
+      "file": "DefaultSingleAgent.html",
+      "distribution": "eUniform",
+      "method": "3+3",
+      "scenario": 3,
+      "trials": 1000,
+      "selection": [
+        [
+          0.037
+        ],
+        [
+          0.1
+        ],
+        [
+          0.369
+        ],
+        [
+          0.376
+        ],
+        [
+          0.117
+        ]
+      ],
+      "max_mcse": 0.015317441039547044,
+      "mean_patients": [
+        [
+          3.285
+        ],
+        [
+          3.684
+        ],
+        [
+          4.491
+        ],
+        [
+          4.557
+        ],
+        [
+          2.643
+        ]
+      ]
+    },
+    {
+      "file": "DefaultSingleAgent.html",
+      "distribution": "eUniform",
+      "method": "3+3",
+      "scenario": 4,
+      "trials": 1000,
+      "selection": [
+        [
+          0.022
+        ],
+        [
+          0.058
+        ],
+        [
+          0.111
+        ],
+        [
+          0.371
+        ],
+        [
+          0.435
+        ]
+      ],
+      "max_mcse": 0.0156772127624779,
+      "mean_patients": [
+        [
+          3.222
+        ],
+        [
+          3.525
+        ],
+        [
+          3.795
+        ],
+        [
+          4.353
+        ],
+        [
+          4.521
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eUniform",
+      "method": "BOIN",
+      "scenario": 0,
+      "trials": 1000,
+      "selection": [
+        [
+          0.698
+        ],
+        [
+          0.16
+        ],
+        [
+          0.026
+        ],
+        [
+          0.005
+        ],
+        [
+          0.0
+        ]
+      ],
+      "max_mcse": 0.01451881537867329,
+      "mean_patients": [
+        [
+          13.491
+        ],
+        [
+          6.381
+        ],
+        [
+          1.656
+        ],
+        [
+          0.372
+        ],
+        [
+          0.048
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eUniform",
+      "method": "BOIN",
+      "scenario": 1,
+      "trials": 1000,
+      "selection": [
+        [
+          0.248
+        ],
+        [
+          0.572
+        ],
+        [
+          0.155
+        ],
+        [
+          0.017
+        ],
+        [
+          0.001
+        ]
+      ],
+      "max_mcse": 0.015646597074124458,
+      "mean_patients": [
+        [
+          8.787
+        ],
+        [
+          10.941
+        ],
+        [
+          5.43
+        ],
+        [
+          1.122
+        ],
+        [
+          0.162
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eUniform",
+      "method": "BOIN",
+      "scenario": 2,
+      "trials": 1000,
+      "selection": [
+        [
+          0.01
+        ],
+        [
+          0.261
+        ],
+        [
+          0.594
+        ],
+        [
+          0.132
+        ],
+        [
+          0.003
+        ]
+      ],
+      "max_mcse": 0.015529455882290275,
+      "mean_patients": [
+        [
+          4.515
+        ],
+        [
+          8.367
+        ],
+        [
+          10.158
+        ],
+        [
+          4.593
+        ],
+        [
+          0.777
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eUniform",
+      "method": "BOIN",
+      "scenario": 3,
+      "trials": 1000,
+      "selection": [
+        [
+          0.0
+        ],
+        [
+          0.02
+        ],
+        [
+          0.245
+        ],
+        [
+          0.565
+        ],
+        [
+          0.17
+        ]
+      ],
+      "max_mcse": 0.015677212762477903,
+      "mean_patients": [
+        [
+          3.501
+        ],
+        [
+          4.725
+        ],
+        [
+          7.602
+        ],
+        [
+          9.225
+        ],
+        [
+          4.317
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eUniform",
+      "method": "BOIN",
+      "scenario": 4,
+      "trials": 1000,
+      "selection": [
+        [
+          0.001
+        ],
+        [
+          0.013
+        ],
+        [
+          0.061
+        ],
+        [
+          0.217
+        ],
+        [
+          0.708
+        ]
+      ],
+      "max_mcse": 0.014378317008607092,
+      "mean_patients": [
+        [
+          3.375
+        ],
+        [
+          4.227
+        ],
+        [
+          5.106
+        ],
+        [
+          6.375
+        ],
+        [
+          9.912
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eUniform",
+      "method": "Rolling Six",
+      "scenario": 0,
+      "trials": 1000,
+      "selection": [
+        [
+          0.415
+        ],
+        [
+          0.084
+        ],
+        [
+          0.02
+        ],
+        [
+          0.001
+        ],
+        [
+          0.0
+        ]
+      ],
+      "max_mcse": 0.015581238718407466,
+      "mean_patients": [
+        [
+          5.793
+        ],
+        [
+          2.877
+        ],
+        [
+          0.6
+        ],
+        [
+          0.132
+        ],
+        [
+          0.006
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eUniform",
+      "method": "Rolling Six",
+      "scenario": 1,
+      "trials": 1000,
+      "selection": [
+        [
+          0.391
+        ],
+        [
+          0.395
+        ],
+        [
+          0.068
+        ],
+        [
+          0.008
+        ],
+        [
+          0.001
+        ]
+      ],
+      "max_mcse": 0.015458816254810716,
+      "mean_patients": [
+        [
+          5.886
+        ],
+        [
+          4.992
+        ],
+        [
+          2.607
+        ],
+        [
+          0.432
+        ],
+        [
+          0.048
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eUniform",
+      "method": "Rolling Six",
+      "scenario": 2,
+      "trials": 1000,
+      "selection": [
+        [
+          0.155
+        ],
+        [
+          0.407
+        ],
+        [
+          0.338
+        ],
+        [
+          0.076
+        ],
+        [
+          0.004
+        ]
+      ],
+      "max_mcse": 0.015535475531827147,
+      "mean_patients": [
+        [
+          5.916
+        ],
+        [
+          5.772
+        ],
+        [
+          4.755
+        ],
+        [
+          2.352
+        ],
+        [
+          0.417
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eUniform",
+      "method": "Rolling Six",
+      "scenario": 3,
+      "trials": 1000,
+      "selection": [
+        [
+          0.046
+        ],
+        [
+          0.114
+        ],
+        [
+          0.388
+        ],
+        [
+          0.339
+        ],
+        [
+          0.105
+        ]
+      ],
+      "max_mcse": 0.015409607392792329,
+      "mean_patients": [
+        [
+          5.829
+        ],
+        [
+          5.835
+        ],
+        [
+          5.601
+        ],
+        [
+          4.854
+        ],
+        [
+          2.496
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eUniform",
+      "method": "Rolling Six",
+      "scenario": 4,
+      "trials": 1000,
+      "selection": [
+        [
+          0.03
+        ],
+        [
+          0.065
+        ],
+        [
+          0.127
+        ],
+        [
+          0.38
+        ],
+        [
+          0.39
+        ]
+      ],
+      "max_mcse": 0.01542400726140908,
+      "mean_patients": [
+        [
+          5.859
+        ],
+        [
+          5.835
+        ],
+        [
+          5.637
+        ],
+        [
+          5.316
+        ],
+        [
+          4.5
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eWeibull",
+      "method": "BOIN",
+      "scenario": 0,
+      "trials": 1000,
+      "selection": [
+        [
+          0.699
+        ],
+        [
+          0.161
+        ],
+        [
+          0.025
+        ],
+        [
+          0.005
+        ],
+        [
+          0.0
+        ]
+      ],
+      "max_mcse": 0.014505137021069467,
+      "mean_patients": [
+        [
+          13.476
+        ],
+        [
+          6.42
+        ],
+        [
+          1.656
+        ],
+        [
+          0.36
+        ],
+        [
+          0.045
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eWeibull",
+      "method": "BOIN",
+      "scenario": 1,
+      "trials": 1000,
+      "selection": [
+        [
+          0.248
+        ],
+        [
+          0.574
+        ],
+        [
+          0.153
+        ],
+        [
+          0.017
+        ],
+        [
+          0.001
+        ]
+      ],
+      "max_mcse": 0.015637263187655313,
+      "mean_patients": [
+        [
+          8.781
+        ],
+        [
+          10.965
+        ],
+        [
+          5.403
+        ],
+        [
+          1.128
+        ],
+        [
+          0.162
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eWeibull",
+      "method": "BOIN",
+      "scenario": 2,
+      "trials": 1000,
+      "selection": [
+        [
+          0.011
+        ],
+        [
+          0.262
+        ],
+        [
+          0.592
+        ],
+        [
+          0.132
+        ],
+        [
+          0.003
+        ]
+      ],
+      "max_mcse": 0.015541428505771277,
+      "mean_patients": [
+        [
+          4.527
+        ],
+        [
+          8.388
+        ],
+        [
+          10.131
+        ],
+        [
+          4.59
+        ],
+        [
+          0.777
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eWeibull",
+      "method": "BOIN",
+      "scenario": 3,
+      "trials": 1000,
+      "selection": [
+        [
+          0.0
+        ],
+        [
+          0.02
+        ],
+        [
+          0.245
+        ],
+        [
+          0.566
+        ],
+        [
+          0.169
+        ]
+      ],
+      "max_mcse": 0.015673034167001616,
+      "mean_patients": [
+        [
+          3.501
+        ],
+        [
+          4.731
+        ],
+        [
+          7.608
+        ],
+        [
+          9.213
+        ],
+        [
+          4.317
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eWeibull",
+      "method": "BOIN",
+      "scenario": 4,
+      "trials": 1000,
+      "selection": [
+        [
+          0.001
+        ],
+        [
+          0.013
+        ],
+        [
+          0.061
+        ],
+        [
+          0.216
+        ],
+        [
+          0.709
+        ]
+      ],
+      "max_mcse": 0.014363808687113596,
+      "mean_patients": [
+        [
+          3.375
+        ],
+        [
+          4.227
+        ],
+        [
+          5.109
+        ],
+        [
+          6.369
+        ],
+        [
+          9.909
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eWeibull",
+      "method": "Rolling Six",
+      "scenario": 0,
+      "trials": 1000,
+      "selection": [
+        [
+          0.415
+        ],
+        [
+          0.084
+        ],
+        [
+          0.02
+        ],
+        [
+          0.001
+        ],
+        [
+          0.0
+        ]
+      ],
+      "max_mcse": 0.015581238718407466,
+      "mean_patients": [
+        [
+          5.799
+        ],
+        [
+          2.88
+        ],
+        [
+          0.6
+        ],
+        [
+          0.132
+        ],
+        [
+          0.006
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eWeibull",
+      "method": "Rolling Six",
+      "scenario": 1,
+      "trials": 1000,
+      "selection": [
+        [
+          0.391
+        ],
+        [
+          0.395
+        ],
+        [
+          0.068
+        ],
+        [
+          0.008
+        ],
+        [
+          0.001
+        ]
+      ],
+      "max_mcse": 0.015458816254810716,
+      "mean_patients": [
+        [
+          5.886
+        ],
+        [
+          4.995
+        ],
+        [
+          2.607
+        ],
+        [
+          0.435
+        ],
+        [
+          0.048
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eWeibull",
+      "method": "Rolling Six",
+      "scenario": 2,
+      "trials": 1000,
+      "selection": [
+        [
+          0.155
+        ],
+        [
+          0.407
+        ],
+        [
+          0.338
+        ],
+        [
+          0.076
+        ],
+        [
+          0.004
+        ]
+      ],
+      "max_mcse": 0.015535475531827147,
+      "mean_patients": [
+        [
+          5.916
+        ],
+        [
+          5.772
+        ],
+        [
+          4.755
+        ],
+        [
+          2.352
+        ],
+        [
+          0.417
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eWeibull",
+      "method": "Rolling Six",
+      "scenario": 3,
+      "trials": 1000,
+      "selection": [
+        [
+          0.046
+        ],
+        [
+          0.114
+        ],
+        [
+          0.387
+        ],
+        [
+          0.34
+        ],
+        [
+          0.105
+        ]
+      ],
+      "max_mcse": 0.015402305022301045,
+      "mean_patients": [
+        [
+          5.829
+        ],
+        [
+          5.835
+        ],
+        [
+          5.598
+        ],
+        [
+          4.854
+        ],
+        [
+          2.499
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eWeibull",
+      "method": "Rolling Six",
+      "scenario": 4,
+      "trials": 1000,
+      "selection": [
+        [
+          0.03
+        ],
+        [
+          0.065
+        ],
+        [
+          0.127
+        ],
+        [
+          0.38
+        ],
+        [
+          0.39
+        ]
+      ],
+      "max_mcse": 0.01542400726140908,
+      "mean_patients": [
+        [
+          5.859
+        ],
+        [
+          5.835
+        ],
+        [
+          5.637
+        ],
+        [
+          5.316
+        ],
+        [
+          4.5
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eLogLogistic",
+      "method": "BOIN",
+      "scenario": 0,
+      "trials": 1000,
+      "selection": [
+        [
+          0.699
+        ],
+        [
+          0.16
+        ],
+        [
+          0.026
+        ],
+        [
+          0.005
+        ],
+        [
+          0.0
+        ]
+      ],
+      "max_mcse": 0.014505137021069467,
+      "mean_patients": [
+        [
+          13.473
+        ],
+        [
+          6.423
+        ],
+        [
+          1.653
+        ],
+        [
+          0.369
+        ],
+        [
+          0.045
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eLogLogistic",
+      "method": "BOIN",
+      "scenario": 1,
+      "trials": 1000,
+      "selection": [
+        [
+          0.246
+        ],
+        [
+          0.576
+        ],
+        [
+          0.152
+        ],
+        [
+          0.018
+        ],
+        [
+          0.001
+        ]
+      ],
+      "max_mcse": 0.015627667772255716,
+      "mean_patients": [
+        [
+          8.802
+        ],
+        [
+          10.98
+        ],
+        [
+          5.37
+        ],
+        [
+          1.137
+        ],
+        [
+          0.156
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eLogLogistic",
+      "method": "BOIN",
+      "scenario": 2,
+      "trials": 1000,
+      "selection": [
+        [
+          0.011
+        ],
+        [
+          0.262
+        ],
+        [
+          0.595
+        ],
+        [
+          0.129
+        ],
+        [
+          0.003
+        ]
+      ],
+      "max_mcse": 0.015523369479594306,
+      "mean_patients": [
+        [
+          4.524
+        ],
+        [
+          8.385
+        ],
+        [
+          10.143
+        ],
+        [
+          4.587
+        ],
+        [
+          0.771
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eLogLogistic",
+      "method": "BOIN",
+      "scenario": 3,
+      "trials": 1000,
+      "selection": [
+        [
+          0.0
+        ],
+        [
+          0.02
+        ],
+        [
+          0.243
+        ],
+        [
+          0.568
+        ],
+        [
+          0.169
+        ]
+      ],
+      "max_mcse": 0.01566448211719749,
+      "mean_patients": [
+        [
+          3.501
+        ],
+        [
+          4.731
+        ],
+        [
+          7.599
+        ],
+        [
+          9.219
+        ],
+        [
+          4.32
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eLogLogistic",
+      "method": "BOIN",
+      "scenario": 4,
+      "trials": 1000,
+      "selection": [
+        [
+          0.001
+        ],
+        [
+          0.013
+        ],
+        [
+          0.061
+        ],
+        [
+          0.216
+        ],
+        [
+          0.709
+        ]
+      ],
+      "max_mcse": 0.014363808687113596,
+      "mean_patients": [
+        [
+          3.375
+        ],
+        [
+          4.23
+        ],
+        [
+          5.109
+        ],
+        [
+          6.36
+        ],
+        [
+          9.918
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eLogLogistic",
+      "method": "Rolling Six",
+      "scenario": 0,
+      "trials": 1000,
+      "selection": [
+        [
+          0.415
+        ],
+        [
+          0.084
+        ],
+        [
+          0.02
+        ],
+        [
+          0.001
+        ],
+        [
+          0.0
+        ]
+      ],
+      "max_mcse": 0.015581238718407466,
+      "mean_patients": [
+        [
+          5.799
+        ],
+        [
+          2.877
+        ],
+        [
+          0.6
+        ],
+        [
+          0.132
+        ],
+        [
+          0.006
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eLogLogistic",
+      "method": "Rolling Six",
+      "scenario": 1,
+      "trials": 1000,
+      "selection": [
+        [
+          0.391
+        ],
+        [
+          0.395
+        ],
+        [
+          0.068
+        ],
+        [
+          0.008
+        ],
+        [
+          0.001
+        ]
+      ],
+      "max_mcse": 0.015458816254810716,
+      "mean_patients": [
+        [
+          5.886
+        ],
+        [
+          4.995
+        ],
+        [
+          2.613
+        ],
+        [
+          0.435
+        ],
+        [
+          0.048
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eLogLogistic",
+      "method": "Rolling Six",
+      "scenario": 2,
+      "trials": 1000,
+      "selection": [
+        [
+          0.155
+        ],
+        [
+          0.407
+        ],
+        [
+          0.338
+        ],
+        [
+          0.076
+        ],
+        [
+          0.004
+        ]
+      ],
+      "max_mcse": 0.015535475531827147,
+      "mean_patients": [
+        [
+          5.916
+        ],
+        [
+          5.772
+        ],
+        [
+          4.749
+        ],
+        [
+          2.355
+        ],
+        [
+          0.417
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eLogLogistic",
+      "method": "Rolling Six",
+      "scenario": 3,
+      "trials": 1000,
+      "selection": [
+        [
+          0.046
+        ],
+        [
+          0.114
+        ],
+        [
+          0.387
+        ],
+        [
+          0.34
+        ],
+        [
+          0.105
+        ]
+      ],
+      "max_mcse": 0.015402305022301045,
+      "mean_patients": [
+        [
+          5.829
+        ],
+        [
+          5.835
+        ],
+        [
+          5.598
+        ],
+        [
+          4.854
+        ],
+        [
+          2.499
+        ]
+      ]
+    },
+    {
+      "file": "DefaultTITE.html",
+      "distribution": "eLogLogistic",
+      "method": "Rolling Six",
+      "scenario": 4,
+      "trials": 1000,
+      "selection": [
+        [
+          0.03
+        ],
+        [
+          0.065
+        ],
+        [
+          0.127
+        ],
+        [
+          0.38
+        ],
+        [
+          0.39
+        ]
+      ],
+      "max_mcse": 0.01542400726140908,
+      "mean_patients": [
+        [
+          5.859
+        ],
+        [
+          5.835
+        ],
+        [
+          5.637
+        ],
+        [
+          5.316
+        ],
+        [
+          4.5
+        ]
+      ]
+    }
+  ],
+  "input_sha256": {
+    "DefaultSingleAgent.html": "2f135cd33bbbcd2c1aa7068b589dba5c61f05993abaa514db5f4610eb0ef3ef1",
+    "DefaultTITE.html": "ebde192dc31ac32c4a8ed943057d82c6e8d97c8c4d366205f974c36ac465d35e"
+  }
+}

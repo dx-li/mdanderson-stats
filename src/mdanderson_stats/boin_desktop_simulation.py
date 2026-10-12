@@ -33,6 +33,7 @@ class BOINDesktopSimulation:
     calendar_gap_budget: int | None = None
     method: str = "BOIN"
     unsafe_assignment_count: np.ndarray | None = None
+    legacy_reporting_denominator: int | None = None
 
     @property
     def selection_probability(self) -> np.ndarray:
@@ -63,7 +64,7 @@ class _WaterfallSimulationDesign(BOINDesktopCombDesign):
         return table
 
 
-def _single_trials(study, probability, repetitions, generator, profile):
+def _single_trials(study, probability, repetitions, generator, profile, *, diagnostics=None):
     design = desktop_combination_design(study)
     shape = (repetitions, *study.shape)
     patients = np.zeros(shape, dtype=np.int64)
@@ -153,6 +154,8 @@ def _single_trials(study, probability, repetitions, generator, profile):
             selected[trial, final_dose[0] - 1, final_dose[1] - 1] = True
             unsafe[trial] = final.selected_eliminated
         reasons.append(reason)
+    if diagnostics is not None:
+        diagnostics["reporting_denominator"] = legacy_maximum
     return patients, toxicities, actual, toxicities.copy(), selected, unsafe, tuple(reasons)
 
 
@@ -299,10 +302,14 @@ def simulate_boin_desktop_combination(
     repetitions, outcome_seed = _validate_request(study, scenario_index, trials, seed, profile)
     probability = np.asarray(study.scenarios[scenario_index].probabilities)
     generator = np.random.default_rng(outcome_seed)
-    run = _contour_trials if study.mode == "contour" else _single_trials
-    n, y, actual, actual_tox, selected, unsafe, reasons = run(
-        study, probability, int(repetitions), generator, profile
-    )
+    diagnostics: dict[str, int] = {}
+    if study.mode == "contour":
+        values = _contour_trials(study, probability, repetitions, generator, profile)
+    else:
+        values = _single_trials(
+            study, probability, repetitions, generator, profile, diagnostics=diagnostics
+        )
+    n, y, actual, actual_tox, selected, unsafe, reasons = values
     return BOINDesktopSimulation(
         study,
         scenario_index,
@@ -315,6 +322,7 @@ def simulate_boin_desktop_combination(
         _owned(selected),
         _owned(unsafe),
         reasons,
+        legacy_reporting_denominator=diagnostics.get("reporting_denominator"),
     )
 
 

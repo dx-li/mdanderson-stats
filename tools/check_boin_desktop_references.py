@@ -31,6 +31,8 @@ references = (
     ("three_plus_three", None, "three-plus-three", False),
     ("single_edited", None, "single-edited", False),
     ("tite_table", None, "tite-table", False),
+    ("tite_table_edges", None, "tite-table-edges", False),
+    ("score_table", None, "score-table", False),
     ("single_reports", None, "single-reports", False),
     ("simulation_summaries", "Functions for BOIN_Comb.R", "simulation-summaries", True),
 )
