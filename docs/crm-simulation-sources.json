@@ -1,5 +1,8 @@
 {
-  "catalog_ids": [81, 132],
+  "catalog_ids": [
+    81,
+    132
+  ],
   "retrieved_at": "2026-09-26",
   "scope": "CRM, BMA-CRM and DA-CRM calendar trial replay and serial operating-characteristic simulation",
   "sources": [
@@ -23,7 +26,8 @@
     "Safety stopping is assessed at cohort boundaries; after maximum enrollment, final selection waits for complete ascertainment.",
     "A safety stop remains a stop while enrolled patients finish follow-up; decision and final ascertainment times are reported separately.",
     "Separate patient-generation and posterior-sampling random streams; retain compact summaries and release posterior draws.",
-    "Serial simulation and explicit likelihood-evaluation budgets; exhaustion raises rather than producing partial operating characteristics."
+    "Serial simulation and explicit likelihood-evaluation budgets; exhaustion raises rather than producing partial operating characteristics.",
+    "An explicit native_desktop profile starts at zero, retries waits at candidate arrivals, consumes the final patient gap, and separates the terminal assessment clock from actual ascertainment duration."
   ],
-  "limitations": "No native scheduler, random-sequence, hidden MCMC setting, or executable parity. The newer CRM Suite policy differs from the older desktop DA safety-wait convention. Native files/reports and online automatic calibration and hidden conventions remain separate work."
+  "limitations": "Native desktop scheduling and saved Suite study/report workflows now have bounded original-instruction and schema evidence (docs/crm-desktop.md). Native random sequences, adaptive-MCMC shortcuts/stopping, populated patient-file reopening and generated native reports remain unverified. Online application defaults are a separate contract."
 }

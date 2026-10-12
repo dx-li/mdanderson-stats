@@ -53,6 +53,7 @@ class CRMSimulation:
     evaluations: int
     max_dose_mcse: FloatArray
     max_split_rhat: FloatArray
+    scheduling: str = "ascertainment"
 
 
 def _freeze_int(values: NDArray[np.int64]) -> NDArray[np.int64]:
@@ -67,6 +68,8 @@ def simulate_crm(
     accrual_rate: float,
     *,
     target: float,
+    scheduling: Literal["ascertainment", "native_desktop"] = "ascertainment",
+    max_arrival_gaps: int = 2000,
     cohorts: int = 10,
     cohort_size: int = 3,
     trials: int = 100,
@@ -101,6 +104,9 @@ def simulate_crm(
     requires a separate ``sampler_rng`` so posterior sampling never changes
     future trial scenarios.
     """
+    if scheduling not in {"ascertainment", "native_desktop"}:
+        raise ValueError("scheduling must be 'ascertainment' or 'native_desktop'")
+    gap_limit = _count_setting(max_arrival_gaps, "max_arrival_gaps", 200, 10_000)
     if method not in {"bmacrm", "dacrm"}:
         raise ValueError("method must be 'bmacrm' or 'dacrm'")
     if aggregation not in {"bma", "bms", "occam"}:
@@ -249,10 +255,18 @@ def simulate_crm(
     for trial_index in range(repetition_count):
         if total_evaluations >= simulation_limit:
             raise RuntimeError("CRM simulation exhausted max_total_evaluations")
+        gap_count = gap_limit if scheduling == "native_desktop" else planned_patients
+        # A per-trial arrival stream keeps the tape bound from changing
+        # potential outcome draws or subsequent trial scenarios.
+        gap_rng = (
+            np.random.default_rng(int(outcome_rng.integers(0, 2**63)))
+            if scheduling == "native_desktop"
+            else outcome_rng
+        )
         if arrival == "fixed":
-            gaps = np.full(planned_patients, 1 / rate)
+            gaps = np.full(gap_count, 1 / rate)
         else:
-            gaps = outcome_rng.exponential(1 / rate, planned_patients)
+            gaps = gap_rng.exponential(1 / rate, gap_count)
         quantiles = outcome_rng.random((planned_patients, dose_count))
         potential_delays = toxicity_time_quantile(
             quantiles,
@@ -270,6 +284,7 @@ def simulate_crm(
             potential_delays,
             duration,
             target=target_value,
+            scheduling=scheduling,
             cohort_size=size,
             starting_dose=starting,
             method=method,
@@ -332,4 +347,5 @@ def simulate_crm(
         total_evaluations,
         _freeze(diagnostic_mcse),
         _freeze(diagnostic_rhat),
+        scheduling,
     )

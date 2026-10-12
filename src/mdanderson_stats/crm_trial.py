@@ -78,6 +78,8 @@ class CRMTrial:
     max_dose_mcse: float | None
     max_split_rhat: float | None
     steps: tuple[CRMTrialStep, ...]
+    scheduling: str = "ascertainment"
+    arrival_gaps_used: int = 0
 
 
 def _freeze_int(values: NDArray[np.int64]) -> NDArray[np.int64]:
@@ -153,6 +155,7 @@ def run_crm_trial(
     window: float,
     *,
     target: float,
+    scheduling: Literal["ascertainment", "native_desktop"] = "ascertainment",
     cohort_size: int = 3,
     starting_dose: int = 0,
     method: Literal["bmacrm", "dacrm"] = "bmacrm",
@@ -178,15 +181,31 @@ def run_crm_trial(
     the next cohort decision. Within a cohort, patients keep the current dose.
     A pending-outcome wait advances to the earliest ascertainment of an
     already-enrolled patient and does not add a second arrival gap afterward.
+
+    With ``scheduling="native_desktop"``, the first patient arrives at zero.
+    ``interarrival`` is instead a tape of successive candidate gaps, consumed
+    after every enrollment (including the last) and for each wait retry.
+    Its length may exceed the number of patient rows in ``dlt_delays``.
+    Terminal assessment occurs at the post-enrollment clock plus the window;
+    reported duration is the last actual outcome ascertainment. Tape exhaustion
+    raises rather than silently changing the schedule. Native RNG identity is
+    not claimed.
     """
     if method not in {"bmacrm", "dacrm"}:
         raise ValueError("method must be 'bmacrm' or 'dacrm'")
-    arrivals = _raw_numeric(interarrival, "interarrival", _MAX_PATIENTS)
+    if scheduling not in {"ascertainment", "native_desktop"}:
+        raise ValueError("scheduling must be 'ascertainment' or 'native_desktop'")
+    native_schedule = scheduling == "native_desktop"
+    arrivals = _raw_numeric(
+        interarrival, "interarrival", 10_000 if native_schedule else _MAX_PATIENTS
+    )
     delays = np.asarray(dlt_delays)
-    if arrivals.ndim != 1 or not 1 <= arrivals.size <= _MAX_PATIENTS:
-        raise ValueError("interarrival must contain 1..200 nonnegative patient gaps")
-    if np.any(arrivals < 0):
-        raise ValueError("interarrival gaps must be nonnegative")
+    if arrivals.ndim != 1 or arrivals.size == 0:
+        raise ValueError("interarrival must be a nonempty vector of gaps")
+    if np.any(arrivals < 0) or (native_schedule and np.any(arrivals <= 0)):
+        raise ValueError(
+            "interarrival gaps must be nonnegative (strictly positive for native_desktop)"
+        )
     raw_skeletons = _raw_numeric(skeletons, "skeletons", 5 * _MAX_DOSES)
     if raw_skeletons.ndim == 1:
         skeleton_matrix = raw_skeletons[None, :]
@@ -203,7 +222,10 @@ def run_crm_trial(
         raise ValueError("DA-CRM trials require exactly one dose skeleton")
     if (
         delays.ndim != 2
-        or delays.shape != (arrivals.size, dose_count)
+        or not 1 <= delays.shape[0] <= _MAX_PATIENTS
+        or delays.shape[1] != dose_count
+        or (not native_schedule and delays.shape[0] != arrivals.size)
+        or (native_schedule and arrivals.size < delays.shape[0])
         or delays.dtype.kind not in "iuf"
     ):
         raise ValueError("dlt_delays must have shape (patients,doses)")
@@ -219,7 +241,7 @@ def run_crm_trial(
     if np.any(delays[np.isfinite(delays)] > duration):
         raise ValueError("finite DLT delays must not exceed window")
     size = _count_setting(cohort_size, "cohort_size", 1, _MAX_COHORT_SIZE)
-    if arrivals.size % size:
+    if delays.shape[0] % size:
         raise ValueError("planned patients must be a multiple of cohort_size")
     start = _count_setting(starting_dose, "starting_dose", 0, dose_count - 1)
     per_call_limit = _count_setting(
@@ -257,15 +279,15 @@ def run_crm_trial(
             raise TypeError("rng must be a numpy.random.Generator")
         transition_count = chains * (draws + warmup)
         if (
-            transition_count * (arrivals.size + dose_count + da_prior.shape.size)
+            transition_count * (delays.shape[0] + dose_count + da_prior.shape.size)
             > _MAX_TRANSITION_WORK
         ):
             raise ValueError("worst-case DA-CRM transition work exceeds 20000000 units")
-        retained = chains * draws * (1 + da_prior.shape.size + dose_count + arrivals.size)
+        retained = chains * draws * (1 + da_prior.shape.size + dose_count + delays.shape[0])
         if retained > _MAX_RETAINED_CELLS:
             raise ValueError("worst-case retained DA-CRM draws exceed 2000000 cells")
 
-    n_planned = arrivals.size
+    n_planned = delays.shape[0]
     assigned = np.full(n_planned, -1, dtype=np.int64)
     enrollment = np.empty(n_planned, dtype=float)
     dlt_calendar = np.full(n_planned, np.inf, dtype=float)
@@ -280,6 +302,15 @@ def run_crm_trial(
     stop_reason = "max_patients"
     decision_time = 0.0
     early_stop = False
+    gap_index = 0
+
+    def advance_candidate(at_time: float) -> float:
+        nonlocal gap_index
+        if gap_index == arrivals.size:
+            raise RuntimeError("native_desktop exhausted the supplied arrival-gap tape")
+        next_time = _advance(at_time, float(arrivals[gap_index]))
+        gap_index += 1
+        return next_time
 
     def assess(
         at_time: float, *, final: bool = False
@@ -322,7 +353,8 @@ def run_crm_trial(
         return snapshot, result
 
     while enrolled < n_planned:
-        clock = _advance(clock, float(arrivals[enrolled]))
+        if not native_schedule:
+            clock = _advance(clock, float(arrivals[enrolled]))
         while True:
             snapshot, result = assess(clock)
             decision = result.decision
@@ -337,7 +369,7 @@ def run_crm_trial(
                     raise RuntimeError(
                         "CRM decision requested a wait with no pending ascertainment"
                     )
-                next_time = float(np.min(future))
+                next_time = advance_candidate(clock) if native_schedule else float(np.min(future))
                 if next_time <= clock:
                     raise RuntimeError("CRM pending-outcome wait did not advance the calendar")
                 suspension += next_time - clock
@@ -353,7 +385,7 @@ def run_crm_trial(
             raise RuntimeError("CRM start decision did not select a dose")
         for offset in range(size):
             patient = enrolled + offset
-            if offset:
+            if offset and not native_schedule:
                 clock = _advance(clock, float(arrivals[patient]))
             enrollment[patient] = clock
             assigned[patient] = current
@@ -363,11 +395,14 @@ def run_crm_trial(
             dlt_calendar[patient] = event_time
             known_at[patient] = min(window_end, event_time)
             treated_counts[current] += 1
+            if native_schedule:
+                clock = advance_candidate(clock)
         enrolled += size
 
     if enrolled == 0:
         raise RuntimeError("CRM trial ended before enrolling any patients")
-    final_time = max(clock, float(np.max(known_at[:enrolled])))
+    ascertainment_end = float(np.max(known_at[:enrolled]))
+    final_time = ascertainment_end if native_schedule else max(clock, ascertainment_end)
     dlt_by_patient = np.isfinite(dlt_calendar[:enrolled])
     toxicities = np.bincount(assigned[:enrolled][dlt_by_patient], minlength=dose_count).astype(
         np.int64
@@ -375,8 +410,8 @@ def run_crm_trial(
     observed_counts = treated_counts.copy()
     selected_dose: int | None = None
     if not early_stop:
-        decision_time = final_time
-        _, final_result = assess(final_time, final=True)
+        decision_time = _advance(clock, duration) if native_schedule else final_time
+        _, final_result = assess(decision_time, final=True)
         final_decision = final_result.decision
         if final_decision.action == "select_mtd":
             selected_dose = final_decision.dose
@@ -409,4 +444,6 @@ def run_crm_trial(
         max_mcse,
         max_rhat,
         tuple(steps),
+        scheduling,
+        gap_index if native_schedule else enrolled,
     )

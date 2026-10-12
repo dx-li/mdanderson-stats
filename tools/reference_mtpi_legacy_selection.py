@@ -43,7 +43,8 @@ cases <- list(
   list(n=c(6,6,6), x=c(3,2,1), target=.5, excluded=4),
   list(n=c(2,2), x=c(0,2), target=.5, excluded=3),
   list(n=c(1,199), x=c(1,0), target=.3, excluded=3),
-  list(n=c(0,3,9,0), x=c(0,1,0,0), target=.3, excluded=5)
+  list(n=c(0,3,9,0), x=c(0,1,0,0), target=.3, excluded=5),
+  list(n=c(2,2), x=c(1,1), target=.5000000001, excluded=3)
 )
 result <- list()
 for (case_id in seq_along(cases)) {

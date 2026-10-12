@@ -2978,7 +2978,7 @@
         "Exact bounded pending-count look-ahead for CRM/BMA-CRM, with completion witnesses and original model priors preserved for lossless refits",
         "Retrospective calendar snapshots and explicit deterministic CRM, look-ahead or DA posterior routing; see docs/crm-conduct.md",
         "Fixed-dose cohort calendar replay and serial operating-characteristic simulation with calibrated event timing, separate patient/sampler randomness, compact diagnostics and global work limits; see docs/crm-simulation.md",
-        "Native files/reports and older-version conduct differences, including the older desktop DA safety-wait convention, remain pending"
+        "Recovered desktop arrival-tape scheduling, pending-data safety waits, separate terminal assessment/duration and native six-interval hazard-prior safeguards; docs/crm-desktop.md."
       ],
       "validation": [
         "Ten independent base-R posterior scenarios including ordinary CRM, the guide skeletons, unequal/zero priors, extreme probabilities and 10000-patient concentrated or boundary data",
@@ -2990,7 +2990,8 @@
         "Exhaustive grouped-completion agreement/disagreement cases, explicit work-limit waits, and an extreme raw-prior preservation regression with independent R posterior support",
         "Calendar boundary and future-outcome masking checks, completed-data DA/CRM equivalence without RNG consumption, and pending-data routing checks",
         "All four complete two-patient CRM histories checked against independent base-R quadrature, plus fixed-cohort enrollment, wait timing and safety-stop follow-up checks",
-        "Serial simulation reproducibility, count conservation and independent DA/patient random-stream checks; final nonselection distinguished from early termination"
+        "Serial simulation reproducibility, count conservation and independent DA/patient random-stream checks; final nonselection distinguished from early termination",
+        "Hash-pinned original x86 wait/raw-rate, six hazard-prior and final-duration probes; native calendar replay, independent scenario/arrival streams, and original-R exact residual mTPI tie added separately."
       ]
     },
     {
@@ -4076,7 +4077,8 @@
         "Exact bounded pending-count look-ahead for CRM/BMA-CRM, with completion witnesses and original model priors preserved for lossless refits",
         "Retrospective calendar snapshots and explicit deterministic CRM, look-ahead or DA posterior routing; see docs/crm-conduct.md",
         "Fixed-dose cohort calendar replay and serial operating-characteristic simulation with calibrated event timing, separate patient/sampler randomness, compact diagnostics and global work limits; see docs/crm-simulation.md",
-        "Native files/reports and older-version conduct differences, including the older desktop DA safety-wait convention, remain pending"
+        "Recovered desktop arrival-tape scheduling, pending-data safety waits, separate terminal assessment/duration and native six-interval hazard-prior safeguards; docs/crm-desktop.md.",
+        "Read/preserve native 1.0.0 HTML/XML studies, select enabled skeletons, simulate stored scenarios with explicit work/seed, and render Python reports preserving original settings; original report markup and ambiguous patient dates are not executed or inferred."
       ],
       "validation": [
         "Ten independent base-R posterior scenarios including ordinary CRM, the guide skeletons, unequal/zero priors, extreme probabilities and 10000-patient concentrated or boundary data",
@@ -4088,7 +4090,9 @@
         "Exhaustive grouped-completion agreement/disagreement cases, explicit work-limit waits, and an extreme raw-prior preservation regression with independent R posterior support",
         "Calendar boundary and future-outcome masking checks, completed-data DA/CRM equivalence without RNG consumption, and pending-data routing checks",
         "All four complete two-patient CRM histories checked against independent base-R quadrature, plus fixed-cohort enrollment, wait timing and safety-stop follow-up checks",
-        "Serial simulation reproducibility, count conservation and independent DA/patient random-stream checks; final nonselection distinguished from early termination"
+        "Serial simulation reproducibility, count conservation and independent DA/patient random-stream checks; final nonselection distinguished from early termination",
+        "Hash-pinned original x86 wait/raw-rate, six hazard-prior and final-duration probes; native calendar replay, independent scenario/arrival streams, and original-R exact residual mTPI tie added separately.",
+        "All three original installer studies read, simulated in bounded smoke runs and settings-round-tripped; generated native reports and populated native patient reopening remain unavailable."
       ]
     },
     {

@@ -41,7 +41,7 @@ already-enrolled patient's outcome becomes known. The decision is then
 recomputed. The prospective patient is treated as soon as the wait resolves;
 later arrival gaps run from actual enrollment. There is no backlog of patients
 accumulating during suspension. These are explicit Python scheduling choices;
-the native program's internal scheduler is not reproduced.
+a separate [native desktop profile](crm-desktop.md) now reproduces the recovered arrival/retry and terminal-clock rules.
 
 After maximum enrollment, the runner completes follow-up before selecting an
 MTD. A safety stop prevents any further enrollment and returns no MTD, even
@@ -56,7 +56,7 @@ are also available for this route. Pending outcomes use exact bounded look-ahead
 set `method="dacrm"` and supply a matching `da_prior`, explicit
 `minimum_observed`, and a NumPy random generator. Completed outcomes use
 deterministic CRM integration. The newer CRM Suite decision policy applies;
-the [older desktop safety-wait exception](dacrm.md) is a separate behavior.
+the [pending-data safety wait](dacrm.md) is supported.
 
 ## Repeated trials
 
@@ -154,6 +154,7 @@ trials. These are work bounds, not claims that any particular run will achieve
 adequate Monte Carlo precision within them.
 
 This adds scientific simulation coverage for the CRM components of catalog
-entries 81 and 132. Native saved files/reports, older-version differences and
-the online entry's automatic skeleton calibration and hidden conventions remain open.
+entries 81 and 132. [Native saved-study and report workflows](crm-desktop.md) are now available.
+Exact adaptive-MCMC stopping, populated native patient-file reopening and the
+online entry's hidden conventions remain open.
 See [source provenance](crm-simulation-sources.json).

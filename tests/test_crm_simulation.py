@@ -73,3 +73,25 @@ def test_da_simulation_uses_an_independent_sampler_stream_for_pending_data():
     expected_scenario_rng.random((2, 2))
     expected_scenario_rng.random((2, 2))
     assert scenario_rng.bit_generator.state == expected_scenario_rng.bit_generator.state
+
+
+def test_native_schedule_bound_does_not_change_patient_random_stream():
+    kwargs = dict(
+        skeletons=[0.1, 0.3],
+        true_toxicity=[0.1, 0.4],
+        window=1,
+        accrual_rate=1,
+        target=0.25,
+        cohorts=2,
+        cohort_size=1,
+        trials=2,
+        rng=610,
+        safety_cutoff=1,
+        scheduling="native_desktop",
+    )
+    first = simulate_crm(**kwargs, max_arrival_gaps=200)
+    second = simulate_crm(**kwargs, max_arrival_gaps=400)
+    np.testing.assert_array_equal(first.patients, second.patients)
+    np.testing.assert_array_equal(first.toxicities, second.toxicities)
+    np.testing.assert_array_equal(first.duration, second.duration)
+    assert first.scheduling == "native_desktop"

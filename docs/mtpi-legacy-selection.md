@@ -55,3 +55,10 @@ exact-rational max-min characterization checks weighted isotonic fits across all
 [audit and reproducible reference command](../research/mtpi-legacy-selection-audit.md).
 These validate the estimator, not the entire native controller, Excel add-in,
 random streams, or clinical validity. Catalog #72 remains partial.
+
+
+Exact residual ties are independently checked by original R fixture case11:
+`n=(2,2)`, `x=(1,1)`, target `.5000000001`. After native offsets the scores
+`.5` and `.5000000002` have exactly equal residuals; original R and Python both
+select dose1. Hash-pinned original source line220 selects
+`sort(abs(pp[mindose:tdose]-pT), index.return=T)$ix[1]`, not all minimizers.

@@ -70,3 +70,48 @@ Compaq Visual Fortran. ExampleFiles.exe is an ordinary self-extracting ZIP with
 281 files including cohort CSVs and TMML studies. Stage-two second-derivative
 criterion remains unrecovered: do not regularize the published rank-one
 information matrix or invent a determinant criterion.
+
+
+## Completed desktop workflow batch
+
+`docs/crm-desktop.md` documents the new saved-study → serial scenario simulation
+→ HTML report → settings reload workflow. `native_desktop` scheduling is separate
+from the preserved ascertainment-based Python profile. The original kernel's
+final accumulator computes maximum enrollment plus final ascertainment delay;
+its terminal assessment clock includes an additional gap and observation window.
+Both are now represented without conflating duration and decision time.
+
+The native six-interval Gamma prior has rate0.5 and shape=mean_hazard/2. For each
+interval independently, an unadjusted next cumulative probability within1e-6
+of one is replaced by .99 if its previous cumulative value is below .99, else
+.9+.1*previous. The modified upper endpoint does not propagate to the next
+interval's lower endpoint. Six original-instruction cases cover ordinary,
+extreme and adjacent-double threshold inputs; maximum shape error1.39e-17.
+`tools/reference_crm_native_schedule.py` regenerates prior/duration references
+using the separately obtained original kernel and explicit runtime services.
+
+Original installer study hashes:
+
+- CRM: `6f0e8c3b8ca5c6fe358a5bb34b22545cc802a203448dd15eb26f036b9592aeec`
+- BMA-CRM: `32d518e90eb941a06a5dbcd04e4fbe9cf7df130f195a56987493f2109566048e`
+- DA-CRM: `930c73015c853f6d526924abf2a59191323b6d09f0b1bd539acac13be943357e`
+
+All three read and round-trip semantically; each of their five scenarios ran
+with one Python trial and explicit seed1401. CRM/BMA enrolled30,30,30,30,6;
+DA enrolled30 in each scenario with a deliberately small8-draw/zero-warmup
+smoke configuration. These are execution checks, not precise operating
+characteristics or original native output references. Native adaptive MCMC,
+completion-bound shortcuts, populated patient-file reopening and original
+rendered-result restoration remain unverified. Whole-application status stays
+partial; the remaining native contracts are now narrower and explicit.
+
+### Verified CRM desktop checkpoint
+
+The complete warnings-as-errors suite passed **34,044 tests in 806.61 seconds**
+on the CRM desktop batch, including the earlier EffTox/CRM-safety additions.
+Ruff lint/format (2,432 files), mypy (699 source files), wheel and sdist builds
+passed. Outside the checkout, reinstalling that wheel into the isolated clean
+validation environment passed 27 saved-study/mTPI tests. Each of the three
+original CRM/BMA/DA saved studies ran all five scenarios with a bounded smoke
+configuration and preserved settings on round-trip; low-draw smoke runs do not
+establish posterior precision or original random-stream identity.

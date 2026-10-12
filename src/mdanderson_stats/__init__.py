@@ -745,6 +745,12 @@ from .crm_calendar import (
     crm_calendar_decision,
     crm_calendar_snapshot,
 )
+from .crm_desktop import (
+    CRMDesktopRun,
+    CRMDesktopStudy,
+    read_crm_desktop_html,
+    simulate_crm_desktop_study,
+)
 from .crm_prior_ess import CRMPriorESSSimulation, simulate_crm_prior_ess
 from .crm_simulation import CRMSimulation, simulate_crm
 from .crm_trial import CRMTrial, CRMTrialStep, run_crm_trial
@@ -4023,3 +4029,11 @@ from .efftox_native_contour import (
 )
 
 __all__ += ["EffToxContourFitRun", "EffToxNativeContourFit", "fit_efftox_native_contour"]
+
+
+__all__ += [
+    "CRMDesktopStudy",
+    "CRMDesktopRun",
+    "read_crm_desktop_html",
+    "simulate_crm_desktop_study",
+]

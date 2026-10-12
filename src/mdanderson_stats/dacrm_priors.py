@@ -1,6 +1,7 @@
 """Convenience elicitation helpers for DA-CRM piecewise hazard priors."""
 
 from math import sqrt
+from typing import Literal
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -59,6 +60,7 @@ def dacrm_trimester_prior(
     probabilities: ArrayLike,
     *,
     dispersion: float,
+    endpoint_policy: Literal["fixed", "native_desktop"] = "fixed",
     alpha_sd: float = sqrt(2),
 ) -> DACRMPrior:
     """Build six-piece hazards calibrated to three trimester DLT probabilities.
@@ -66,8 +68,14 @@ def dacrm_trimester_prior(
     The three positive probabilities must sum to one. The final intermediate
     cumulative probability must be below 0.99 so the six calibrated hazards
     remain finite and positive. The guide does not specify a gamma dispersion,
-    so callers must supply it explicitly.
+    so callers must supply it explicitly. Recovered desktop code uses dispersion
+    two and ``endpoint_policy="native_desktop"``: for any interval whose
+    unadjusted next cumulative probability is within 1e-6 of one, use .99 when
+    the previous value is below .99, otherwise .9 + .1 times that previous value.
+    The default fixed endpoint preserves the original Python API.
     """
+    if endpoint_policy not in {"fixed", "native_desktop"}:
+        raise ValueError("endpoint_policy must be 'fixed' or 'native_desktop'")
     window_value = _positive(window, "window")
     dispersion_value = _positive(dispersion, "dispersion")
     raw = np.asarray(probabilities)
@@ -82,10 +90,23 @@ def dacrm_trimester_prior(
         raise ValueError("probabilities must be positive and sum to one")
     p1, p2, p3 = probs
     cumulative = np.array([0.0, p1 / 2, p1, p1 + p2 / 2, p1 + p2, p1 + p2 + p3 / 2, 0.99])
-    if np.any(np.diff(cumulative) <= 0):
-        raise ValueError("trimester cumulative probabilities must increase strictly to 0.99")
+    if endpoint_policy == "native_desktop":
+        cumulative[-1] = p1 + p2 + p3
+    previous, following = cumulative[:-1], cumulative[1:].copy()
+    if endpoint_policy == "native_desktop":
+        # Native code calibrates each interval separately: adjusting q_next
+        # does not alter the following interval's original q_previous.
+        near_one = np.abs(following - 1) < 1e-6
+        following[near_one] = np.where(
+            previous[near_one] < 0.99, 0.99, 0.9 + 0.1 * previous[near_one]
+        )
+    if np.any(following <= previous) or np.any(following >= 1):
+        raise ValueError(
+            "trimester cumulative probabilities must increase strictly "
+            "within each interval below one"
+        )
     with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
-        means = (6.0 / window_value) * (np.log1p(-cumulative[:-1]) - np.log1p(-cumulative[1:]))
+        means = (6.0 / window_value) * (np.log1p(-previous) - np.log1p(-following))
     if np.any(~np.isfinite(means) | (means <= 0)):
         raise ValueError("trimester probabilities imply nonpositive or unrepresentable hazards")
     return _prior(window_value, means, dispersion_value, alpha_sd)

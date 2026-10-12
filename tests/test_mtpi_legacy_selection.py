@@ -102,3 +102,15 @@ def test_perturbation_single_dose_and_empty_ranges():
 def test_invalid_states(patients, toxicities, kwargs):
     with pytest.raises(ValueError):
         select_mtpi_legacy_mtd(patients, toxicities, **kwargs)
+
+
+def test_original_r_exact_residual_tie_selects_lowest_dose():
+    data = np.genfromtxt(
+        Path(__file__).parent / "fixtures/mtpi-legacy-selection.csv", delimiter=",", names=True
+    )
+    rows = data[data["case"] == 11]
+    distances = abs(rows["score"] - rows["target"])
+    assert distances[0] == distances[1]
+    assert rows["selected"].tolist() == [1, 1]
+    result = select_mtpi_legacy_mtd([2, 2], [1, 1], target=0.5000000001)
+    assert result.dose == 1
