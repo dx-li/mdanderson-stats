@@ -341,3 +341,12 @@ difference is0.00305588; maximum between-scramble reference standard error is
 2.823e-6. The reproducible tool and JSON are check_uaroet_correlated_reference.py
 and uaroet-correlated-reference-2026-10-12.json. This supports that particular
 posterior, not general high-dimensional calibration or clinical validity.
+
+Precision acceptance checkpoint:66,752 full tests passed with all extras and
+warnings as errors in979.91s;5,592 outside-checkout installed-wheel tests and
+both examples passed. Production hashes matched754 files from collection.
+Ruff/format2,670files, mypy754sources and build passed;758 packaged source/data
+files and29 licensing files match, and13 native files match regeneration.
+A one-chain direct-prior case also meets conduct target0.005 at50,000draws
+(maximum ratio0.00435839). See uaroet-precision-validation-2026-10-12.json.
+Next integrate the separately tested calibration and controller prototypes.

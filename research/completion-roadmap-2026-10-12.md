@@ -90,3 +90,13 @@ prior posterior checks pass. Next implement continuous per-chain precision and
 pseudo-trial calibration, preserving the core sampler's accepted likelihood.
 The current sampler's retained-cell/work caps need a bounded continuation workflow;
 source-required targets must not be claimed from pooled diagnostics or short fits.
+
+UAROET continuous per-chain precision is integrated at e89acdc7, with independent
+correlated-posterior integration evidence at632a9d2c. Simulation target0.03 passes
+at4,000draws per chain; a separate one-chain direct-prior conduct target0.005
+passes at50,000draws. New full-suite acceptance passed66,752tests (installed wheel5,592). Next integrate the
+pseudo-trial calibration driver after its dense correlated posterior accuracy
+check, then source-validated safe/legacy controller primitives, saved conduct,
+delayed calendar simulation and report/aggregation workflows. The1000-repetition
+recommendation applies to final calibrated trial designs, not a one-trial pilot.
+No application status promotion:101 implemented/31 partial/6 pending.

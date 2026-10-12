@@ -1,0 +1,50 @@
+{
+  "scope": "UAROET continuous per-chain posterior precision; application92 remains partial",
+  "code_commit": "e89acdc7fd3f5ca6a4d603dcd36507f82766dd41",
+  "independent_reference_commit": "632a9d2c21dc811239c9184978134218e3b1a918",
+  "full_suite": {
+    "passed": 66752,
+    "seconds": 979.91,
+    "warnings_as_errors": true,
+    "all_extras": true
+  },
+  "installed_wheel": {
+    "passed": 5592,
+    "outside_checkout": true,
+    "extras": [
+      "plot",
+      "image"
+    ],
+    "examples": [
+      "uaroet_pending.py",
+      "uaroet_saved_study.py"
+    ]
+  },
+  "native_reference_files_identical_to_regeneration": 13,
+  "static_checks": {
+    "ruff": true,
+    "formatted_files": 2670,
+    "mypy_source_files": 754
+  },
+  "artifacts": {
+    "source_wheel_byte_matched_files": 758,
+    "notices_identical": true,
+    "raw_binaries_excluded": true,
+    "wheel_sha256": "6d48ec4f0fc11e5605fa652c1cfa47ffc85739a92d8ceef5c4925622c6a47086",
+    "sdist_sha256": "07f53def87d9f527018da14fc7483e865fb7fc634349ea1e9ecaa864bfa69079"
+  },
+  "licensing_files_retained": 29,
+  "production_files_hash_verified": 754,
+  "production_snapshot_sha256": "ab002dd4f221a0442e196b8a8d4fd2160ad6f816fb8c1e58008320514ade4315",
+  "quality_references": [
+    "uaroet-precision-quality-2026-10-12.json",
+    "uaroet-correlated-reference-2026-10-12.json",
+    "uaroet-conduct-precision-quality-2026-10-12.json"
+  ],
+  "remaining": [
+    "Pseudo-trial prior calibration integration",
+    "Safe and legacy controller integration",
+    "Saved conduct, calendar simulation, aggregation and reports"
+  ],
+  "clinical_validation": false
+}

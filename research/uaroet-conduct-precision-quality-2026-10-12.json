@@ -1,0 +1,13 @@
+{
+  "scope": "one-chain direct-prior conduct precision; no posterior-data or R-hat convergence claim",
+  "target": 0.005,
+  "draws": 50000,
+  "ratios": [
+    [
+      0.004358389770369489,
+      0.004044058706915274
+    ]
+  ],
+  "work": 450000,
+  "clinical_validation": false
+}
