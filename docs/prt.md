@@ -1,13 +1,13 @@
 # Predicted risks of toxicity (PRT)
 
-Catalog entry **69 remains partial**. Python now implements the discrete probit
-hazard likelihood, conditional remaining toxicity probabilities, PRT predictive
-criteria, cohort decisions and final selection. The state-space posterior fit and published covariance-weighted isotonic
-transformation are now available below. An [explicit-input calendar replay](prt-calendar.md)
-connects these components to cohort enrollment and follow-up. Explicit native arithmetic diagnostics and patient-file conversion are available.
-Complete native conduct, timing and operating-characteristic replication remain outstanding. The predictive
-function accepts aligned isotonic posterior draws; fitting and projection are
-separate steps.
+The recovered guide workflow includes saved conduct and generated simulation,
+posterior inference, explicit paper/native profiles, quality holds and batch
+JSON/CSV reports. See [saved simulation](prt-simulation.md) and the
+[scope crosswalk](../research/prt-simulation-complete-checkpoint-2026-10-12.md).
+The lower-level predictive function accepts aligned isotonic posterior draws;
+fitting and projection remain separately usable. The historical algorithm's
+numerical defects, exact native RNG/GUI identity and clinical validity are
+separate from workflow coverage.
 
 Sources: [MD Anderson entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/69),
 [conduct guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PRT/readme_conduct.pdf),
@@ -245,8 +245,8 @@ and shape bounds are1e6 and10000 respectively; all must be positive.
 
 `prt_arrivals_from_uniforms(mean_interarrival, uniforms)` sorts exactly800
 uniform points on `[0,800*mean]`, matching the recovered finite arrival law.
-It is not an exponential inter-arrival generator. These primitives do not yet
-constitute the complete desktop trial runner. Original simulation text import now
+It is not an exponential inter-arrival generator. The [saved simulation runner](prt-simulation.md) connects these primitives to
+the distinct native screening and simulation controllers. Original simulation text import now
 requires its native integer-day assessment window; direct Python study endpoints
 can represent a separate continuous-time extension.
 
@@ -274,7 +274,7 @@ prints de-escalation without selecting an exact lower dose. The returned
 `source_dose` is a retained native register, not an actionable recommendation.
 Simulation/final selection have distinct eligibility, tie and fallback defects;
 invalid selections are flagged. Abstract screening counts must be derived from
-actual patient records by any future runner.
+actual patient records; the saved simulation runner performs that conversion.
 
 Validation includes 2,867 focused tests, including 72 native moments/summary
 cases, 1,368 full predictive/controller cases and 17 original-executable output
@@ -328,5 +328,5 @@ The six-patient bundled guide history, using four chains with2,000 retained and
 reaches approximately-.013319; the legacy pooled result provisionally escalates
 under6.21 but separate chain calculations disagree. Low R-hat alone is insufficient.
 The published and native calculations must not silently substitute for each other.
-Complete native generated-calendar, simulation-batch and operating-characteristic
-report acceptance remain open; catalog69 is still partial.
+The [generated-calendar and batch workflow](prt-simulation.md) now supplies the
+simulation path, with explicit unresolved statuses and unconditional denominators.

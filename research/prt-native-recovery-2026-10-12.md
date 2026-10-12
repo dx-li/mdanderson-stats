@@ -280,3 +280,20 @@ A bounded cross-check of the two other tools explicitly setting0x37f found no
 UAROET calendar fixture change at53-bit precision, and only2.78e-17 maximum change
 across six ToxFinder interpolation-surface cases. No other application's default
 or status was changed; this checks those captured cases, not all runtime paths.
+
+## Generated simulation integration supersedes earlier remaining-work notes
+
+`prt_simulation.py` now connects the recovered generation, as-of conversion,
+screening, separate simulation/final decisions and shared quality-gated inference.
+Supplied native decisions reproduce all72 enrollment trace steps;111precision
+cases check production conversion. A real posterior two-stage trial and two
+independent generated pilots complete with exact saved-tape replay. Batch
+JSON/CSV keep all replicates in denominators and separate unresolved runs from
+resolved stops. See the guide crosswalk and final validation in
+`prt-simulation-complete-checkpoint-2026-10-12.md`.
+
+Inspection of4674–47fe confirms skipped-inference jumps target97e1. At the cap
+this enters final selection with retained summaries. Python explicitly holds
+that case; no stale posterior or initialized zero is silently used as a fit.
+These observations close the recoverable workflow contract; exact native RNG,
+GUI formatting and clinical validation are separate claims.

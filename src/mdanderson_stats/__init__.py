@@ -1626,6 +1626,14 @@ from .prt_legacy import (
     prt_legacy_screening,
     prt_legacy_simulation_decision,
 )
+from .prt_simulation import (
+    PRTSimulationBatch,
+    PRTSimulationResult,
+    PRTSimulationStep,
+    run_prt_simulation_calendar,
+    simulate_prt,
+    simulate_prt_batch,
+)
 from .prt_study import (
     PRTPatient,
     PRTStudy,
@@ -2309,6 +2317,12 @@ __all__ = [
     "PRTLegacyPredictive",
     "PRTLegacyDecision",
     "PRTLegacyScreening",
+    "PRTSimulationBatch",
+    "PRTSimulationResult",
+    "PRTSimulationStep",
+    "run_prt_simulation_calendar",
+    "simulate_prt",
+    "simulate_prt_batch",
     "PRTConductResult",
     "analyze_prt_conduct",
     "prt_legacy_projection",

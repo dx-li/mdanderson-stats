@@ -4,7 +4,7 @@ Catalog membership was rechecked against both official API lists: 80 desktop +
 58 online entries, with identical response hashes to the preserved inventory.
 No entry was added or dropped. See [membership evidence](catalog-membership-2026-10-12.json).
 
-Current counts are **102 implemented / 32 partial / 4 pending**. ARAND62 now
+Current counts are **103 implemented / 31 partial / 4 pending**. ARAND62 now
 meets the guide-defined simulation workflow; see its scope crosswalk below. This continuation
 adds the mTPI R final estimator, recovered EffTox contour fitter, CRM desktop
 study/controller workflow, ToxFinder native allocation/simulation workflow, and
@@ -77,7 +77,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 65 | CI of Interaction Index | implemented | Declared recovered workflow implemented; [Catalog](../src/mdanderson_stats/catalog.json) retains scope and compatibility limits. |
 | 66 | Bayesian Chi Square TTE fit | partial | Rounded interval-likelihood fitting now covers all seven families with explicit proper Gaussian parameter priors and paired randomized CDF diagnostics. Censored diagnostics, native fitting/priors, fallback priors, Rychlik rank/trim convention, sorting, and reports remain uncertain. No BIC/DIC output contract was established. [Bayesian chi-square guide](../docs/bayesian-chi-square.md); [rounded-time guide](../docs/rounded-tte-bayesian-gof.md) |
 | 67 | ANOVA DDP | implemented | Declared recovered workflow implemented; [Guide](../docs/anovaddp.md) retains scope and compatibility limits. |
-| 69 | PRT | partial | Saved conduct, paper/native profiles, explicit quality holds and reports are integrated. Native supplied-input arithmetic/controller contracts are validated; generated calendar, full simulation/batch/report acceptance remain open. Projection defects are explicit. [PRT guide](../docs/prt.md) |
+| 69 | PRT | implemented | Original saved conduct/simulation settings, separate paper/native controllers, generated calendar, numerical holds, saved replay and unconditional batch reports are integrated.21 native fixture files,72 composed enrollment steps and qualified real posterior trials support the [scope crosswalk](prt-simulation-complete-checkpoint-2026-10-12.md). Native RNG/GUI identity and clinical validity are separate claims. |
 | 70 | WFMM | partial | Native MOM/profile variance and proposal initialization, other extended transforms/boundaries, pass filtering and files remain unresolved. The inverse-gamma `delta_omega` mapping and energy compression are now native-verified, with five periodic Haar transforms checked. [native-prior audit](wfmm-native-prior-audit.md); [WFMM audit](wfmm-audit.md); [prediction guide](../docs/wfmm-prediction.md) |
 | 72 | Toxicity Probability Intervals | implemented | Current version2.1 monitoring and all-scenario simulation/report workflow is integrated with bounded XLSM/JSON input, paper-default and explicit legacy controller/final ranking, native uniform replay and captured profile/seed. Original2007 TPI tuning and informative-prior recalibration remain separate extension limits. [Acceptance](mtpi-desktop-complete-checkpoint-2026-10-12.md). |
 | 74 | BP1CI | implemented | Declared recovered workflow implemented; [Guide](../docs/bp1ci.md) retains scope and compatibility limits. |

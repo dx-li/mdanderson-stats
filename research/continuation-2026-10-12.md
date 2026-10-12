@@ -812,3 +812,12 @@ Use the21 portable reference fixtures and startup0x23f evidence. The isolated
 only as scratch. Four fitted-model gaps, remaining partial contracts, mixed-license
 distribution choice and prior PR Forbidden are still open. No merge, registry
 release, deployment, author outreach or permissions changes occurred.
+
+PRT generated simulation integration is under final acceptance: separate shared
+simulation/final analysis, native calendar, generated800-arrival/hazard tapes,
+saved replay and batch OC reports are implemented.143new tests include72native
+composed steps and111precision boundaries plus real posterior completion.
+A real two-stage trial and two generated pilots select successfully while all
+quality holds remain active. Native skipped-final inference is explicitly
+unresolved. See prt-simulation-complete-checkpoint-2026-10-12.md; full tests and
+clean artifacts must pass before reporting the contingent69 promotion complete.

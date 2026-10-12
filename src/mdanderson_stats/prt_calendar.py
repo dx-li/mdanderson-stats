@@ -1,7 +1,8 @@
 """Explicit-input calendar replay for predicted-risk toxicity trials.
 
-The replay implements published cohort/suspension conduct rules but does not
-invent the unavailable Appendix-B event-time generator or arrival law. Callers
+The replay implements published cohort/suspension conduct rules with supplied
+timing. The recovered native generator and saved-study workflow
+are separately available in prt_simulation. Callers
 supply arrival times and a potential-toxicity-delay table.
 """
 

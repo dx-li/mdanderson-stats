@@ -4,7 +4,8 @@
 to explicitly supplied arrivals and dose-specific toxicity delays. It supports
 cohort enrollment, suspension, FIFO waiting or declining arrivals, resumed
 enrollment and final selection after enrolled patients' outcomes resolve.
-Catalog entry 69 remains partial; see the [model and source limitations](prt.md).
+For the recovered native saved-study generator and quality-gated batch workflow,
+see [PRT simulation](prt-simulation.md). This page describes the separate paper replay.
 
 ```python
 import numpy as np
@@ -42,7 +43,7 @@ Only the assigned dose's outcome becomes observable. Follow-up starts at actual
 enrollment, including for queued candidates. Infinity or a delay beyond the
 assessment window denotes no event during that window. Arrival times must be
 nonnegative and nondecreasing; ties are allowed. The caller supplies the timing
-distribution rather than inheriting an undocumented native simulation law.
+distribution for this paper replay; the native simulation law is separately recovered.
 
 Intervals follow the paper's explicit half-open convention: `[0,t1)`,
 `[t1,t2)`, and so on. An event on an internal boundary belongs to the next
@@ -76,9 +77,10 @@ resource use. Unchanged likelihood counts reuse one posterior; the full
 posterior history is not retained. Predictive probabilities normalize verified
 floating-point count mass, while materially invalid isotonic probabilities
 still raise an error. In particular, the published full-covariance projection
-can fail for otherwise valid trial data; the native safeguard is unresolved.
+can fail for otherwise valid trial data; the native lower floor and different ordering are separately exposed in the
+explicit legacy profile. This paper replay reports diagnostics but does not enforce
+the saved-study workflow's Rhat/MCSE/chain-agreement holds.
 
 The [source audit](../research/prt-calendar-audit.md) records the independent R
-interval ledger and replay checks. Native patient-file conversion, the
-unavailable Appendix-B event-time generator, aggregate native operating
-characteristics and exact executable equivalence remain outstanding.
+interval ledger and replay checks. Saved native inputs, generator and batch reports are now integrated separately;
+exact executable RNG/GUI/file-format identity is not claimed.

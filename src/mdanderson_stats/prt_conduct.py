@@ -16,8 +16,10 @@ from .prt_fit import fit_prt_model, prt_isotonic_projection
 from .prt_legacy import (
     prt_legacy_beta_moments,
     prt_legacy_conduct_decision,
+    prt_legacy_final_selection,
     prt_legacy_predictive,
     prt_legacy_projection,
+    prt_legacy_simulation_decision,
 )
 from .prt_study import PRTStudy, _integer, _number, prt_study_counts
 
@@ -51,6 +53,7 @@ class PRTConductResult:
     max_likelihood_evaluations: int
     rng_state_json: str
     warnings: tuple[str, ...]
+    controller: str = "conduct"
 
     def to_json(self) -> str:
         data = asdict(self)
@@ -58,7 +61,7 @@ class PRTConductResult:
         data["rng_state"] = json.loads(data.pop("rng_state_json"))
         return (
             json.dumps(
-                {"schema": "mdanderson_stats.prt.conduct", "version": 1, **data},
+                {"schema": "mdanderson_stats.prt." + self.controller, "version": 1, **data},
                 indent=2,
                 allow_nan=False,
             )
@@ -116,7 +119,7 @@ class PRTConductResult:
         return stream.getvalue()
 
 
-def _evaluate(study: PRTStudy, raw: np.ndarray, profile: str):
+def _evaluate(study: PRTStudy, raw: np.ndarray, profile: str, controller: str = "conduct"):
     """One full or individual-chain estimate; no sampling or profile fallback."""
     _, _, assigned, assessed, _ = prt_study_counts(study)
     k = study.patients[-1].dose
@@ -140,6 +143,8 @@ def _evaluate(study: PRTStudy, raw: np.ndarray, profile: str):
     pn: list[float | None] = [None] * study.doses
     pe: list[float | None] = [None] * study.doses
     relevant = range(study.doses) if profile == "paper_2008" else range(k, min(k + 2, study.doses))
+    if controller == "simulation_final":
+        relevant = range(0)
     for dose in relevant:
         pending = [
             p
@@ -185,6 +190,31 @@ def _evaluate(study: PRTStudy, raw: np.ndarray, profile: str):
             excessive_cutoff=study.excessive_cutoff,
         )
         action, selected, rule, warnings = decision.action, decision.dose, decision.rule, ()
+    elif controller == "simulation_final":
+        native = prt_legacy_final_selection(
+            assessed,
+            xi,
+            np.abs(mean - study.target),
+            k,
+            excessive_cutoff=study.excessive_cutoff,
+        )
+        action, rule, warnings = native.action, native.rule, native.warnings
+        selected = native.source_dose if action == "select" else None
+    elif controller == "simulation":
+        native = prt_legacy_simulation_decision(
+            xi,
+            np.abs(mean - study.target),
+            k,
+            int(assigned[k] - assessed[k]),
+            cast(float, pn[k]),
+            cast(float, pe[k]),
+            cast(float, pe[k + 1]) if k + 1 < study.doses else 0.0,
+            epsilon=study.epsilon,
+            negligible_cutoff=study.negligible_cutoff,
+            excessive_cutoff=study.excessive_cutoff,
+        )
+        action, rule, warnings = native.action, native.rule, native.warnings
+        selected = native.source_dose if action in ("stay", "escalate", "deescalate") else None
     else:
         native = prt_legacy_conduct_decision(
             xi,
@@ -203,11 +233,12 @@ def _evaluate(study: PRTStudy, raw: np.ndarray, profile: str):
     return total, mean, xi, pn, pe, moments, action, selected, rule, warnings, condition
 
 
-def analyze_prt_conduct(
+def _analyze_prt_history(
     study: PRTStudy,
     *,
     rng: np.random.Generator,
     profile: str = "paper_2008",
+    controller: str = "conduct",
     max_rhat: float = 1.05,
     max_mcse: float = 0.02,
     max_likelihood_evaluations: int = 200000,
@@ -221,6 +252,10 @@ def analyze_prt_conduct(
     """
     if not isinstance(study, PRTStudy) or study.max_patients is not None or not study.patients:
         raise ValueError("require a nonempty PRT conduct study")
+    if controller not in ("conduct", "simulation", "simulation_final") or (
+        controller != "conduct" and profile != "legacy_1_0"
+    ):
+        raise ValueError("invalid profile/controller combination")
     if profile not in ("paper_2008", "legacy_1_0"):
         raise ValueError("profile must be paper_2008 or legacy_1_0")
     if not isinstance(rng, np.random.Generator):
@@ -254,6 +289,7 @@ def analyze_prt_conduct(
     diagnostics: dict = dict(
         study=study,
         profile=profile,
+        controller=controller,
         status="numerical_hold",
         action="hold",
         dose=None,
@@ -301,7 +337,9 @@ def analyze_prt_conduct(
         if np.all(np.isfinite(raw_mcse)):
             diagnostics["max_risk_mcse"] = float(raw_mcse.max())
         raw = fit.conditional_toxicity[..., :-1, :]
-        result = _evaluate(study, raw.reshape(-1, study.intervals, study.doses), profile)
+        result = _evaluate(
+            study, raw.reshape(-1, study.intervals, study.doses), profile, controller
+        )
         total, mean, xi, pn, pe, moments, action, selected, rule, branch_warnings, condition = (
             result
         )
@@ -343,7 +381,7 @@ def analyze_prt_conduct(
         stable = True
         for chain in raw:
             try:
-                check = _evaluate(study, chain, profile)
+                check = _evaluate(study, chain, profile, controller)
                 stable &= (check[6], check[7], check[8]) == (action, selected, rule)
             except (ValueError, ArithmeticError):
                 stable = False
@@ -367,3 +405,23 @@ def analyze_prt_conduct(
         "not convergence or clinical guarantees."
     )
     return PRTConductResult(**diagnostics, warnings=tuple(warnings))
+
+
+def analyze_prt_conduct(
+    study: PRTStudy,
+    *,
+    rng: np.random.Generator,
+    profile: str = "paper_2008",
+    max_rhat: float = 1.05,
+    max_mcse: float = 0.02,
+    max_likelihood_evaluations: int = 200000,
+) -> PRTConductResult:
+    """Analyze a saved conduct history with explicit arithmetic and quality holds."""
+    return _analyze_prt_history(
+        study,
+        rng=rng,
+        profile=profile,
+        max_rhat=max_rhat,
+        max_mcse=max_mcse,
+        max_likelihood_evaluations=max_likelihood_evaluations,
+    )

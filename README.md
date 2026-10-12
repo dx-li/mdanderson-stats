@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-102 implemented, 32 partial, and 4 pending. Each method's guide explains its
+103 implemented, 31 partial, and 4 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -1315,7 +1315,10 @@ available, including the state-space posterior fit and full-covariance isotonic
 formula. [Calendar replay](docs/prt-calendar.md) adds explicit arrivals, interval
 follow-up, cohort enrollment, suspension and final selection. The guide-history
 pilot exposes out-of-range projected risks, reported explicitly; native projection
-safeguards and native timing/operating-characteristic replication remain pending.
+and timing defects now have explicit compatibility profiles.
+[Saved simulation and batch reports](docs/prt-simulation.md) preserve quality
+holds and count unresolved trials separately from safety stops. Native RNG
+identity and clinical validity are not claimed.
 
 [ROSE](docs/rose.md) provides one- and two-stage dose-selection designs using
 normal approximation or exact binomial constraints, including unequal allocation
