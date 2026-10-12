@@ -47,7 +47,19 @@ class Registers(ctypes.Structure):
     ]
 
 
-def trace(binary: Path, root: Path, model: dict, label: str) -> dict:
+def trace(
+    binary: Path,
+    root: Path,
+    model: dict,
+    label: str,
+    *,
+    mode: str = "likelihood",
+    coefficients: np.ndarray | None = None,
+    mcmc_settings: dict | None = None,
+    basis_settings: dict | None = None,
+) -> dict:
+    y = Y if coefficients is None else coefficients
+    entry = {"likelihood": ENTRY, "mom": 0x428360, "eb": 0x494010, "bounds": 0x48AB80}[mode]
     library = ctypes.CDLL(None, use_errno=True)
     library.ptrace.restype = ctypes.c_long
 
@@ -67,10 +79,17 @@ def trace(binary: Path, root: Path, model: dict, label: str) -> dict:
     savemat(
         path,
         dict(
-            Y=Y,
+            Y=y,
             model=model,
-            basis_specs=dict(transformtype="none", nlevels=1.0),
-            MCMCspecs=dict(B=8.0, burnin=4.0, thin=1.0, time_update=1.0, nj_nosmooth=0.0),
+            basis_specs=dict(transformtype="none", nlevels=1.0) | (basis_settings or {}),
+            MCMCspecs=dict(
+                B=8.0,
+                burnin=4.0,
+                thin=1.0,
+                time_update=1.0,
+                nj_nosmooth=0.0,
+            )
+            | (mcmc_settings or {}),
         ),
     )
     pid = os.fork()
@@ -109,7 +128,7 @@ def trace(binary: Path, root: Path, model: dict, label: str) -> dict:
         )
         return np.array(values).reshape(rows, columns).tolist()
 
-    original = breakpoint(ENTRY)
+    original = breakpoint(entry)
     active = None
     records = []
     exited = False
@@ -127,27 +146,58 @@ def trace(binary: Path, root: Path, model: dict, label: str) -> dict:
             registers = Registers()
             ptrace(12, pid, 0, ctypes.byref(registers))
             address = registers.rip - 1
-            if address == ENTRY:
-                record = dict(
-                    theta=matrix(registers.rdi),
-                    beta=matrix(registers.rsi),
-                    betans=matrix(registers.rdx),
-                    coefficient=word(registers.rsp + 8) & 0xFFFFFFFF,
-                )
+            if address == entry:
+                if mode == "likelihood":
+                    record = dict(
+                        theta=matrix(registers.rdi),
+                        beta=matrix(registers.rsi),
+                        betans=matrix(registers.rdx),
+                        coefficient=word(registers.rsp + 8) & 0xFFFFFFFF,
+                    )
+                elif mode == "bounds":
+                    record = dict(theta_MOM=matrix(registers.rsi), beta=matrix(registers.rdx))
+                    output_pointers = [word(registers.rsp + offset) for offset in (32, 40, 48)]
+                elif mode == "eb":
+                    record = dict(
+                        Z=matrix(registers.rdi),
+                        p=matrix(registers.rsi),
+                        T=matrix(registers.rdx),
+                        niter=registers.rcx,
+                    )
+                    output_pointers = [word(registers.rsp + offset) for offset in (8, 16, 24)]
+                else:
+                    record = dict(A=matrix(registers.rsi), b=matrix(registers.rdx))
                 return_address = word(registers.rsp)
-                active = (return_address, breakpoint(return_address), record)
-                ptrace(5, pid, ENTRY, original)
-                registers.rip = ENTRY
+                active = (return_address, breakpoint(return_address), record, registers.rdi)
+                ptrace(5, pid, entry, original)
+                registers.rip = entry
                 ptrace(13, pid, 0, ctypes.byref(registers))
                 ptrace(9, pid)
                 os.waitpid(pid, 0)
-                breakpoint(ENTRY)
+                breakpoint(entry)
             elif active and address == active[0]:
                 fp = ctypes.create_string_buffer(512)
                 ptrace(14, pid, 0, fp)
                 record = active[2]
-                record.update(loglik=struct.unpack_from("<d", fp.raw, 160)[0], caller=hex(address))
-                records.append(record)
+                if mode == "likelihood":
+                    record.update(
+                        loglik=struct.unpack_from("<d", fp.raw, 160)[0], caller=hex(address)
+                    )
+                    records.append(record)
+                elif mode == "bounds":
+                    record.update(
+                        zip(("mle", "upper", "lower"), map(matrix, output_pointers), strict=True)
+                    )
+                    records.append(record)
+                elif mode == "eb":
+                    record.update(
+                        zip(("pout", "Tout", "gam"), map(matrix, output_pointers), strict=True)
+                    )
+                    record["caller"] = hex(address)
+                    records.append(record)
+                elif address == 0x488A25:
+                    record.update(solution=matrix(active[3]), caller=hex(address))
+                    records.append(record)
                 ptrace(5, pid, address, active[1])
                 registers.rip = address
                 ptrace(13, pid, 0, ctypes.byref(registers))
@@ -168,7 +218,7 @@ def trace(binary: Path, root: Path, model: dict, label: str) -> dict:
     native = loadmat(root / f"{label}_Init.mat")
     return dict(
         case=label,
-        y=Y.tolist(),
+        y=y.tolist(),
         model={k: v.tolist() for k, v in model.items()},
         traces=records,
         output={

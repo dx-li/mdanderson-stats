@@ -160,3 +160,12 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 173 | Calibration of Bayesian Success Criteria for Clinical Trials | implemented | Declared recovered workflow implemented; [Guide](../docs/success-calibration.md) retains scope and compatibility limits. |
 | 174 | RMC-COMPASS: Renal Medullary Carcinoma - Clinical and Outcomes Model for Prognostic Assessment and Survival Stratification | partial | Rounded public coefficients now support approximate point predictions and explicit rounding envelopes. Exact parameters/bounds, uncertainty, raw-input rules and output workflows remain unavailable. [Guide](../docs/rmc-compass.md); [live-model audit](rmc-compass-audit.md) |
 | 175 | Posterior Predictive Design for Phase I Clinical Trials | implemented | Declared recovered workflow implemented; [Catalog](../src/mdanderson_stats/catalog.json) retains scope and compatibility limits. |
+
+WFMM70 initialization update: bounded iterative MOM and explicit native EB are
+implemented with independent original-executable references (166 MOM systems,
+20 EB calls);4 proposal and4 bound matrices resolve native scaling/fallbacks.
+Default MOM uses complete trace equations and absolute convergence. Legacy
+profile retains omitted residual-column cross terms, zero-component omission
+and signed stopping. Native EB reports signed stops separately from convergence.
+Automatic conditional optimization/bounds, transforms and complete saved
+MCMC/postprocessing/prediction integration remain open. Entry70 stays partial.

@@ -514,3 +514,41 @@ boundary rules, pass filtering and native prediction/file
 formats remain open. Energy compression of explicit coefficient matrices is
 now verified against the original program. The [source and implementation audit](../research/wfmm-audit.md)
 tracks these gaps and the independent references.
+
+### Source-recovered MOM and native empirical Bayes
+
+`wfmm_mom_initialization(D, X, Z, ...)` solves iterative trace moment equations
+and updates the joint GLS coefficient estimates. Its default `profile="stable"`
+uses complete covariance-component trace equations, retains floored random
+components in GLS, and requires an absolute variance change within tolerance.
+It is a method-of-moments initializer, not REML, profile ML or a posterior fit.
+
+Explicit `profile="legacy_3_1"` reproduces three recovered native differences:
+random components at or below `zero_threshold` are omitted from GLS; off-diagonal
+moment entries in residual columns after the first are zero; and stopping uses
+`max(new-old)` without absolute values. The returned `converged` flag always
+requires the absolute criterion. `legacy_stopping_satisfied` records the separate
+native rule. Inspect `floored`, `omitted_random_components`, `normal_equations`
+and iteration diagnostics before using the result.
+
+`wfmm_native_empirical_bayes(standardized_estimates, profile="legacy_3_1", ...)`
+implements the original bounded, partitioned empirical-Bayes routine. Inputs
+are joint-GLS estimates divided by their **conditional** sampling standard
+deviations. T is a slab-to-sampling variance ratio, not a raw slab variance.
+The function preserves native pi/T floors, the odds cap, unsmoothed partition
+overrides and the global signed stopping rule. Its returned coefficient inclusion
+probabilities are the last E-step values, evaluated at the preceding parameters.
+The absolute-convergence flag distinguishes an actual small change from a native
+signed stop. Existing `calibrate_wfmm_shrinkage` remains the separate mathematical
+EM implementation without these native compatibility policies.
+
+Native WFMM2 traces also establish that `propvar_omega` multiplies `se_omega`
+as a **proposal standard deviation**, despite the guide's variance wording.
+Zero native scales remain zero. This evidence does not authorize silently
+substituting zero proposal scales into the current Python sampler.
+
+These components do not yet close the automatic WFMM initializer or the saved
+WFMM1/WFMM2/WFMM3 pipeline. Fixed-shrunken-beta conditional optimization,
+likelihood-width bounds, proposal usability, remaining transforms and integrated
+postprocessing/prediction remain explicit completion contracts. Entry70 is partial.
+See `examples/wfmm_initialization.py` for diagnostics on synthetic input.

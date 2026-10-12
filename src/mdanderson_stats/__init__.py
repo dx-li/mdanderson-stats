@@ -2297,6 +2297,8 @@ from .wfmm_compression import WFMMCompression, wfmm_compress_coefficients
 from .wfmm_covariance import WFMMCovarianceSummary, wfmm_covariance, wfmm_summarize_covariance
 from .wfmm_empirical_bayes import WFMMShrinkage, calibrate_wfmm_shrinkage
 from .wfmm_model import WFMMCoefficientFit, WFMMPrior, fit_wfmm_coefficients
+from .wfmm_mom import WFMMMomentInitialization, wfmm_mom_initialization
+from .wfmm_native_eb import WFMMNativeEmpiricalBayes, wfmm_native_empirical_bayes
 from .wfmm_posterior import WFMMPosteriorSummary, wfmm_summarize
 from .wfmm_prediction import wfmm_predict_coefficients
 from .wfmm_selection import WFMMSelection, wfmm_restore_coefficients, wfmm_select_coefficients
@@ -2416,6 +2418,10 @@ __all__ = [
     "wfmm_restore_coefficients",
     "WFMMShrinkage",
     "calibrate_wfmm_shrinkage",
+    "WFMMNativeEmpiricalBayes",
+    "wfmm_native_empirical_bayes",
+    "WFMMMomentInitialization",
+    "wfmm_mom_initialization",
     "WFMMVarianceInitialization",
     "initialize_wfmm_variances",
     "wfmm_variance_prior",

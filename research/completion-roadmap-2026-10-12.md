@@ -149,3 +149,10 @@ eight additional MOM/MLE/proposal output probes are available. Its transform,
 initialization, prediction and saved pipeline contracts still require independent
 validation and integration. Four unavailable fitted models, BLESS/ComPAS exact
 contracts, licensing decisions and Forbidden PR creation remain separate.
+
+WFMM initialization components now close MOM and standardized-input native EB
+with explicit compatibility defects and independent source references. Next
+integrate fixed-shrunken-beta conditional optimization, bounds/scale usability,
+then saved initialization/sampling/postprocessing and remaining transforms and
+prediction. Source scales at boundaries can be zero or use artificial negative
+lower endpoints; neither is silently a valid confidence interval. No promotion.

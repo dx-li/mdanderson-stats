@@ -1509,3 +1509,13 @@ The UAROET saved-study adapter and count/escalation probes are independently
 authored. Synthetic count fixtures exercise externally supplied original code;
 no original example bundle or guide is included. Input repair notes identify
 explicit deviations from the original parser and missing example utility file.
+
+WFMM 3.1 initialization references additionally cover synthetic MOM equations,
+empirical-Bayes inputs/outputs, conditional likelihoods/bounds and proposal
+standard deviations. Authored Python implements the recovered equations and
+explicitly isolates legacy numerical defects; no original binary, library,
+source listing or patient data is distributed. Checksummed child-process
+reference tools and validation boundaries are documented in
+`research/wfmm-initialization-recovery-2026-10-12.md`. These observations establish
+bounded behavior compatibility, not clinical validation or additional license
+permissions.

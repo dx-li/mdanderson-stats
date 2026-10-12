@@ -841,3 +841,13 @@ regeneration is byte-identical. No production code changed after the accepted
 PRT checkpoint, and WFMM remains partial. Continue exact MOM/empirical-Bayes/
 conditional optimizer/Metropolis proposal and saved workflow integration; see
 wfmm-initialization-recovery-2026-10-12.md.
+
+### WFMM initialization continuation
+
+New production MOM and explicit native EB components have source references and
+independent checks; see `wfmm-initialization-recovery-2026-10-12.md`. Native
+trace-equation omissions, signed-only stops and lagged gamma remain explicit
+compatibility behavior. Original proposal SD is propvar_omega times se_omega;
+zero bounds and artificial lower=-upper fallbacks require usability diagnostics.
+Next compose the fixed-shrunken-beta conditional optimizer and bounds, then saved
+full WFMM workflow and remaining transforms/prediction. No status promotion.
