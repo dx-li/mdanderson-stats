@@ -332,3 +332,12 @@ per chain: maximum ratio0.0274011 and maximum utility split R-hat1.0005601.
 See uaroet-precision-quality-2026-10-12.json. Full final-code acceptance is pending
 for this new precision component; the prior66,131-test checkpoint predates it.
 Pseudo-trial calibration, controllers, calendar simulation and reports remain open.
+
+An independent correlated-posterior accuracy check now uses eight scrambled
+Sobol integrations of65,536 prior points each, with a separate256-node
+correlation-angle Gaussian CDF quadrature. This does not call the package copula
+or sampler. For the pending-outcome precision case, maximum posterior joint-mean
+difference is0.00305588; maximum between-scramble reference standard error is
+2.823e-6. The reproducible tool and JSON are check_uaroet_correlated_reference.py
+and uaroet-correlated-reference-2026-10-12.json. This supports that particular
+posterior, not general high-dimensional calibration or clinical validity.
