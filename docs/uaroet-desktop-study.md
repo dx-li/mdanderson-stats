@@ -151,3 +151,14 @@ interrupted fit is diagnostic only. CSV chain/draw/dose indices are1-based;
 Python API dose indices remain0-based. These are portable Python output schemas,
 not native report byte identity. Calendar simulation/aggregation integration and
 final workflow acceptance are still pending; the application remains partial.
+
+Calendar primitives expose immutable `UAROETTimedPatient` records and
+`uaroet_study_as_of` views, including observations exactly at the decision time.
+Use an empty-patient design to materialize a timed history; existing conduct rows
+are never silently replaced. The legacy profile uses native clock-minus-arrival
+comparisons and rounded uniform delays; the safe profile uses absolute timestamps
+and continuous uniform delays. Native rounding can produce zero-day outcomes
+from a positive sub-day window. Optional CheckAcceptabilityWithinCohort defaults
+to1 and SuspendAccrualForFullEvalOfNewDoseCohort defaults to0. Disabling within-
+cohort safety checks requires the legacy profile. Native suspension semantics
+are documented in the recovery checkpoint; calendar trial integration remains open.

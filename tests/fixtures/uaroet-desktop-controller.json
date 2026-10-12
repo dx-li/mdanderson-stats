@@ -119,7 +119,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -302,7 +487,144 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -437,7 +759,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -630,7 +1137,214 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -835,7 +1549,154 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -980,7 +1841,214 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -1175,7 +2243,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -1358,7 +2611,144 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -1493,7 +2883,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -1676,7 +3251,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -1859,7 +3619,156 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -2006,7 +3915,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -2199,7 +4293,214 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -2404,7 +4705,166 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -2561,7 +5021,214 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -2756,7 +5423,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -2939,7 +5791,156 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -3086,7 +6087,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 1,
+        "old": 1,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -3269,7 +6455,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 2,
+        "old": 3,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -3452,7 +6823,156 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": false,
+          "old_open": true
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 2,
+        "old": 3,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -3599,7 +7119,8 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
       },
       "trace": [
         {
@@ -3640,6 +7161,396 @@
         },
         {
           "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 2,
+        "old": 3,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 2,
+        "old": 3,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
           "stop": false,
           "new_open": true,
           "old_open": false
@@ -3792,7 +7703,8 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -3997,7 +7909,166 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": false,
+          "old_open": true
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 2,
+        "old": 3,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -4154,7 +8225,214 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 2,
+        "old": 3,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -4349,7 +8627,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 2,
+        "old": 3,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -4532,7 +8995,156 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": false,
+          "old_open": true
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 2,
+        "old": 3,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -4679,7 +9291,8 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
       },
       "trace": [
         {
@@ -4735,6 +9348,190 @@
           "stop": false,
           "new_open": false,
           "old_open": true
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 3,
+        "new": 2,
+        "old": 3,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
         },
         {
           "selected": 1,
@@ -4862,7 +9659,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 2,
+        "new": 3,
+        "old": 1,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -5045,7 +10027,150 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": true,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 2,
+        "new": 3,
+        "old": 1,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -5186,7 +10311,8 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
       },
       "trace": [
         {
@@ -5245,6 +10371,190 @@
         },
         {
           "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 2,
+        "new": 3,
+        "old": 1,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 2,
           "stop": false,
           "new_open": false,
           "old_open": false
@@ -5379,7 +10689,214 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 2,
+        "new": 3,
+        "old": 1,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -5584,7 +11101,160 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": true,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 2,
+        "new": 3,
+        "old": 1,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -5735,7 +11405,8 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
       },
       "trace": [
         {
@@ -5776,6 +11447,212 @@
         },
         {
           "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 2,
+        "new": 3,
+        "old": 1,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 2,
           "stop": false,
           "new_open": false,
           "old_open": false
@@ -5930,7 +11807,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 2,
+        "new": 3,
+        "old": 1,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -6113,7 +12175,150 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": true,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 2,
+        "new": 3,
+        "old": 1,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -6254,7 +12459,8 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
       },
       "trace": [
         {
@@ -6301,6 +12507,190 @@
         },
         {
           "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 2,
+        "new": 3,
+        "old": 1,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
           "stop": false,
           "new_open": false,
           "old_open": false
@@ -6437,7 +12827,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 2,
+        "old": 4,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -6620,7 +13195,144 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": true,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 2,
+        "old": 4,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -6755,7 +13467,8 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
       },
       "trace": [
         {
@@ -6796,6 +13509,396 @@
         },
         {
           "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 2,
+        "old": 4,
+        "utility_sequence": [
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 2,
+        "old": 4,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
           "stop": false,
           "new_open": false,
           "old_open": true
@@ -6948,7 +14051,8 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -7153,7 +14257,154 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": true,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 2,
+        "old": 4,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -7298,7 +14549,214 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 2,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 2,
+        "old": 4,
+        "utility_sequence": [
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ],
+          [
+            60,
+            20,
+            40
+          ],
+          [
+            20,
+            60,
+            40
+          ],
+          [
+            40,
+            20,
+            60
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -7493,7 +14951,192 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 2,
+        "old": 4,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -7676,7 +15319,144 @@
             -2,
             -2
           ]
-        ]
+        ],
+        "check_acceptability": true
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": -1,
+          "stop": true,
+          "new_open": true,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 2,
+        "old": 4,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "check_acceptability": false
       },
       "trace": [
         {
@@ -7811,7 +15591,8 @@
             1,
             1
           ]
-        ]
+        ],
+        "check_acceptability": true
       },
       "trace": [
         {
@@ -7846,6 +15627,190 @@
         },
         {
           "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        }
+      ]
+    },
+    {
+      "inputs": {
+        "first": 1,
+        "new": 2,
+        "old": 4,
+        "utility_sequence": [
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ],
+          [
+            40,
+            40,
+            40
+          ]
+        ],
+        "status_sequence": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
+        "check_acceptability": false
+      },
+      "trace": [
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": true,
+          "old_open": false
+        },
+        {
+          "selected": 1,
+          "stop": false,
+          "new_open": false,
+          "old_open": false
+        },
+        {
+          "selected": 0,
+          "stop": false,
+          "new_open": false,
+          "old_open": true
+        },
+        {
+          "selected": 0,
           "stop": false,
           "new_open": false,
           "old_open": false

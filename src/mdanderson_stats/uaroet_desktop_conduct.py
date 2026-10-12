@@ -75,6 +75,9 @@ def recommend_uaroet_desktop(
         raise ValueError("on_chunk must be callable")
     p = study.trial_parameters
     D = study.dose_count
+    check_within = bool(p.get("CheckAcceptabilityWithinCohort", 1))
+    if profile == "safe" and not check_within:
+        raise ValueError("within-cohort bypass requires the legacy profile")
     n = len(study.patients)
     if final and n == 0:
         raise ValueError("final selection requires assigned patients")
@@ -191,7 +194,11 @@ def recommend_uaroet_desktop(
         forced = None
         if n < first and status[start] == 1:
             forced = start
-        elif (state.new_open or state.old_open) and status[state.last] == 1:
+        elif (
+            any(v == 1 for v in status)
+            and (state.new_open or state.old_open)
+            and (not check_within or status[state.last] == 1)
+        ):
             forced = state.last
         if forced is not None:
             w[forced] = 1

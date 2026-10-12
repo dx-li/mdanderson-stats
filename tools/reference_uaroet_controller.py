@@ -79,7 +79,9 @@ def controller_services(machine, address, size, data):
 u.hook_add(UC_HOOK_CODE, controller_services)
 
 
-def trial(first=3, new=2, old=3, utility_sequence=None, status_sequence=None):
+def trial(
+    first=3, new=2, old=3, utility_sequence=None, status_sequence=None, check_acceptability=True
+):
     global statuses
     u.mem_write(obj, b"\0" * 0x60000)
     u.mem_write(post, b"\0" * 0x8000)
@@ -93,7 +95,7 @@ def trial(first=3, new=2, old=3, utility_sequence=None, status_sequence=None):
         (0x1E4, 0),
     ]:
         pack(obj + off, "i", val)
-    pack(obj + 0xC4, "B", 1)
+    pack(obj + 0xC4, "B", int(check_acceptability))
     pack(post + 0x7254, "i", 3)
     treated = [0, 0, 0]
     trace = []
@@ -144,7 +146,9 @@ for first, new, old in ((1, 1, 1), (3, 1, 1), (3, 2, 3), (2, 3, 1), (1, 2, 4)):
                 utility_sequence=utility_sequence,
                 status_sequence=status_sequence,
             )
-            cases.append(dict(inputs=kw, trace=trial(**kw)))
+            for check in (True, False):
+                inputs = dict(**kw, check_acceptability=check)
+                cases.append(dict(inputs=inputs, trace=trial(**inputs)))
 print(
     json.dumps(
         dict(executable_sha256=hashlib.sha256(path.read_bytes()).hexdigest(), cases=cases), indent=2

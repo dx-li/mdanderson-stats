@@ -85,7 +85,13 @@ def test_native_live_cohorts(case):
     state = UAROETCohortState((0, 0, 0))
     trace = []
     for utility, status in zip(x["utility_sequence"], x["status_sequence"]):
-        selected = state.choose(tuple(status), utility, first_size=x["first"], profile="legacy_1_8")
+        selected = state.choose(
+            tuple(status),
+            utility,
+            first_size=x["first"],
+            check_acceptability=x.get("check_acceptability", True),
+            profile="legacy_1_8",
+        )
         if selected is None:
             trace.append(
                 dict(selected=-1, stop=True, new_open=state.new_open, old_open=state.old_open)

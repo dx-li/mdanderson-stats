@@ -1,0 +1,22 @@
+{
+  "scope": "one exploratory pseudo-trial,100 patients per dose,zero-mean SD100 pseudo-prior",
+  "seed": 1003,
+  "prior_mean": [
+    -0.7848215661648121,
+    0.4789632776143543,
+    -2.139626721306292,
+    1.5165323758373521
+  ],
+  "association_mean": 0.1671939777381616,
+  "mcse": [
+    0.02863074385180693
+  ],
+  "rhat": [
+    1.0004482189200221
+  ],
+  "draws": [
+    16000
+  ],
+  "meets_guide_replication_minimum": false,
+  "clinical_validation": false
+}

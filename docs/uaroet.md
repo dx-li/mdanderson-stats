@@ -185,9 +185,10 @@ for posterior moments. See the [audit](../research/uaroet-audit.md) and
 [source record](uaroet-sources.json) for validation results and conventions.
 
 Bounded native instruction references now cover selected contracts; full Windows
-execution and native-inference/RNG parity are not claimed. Native prior files,
-automatic pseudo-trial/ESS calibration, adaptive posterior precision control,
-delayed-outcome simulation and native report formats remain separate work. Original
+execution and native-inference/RNG parity are not claimed. Dedicated current-desktop
+APIs now integrate saved priors, pseudo-trial calibration/ESS, per-chain precision,
+explicit safe/legacy conduct and portable reports; see [saved studies](uaroet-desktop-study.md).
+Calendar simulation/aggregation and final workflow acceptance remain open. Original
 vendor code, executable files and papers are not bundled.
 
 ## Toxicity observed while efficacy is pending

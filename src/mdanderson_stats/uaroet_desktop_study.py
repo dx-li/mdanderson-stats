@@ -334,6 +334,8 @@ def _validate_settings(
         "NumPatientSurplusBeforeRandomize": (0, 500),
         "RandomizeByMeanUtility": (0, 1),
         "NumTimesToShrinkUtilityCutoff": (0, 500),
+        "CheckAcceptabilityWithinCohort": (0, 1),
+        "SuspendAccrualForFullEvalOfNewDoseCohort": (0, 1),
     }
     probability = {
         "MaxProbTox",
@@ -354,12 +356,13 @@ def _validate_settings(
         "MaxDaysToToxicity",
         "MeanDaysBetweenArrivals",
     }
-    required = set(integers) | probability | utility | times
-    if set(trial) != required:
+    optional = {"CheckAcceptabilityWithinCohort", "SuspendAccrualForFullEvalOfNewDoseCohort"}
+    required = (set(integers) | probability | utility | times) - optional
+    if not required <= set(trial) or set(trial) - required - optional:
         raise ValueError(
             f"trial settings require exactly the documented keys; "
             f"missing={sorted(required - set(trial))}, "
-            f"unsupported={sorted(set(trial) - required)}"
+            f"unsupported={sorted(set(trial) - required - optional)}"
         )
     for k, v in trial.items():
         v = _scalar(v, f"trial setting {k}")

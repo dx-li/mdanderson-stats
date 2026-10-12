@@ -1,0 +1,2382 @@
+{
+  "executable_sha256": "b953affb6cd3968c389d5a35020e594cd25fef3ff61825db8aa282d8216a3eaf",
+  "scope": "Native rounded uniform delays with supplied variates",
+  "cases": [
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        0.0,
+        2.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        0.0,
+        32.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        0.0,
+        22.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        0.0,
+        11.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        0.2
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        0.0,
+        42.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        1.0,
+        2.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        0.0,
+        32.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        1.0,
+        22.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        1.0,
+        11.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.1,
+        1.2
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        1.0,
+        42.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        2.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        1.0,
+        32.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        1.0,
+        22.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        1.0,
+        11.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        0.5,
+        1.5
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        2.0,
+        42.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        11.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        22.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        32.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        42.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        11.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        22.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        32.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        42.0,
+        2.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        11.0,
+        32.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        22.0,
+        22.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        32.0,
+        11.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        1.0,
+        42.0
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        42.0,
+        42.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        2.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        2.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        2.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        2.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        0.1,
+        0.2
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        2.0,
+        0.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        2.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        2.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        2.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        2.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        0.5,
+        1.5
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.0,
+        0.0
+      ],
+      "result": [
+        2.0,
+        1.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.25,
+        0.75
+      ],
+      "result": [
+        2.0,
+        32.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.5,
+        0.5
+      ],
+      "result": [
+        2.0,
+        22.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        0.75,
+        0.25
+      ],
+      "result": [
+        2.0,
+        11.0
+      ]
+    },
+    {
+      "efficacy_window": [
+        2.3,
+        2.3
+      ],
+      "toxicity_window": [
+        1.0,
+        42.0
+      ],
+      "uniforms": [
+        1.0,
+        1.0
+      ],
+      "result": [
+        2.0,
+        42.0
+      ]
+    }
+  ],
+  "arrival_cases": [
+    {
+      "previous": 0.0,
+      "wait_until": 0.0,
+      "intervals": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 0.2,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 0.0,
+      "intervals": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 0.2,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 0.0,
+      "intervals": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 0.5,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 0.0,
+      "intervals": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 0.5,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 0.0,
+      "intervals": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 1.0,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 0.0,
+      "intervals": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 1.0,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 0.0,
+      "intervals": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 2.0,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 0.0,
+      "intervals": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 2.0,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 1.0,
+      "intervals": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 0.2,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 1.0,
+      "intervals": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 1.0,
+        "discarded": 4,
+        "variates_used": 5
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 1.0,
+      "intervals": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 0.5,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 1.0,
+      "intervals": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 1.0,
+        "discarded": 1,
+        "variates_used": 2
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 1.0,
+      "intervals": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 1.0,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 1.0,
+      "intervals": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 1.0,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 1.0,
+      "intervals": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 2.0,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.0,
+      "wait_until": 1.0,
+      "intervals": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 2.0,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 10.0,
+      "wait_until": 12.0,
+      "intervals": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 10.2,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 10.0,
+      "wait_until": 12.0,
+      "intervals": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 12.199999999999992,
+        "discarded": 10,
+        "variates_used": 11
+      }
+    },
+    {
+      "previous": 10.0,
+      "wait_until": 12.0,
+      "intervals": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 10.5,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 10.0,
+      "wait_until": 12.0,
+      "intervals": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 12.0,
+        "discarded": 3,
+        "variates_used": 4
+      }
+    },
+    {
+      "previous": 10.0,
+      "wait_until": 12.0,
+      "intervals": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 11.0,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 10.0,
+      "wait_until": 12.0,
+      "intervals": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 12.0,
+        "discarded": 1,
+        "variates_used": 2
+      }
+    },
+    {
+      "previous": 10.0,
+      "wait_until": 12.0,
+      "intervals": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 12.0,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 10.0,
+      "wait_until": 12.0,
+      "intervals": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 12.0,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.1,
+      "wait_until": 0.3,
+      "intervals": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 0.30000000000000004,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.1,
+      "wait_until": 0.3,
+      "intervals": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 0.30000000000000004,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.1,
+      "wait_until": 0.3,
+      "intervals": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 0.6,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.1,
+      "wait_until": 0.3,
+      "intervals": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 0.6,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.1,
+      "wait_until": 0.3,
+      "intervals": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 1.1,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.1,
+      "wait_until": 0.3,
+      "intervals": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 1.1,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.1,
+      "wait_until": 0.3,
+      "intervals": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "enabled": false,
+      "result": {
+        "clock": 2.1,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    },
+    {
+      "previous": 0.1,
+      "wait_until": 0.3,
+      "intervals": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "enabled": true,
+      "result": {
+        "clock": 2.1,
+        "discarded": 0,
+        "variates_used": 1
+      }
+    }
+  ]
+}

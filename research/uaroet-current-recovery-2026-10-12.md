@@ -363,3 +363,40 @@ tests pass. A pre-integration dense correlated calibration pilot met0.03 after
 16,000draws/chain, maximum R-hat1.00045; an exact production rerun is underway.
 This is one exploratory replicate, not the guide's1000-replicate final design.
 No status promotion or final-code full-suite claim for these new components yet.
+
+The production calibration rerun exactly matches the exploratory prototype:
+16,000 draws per chain, maximum utility ratio 0.02863074 and R-hat 1.00044822.
+Independent importance integration for that dense correlated pseudo-dataset gives
+maximum parameter-mean difference 0.0096483, with estimated reference standard
+error at most 0.000572. Doubling correlation-angle quadrature nodes changes means
+by 4.44e-16. Vanishing-likelihood points are explicitly recorded; their relative
+weight bound under the declared 2e-12 roundoff floor is 1.58e-82, not a general
+certified integration bound. See the calibration quality/reference JSON and tools.
+
+Calendar recovery adds 75 actual native uniform/rounding/setter cases. UAROET1.8
+rounds each generated delay with floor(value+0.5), so a positive [.1,.2] window
+produces zero delays. The explicit legacy profile retains this; the safe profile
+uses the guide's continuous law. Native 6a655–6a67a starts first arrival at zero;
+6a8c2–6a93a computes maximum patient follow-up time, then uses that plus one for
+final inference. Both simulation (5ea70) and conduct (5ec80) final entry points now
+have 135 native fixtures each, with identical outcomes on that grid.
+
+Application parameter initialization at1f848 sets CheckAcceptabilityWithinCohort
+true and SuspendAccrualForFullEvalOfNewDoseCohort false;10ef5–10f0e transfers them
+to selector c4/c6. Both optional flags are now accepted. Ninety live-cohort paths
+cover within-cohort checking enabled/disabled; bypass requires explicit legacy
+profile. Native suspension, when enabled, marks only closure of a multi-patient
+new-dose cohort, waits for that last patient's completion, and discards arrival
+events before that time (6a7b7–6a891). Calendar simulation must retain these
+limitations explicitly rather than silently assuming full-cohort follow-up.
+562 calendar tests check delay laws and as-of data against the480 native
+likelihood-inclusion cases. Full calendar simulation/aggregation is still open.
+
+An additional32 native arrival-loop cases execute6a812–6a690 with supplied
+inter-arrival variates through the actual virtual-distribution call. They verify
+that arrivals before the suspension deadline are discarded and equality is
+accepted. The calendar test suite now has595 passing cases. The arrival provider
+is constructed at6973b–69759 with mean field230 and vtable4d59d8;68360 calls2adf0,
+which scales the unit-exponential generator at2af13–2af18 without outcome-style
+rounding. These fixtures isolate arithmetic/control contracts, not native RNG
+identity or a full original trial run.

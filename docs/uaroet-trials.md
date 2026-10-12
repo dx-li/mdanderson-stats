@@ -128,4 +128,6 @@ and `tools/reference_uaroet_trial.R`.
 This is a complete-outcome Python scheduler. Delayed observations, native prior
 files, pseudo-trial/ESS elicitation, adaptive posterior precision and native
 report/executable parity remain outside this extension. Catalog entry 92 remains
-partial while those workflows are open.
+partial. The separate [current-desktop APIs](uaroet-desktop-study.md) now integrate
+saved files, calibration/ESS, per-chain precision, conduct and portable reports;
+calendar simulation/aggregation and final workflow acceptance remain open.

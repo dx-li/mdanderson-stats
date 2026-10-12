@@ -2168,6 +2168,11 @@ from .uaroet import (
     uaroet_parameter_names,
     uaroet_probabilities,
 )
+from .uaroet_calendar import (
+    UAROETTimedPatient,
+    uaroet_outcome_delays,
+    uaroet_study_as_of,
+)
 from .uaroet_calibration import (
     UAROETCalibration,
     calibrate_uaroet_prior,
@@ -3056,6 +3061,9 @@ __all__ = [
     "catbub_thresholds",
     "catbub_operating_characteristics",
     "UAROETAllocation",
+    "UAROETTimedPatient",
+    "uaroet_outcome_delays",
+    "uaroet_study_as_of",
     "UAROETCalibration",
     "calibrate_uaroet_prior",
     "uaroet_calibrated_prior_text",

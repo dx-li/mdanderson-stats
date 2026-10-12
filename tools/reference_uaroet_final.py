@@ -60,7 +60,7 @@ initial = u.context_save()
 post, data, records = 0x20080000, 0x200F0000, 0x20100000
 
 
-def final(patients, utility, tox_tails, eff_tails):
+def final(patients, utility, tox_tails, eff_tails, simulation=False):
     u.context_restore(initial)
     u.mem_write(obj, b"\0" * 0x110000)
     u.mem_write(stack - 0x1000, b"\0" * 0x2000)
@@ -110,8 +110,9 @@ def final(patients, utility, tox_tails, eff_tails):
     pack(stack, "I", end)
     u.reg_write(UC_X86_REG_ESP, stack)
     u.reg_write(UC_X86_REG_ECX, obj)
-    u.emu_start(base + 0x5EC80, base + 0x5ED74, count=100000)
-    assert u.reg_read(UC_X86_REG_EIP) == base + 0x5ED74
+    entry, stop = (0x5EA70, 0x5EB4A) if simulation else (0x5EC80, 0x5ED74)
+    u.emu_start(base + entry, base + stop, count=100000)
+    assert u.reg_read(UC_X86_REG_EIP) == base + stop
     return dict(
         selected=struct.unpack("<i", u.mem_read(obj, 4))[0],
         highest_allowed=struct.unpack("<i", u.mem_read(obj + 0x6C, 4))[0],
@@ -126,7 +127,14 @@ for high in range(3):
         for utility in ([20, 40, 60], [60, 40, 20], [40, 40, 40]):
             for tox, eff in (([0] * 3, [0] * 3), ([0.9] * 3, [0] * 3), ([0] * 3, [0.9] * 3)):
                 inputs = dict(patients=patients, utility=utility, tox_tails=tox, eff_tails=eff)
-                cases.append(dict(inputs=inputs, result=final(**inputs)))
+                for simulation in (False, True):
+                    cases.append(
+                        dict(
+                            inputs=inputs,
+                            simulation=simulation,
+                            result=final(**inputs, simulation=simulation),
+                        )
+                    )
 print(
     json.dumps(
         dict(

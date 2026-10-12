@@ -31,7 +31,8 @@
     "The strict toxicity event in equation 6 is used; Section 5's inclusive example differs only at exact equality.",
     "Near-optimality and probability-of-being-best are defined across all doses before safety filtering, following equations 7\u20139. All tied maxima count toward probability-of-being-best.",
     "Adaptive randomization is proportional to predictive good-outcome probability, not mean utility. No untried dose may be skipped during escalation.",
-    "Final selection exposes both an acceptable-set maximum and the literal Section 4.4 global maximum gated by a nonempty acceptable set; the distinction is explicit because these differ when the global best is unsafe."
+    "Final selection exposes both an acceptable-set maximum and the literal Section 4.4 global maximum gated by a nonempty acceptable set; the distinction is explicit because these differ when the global best is unsafe.",
+    "Dedicated current-desktop APIs provide explicit safe/legacy_1_8 controller profiles, pseudo-trial calibration, per-chain utility precision, saved conduct and streamed Python reports; these are separate from the original paper controller APIs."
   ],
-  "limitations": "Current desktop study import, calibrated priors/ESS integration, calendar conduct/simulation, adaptive precision and native report workflows remain open. Low-level toxicity-only posterior inference is integrated. Source references do not establish native inference/RNG identity or clinical validity."
+  "limitations": "Calendar simulation/aggregation and full current-desktop workflow acceptance remain open. Saved studies, prior ESS/calibration, per-chain adaptive precision, explicit conduct profiles and streamed Python assignment reports are integrated. Native report byte identity, inference/RNG identity and clinical validity are not claimed."
 }

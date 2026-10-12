@@ -1,0 +1,56 @@
+{
+  "scope": "dense correlated pseudo-posterior; independent importance integration, positive-normal proposal and256-node correlation-angle quadrature",
+  "counts": [
+    [
+      [
+        62,
+        6
+      ],
+      [
+        27,
+        5
+      ]
+    ],
+    [
+      [
+        40,
+        18
+      ],
+      [
+        25,
+        17
+      ]
+    ]
+  ],
+  "reference_parameter_means": [
+    -0.7841068191487005,
+    0.47954674672935654,
+    -2.12997844648415,
+    1.507968824330166
+  ],
+  "reference_standard_error": [
+    0.0003127204122626177,
+    0.0004734007724371373,
+    0.0004853381069389676,
+    0.0005719629093816998
+  ],
+  "python_parameter_means": [
+    -0.7848215661648121,
+    0.4789632776143543,
+    -2.139626721306292,
+    1.5165323758373521
+  ],
+  "absolute_errors": [
+    0.0007147470161116276,
+    0.0005834691150022331,
+    0.009648274822141811,
+    0.008563551507186018
+  ],
+  "vanishing_likelihood_points": 8241,
+  "total_points": 524288,
+  "roundoff_floor_relative_likelihood_bound": 1.5796784017326082e-82,
+  "roundoff_floor": 2e-12,
+  "clinical_validation": false,
+  "quadrature_node_doubling_parameter_mean_difference": 4.440892098500626e-16,
+  "roundoff_bound_is_conditional_on_declared_numerical_floor": true
+}

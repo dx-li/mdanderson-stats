@@ -26,7 +26,9 @@ def test_native_cohort_trace(case):
         elif not eligible:
             trace.append(dict(selected=-1, stop=True, new_open=new_open, old_open=old_open))
             break
-        elif (new_open or old_open) and status[last] == 1:
+        elif (new_open or old_open) and (
+            not x.get("check_acceptability", True) or status[last] == 1
+        ):
             selected = last
         else:
             selected = max(eligible, key=lambda i: (utility[i], -i))

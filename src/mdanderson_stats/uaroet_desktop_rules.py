@@ -268,11 +268,16 @@ class UAROETCohortState:
         *,
         first_size: int,
         starting_dose: int = 0,
+        check_acceptability: bool = True,
         profile: str = "safe",
     ) -> int | None:
         """Plain greedy cohort selection; source-compatible bypass requires legacy."""
         _profile(profile)
         D = len(self.first_seen)
+        if not isinstance(check_acceptability, (bool, np.bool_)) or (
+            profile == "safe" and not check_acceptability
+        ):
+            raise ValueError("within-cohort bypass requires the legacy profile")
         start = _integer(starting_dose, "starting_dose", 0, D - 1)
         first = _integer(first_size, "first_size", 1, 500)
         if len(status) != D or any(
@@ -285,7 +290,7 @@ class UAROETCohortState:
         eligible = [i for i, s in enumerate(status) if s == 1]
         if not eligible:
             return None
-        if (self.new_open or self.old_open) and status[self.last] == 1:
+        if (self.new_open or self.old_open) and (not check_acceptability or status[self.last] == 1):
             return self.last
         return max(eligible, key=lambda i: (utility[i], -i))
 
