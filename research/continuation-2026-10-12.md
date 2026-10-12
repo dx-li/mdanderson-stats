@@ -734,3 +734,8 @@ has well-mixed chains but the paper projection reaches-0.010342, while the nativ
 lower-floor transform stays in[0,1] in that run; no silent clipping or source/paper
 profile substitution is justified. Integrate these explicit diagnostics, then
 finish saved conduct, calendar/simulation and reports with qualified precision.
+
+PRT explicit legacy arithmetic is now integrated,2,867 focused tests pass. New
+72moment/1,368controller/17dispatch fixtures preserve native defects with validity
+flags; paper APIs remain unchanged. Full final-code acceptance is starting.
+Entry69 remains partial; saved conduct and native calendar/batch/report are next.

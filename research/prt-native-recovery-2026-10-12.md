@@ -208,3 +208,35 @@ patients. Independent product-mass checks reproduce every result. This is a
 material validity defect, not ordinary Monte Carlo error. Legacy diagnostics may
 expose it, but valid scientific decisions must reject these invalid criteria or
 use the explicitly corrected estimator. No silent normalization is justified.
+
+
+## Integrated arithmetic/controller checkpoint
+
+The explicit `prt_legacy` module passes2,867 tests against independent executable
+fixtures and input-validity checks. The simulation branch fixture now has963
+cases, including arbitrary distance/tie checks. Three further portable probes:
+
+- moments:72 cases (60 supplied moments plus12 projected-draw summaries) confirm
+  population-N SD, strict target exceedance, beta formed before alpha fallback,
+  and fallback only for strictly negative shapes. Zero/NaN/infinity persist.
+- controller:1,368 cases execute the full predictive/controller block, including
+  untried next doses and exact next-upper-cutoff equality.
+- output dispatch:17 codes execute original branch instructions while skipping
+  formatted-I/O calls. Code6.0 reaches no decision-text branch. This is dispatch
+  evidence, not formatting parity.
+
+Current dose in conduct is the last patient record's dose. Rule4 does not specify
+an exact lower dose. Do not import simulation's dose selector into conduct.
+Source executable hashes remain unchanged. The three generators are
+`tools/reference_prt_{moments,controller,output_dispatch}.py`; fixtures are under
+`tests/fixtures/prt-desktop-*.json`. Native output defects remain named legacy
+behavior, never silently corrected scientific defaults.
+
+Reinspection of paper Sections3 and4 confirms isotonic conditional risks and
+posterior-integrated products for pending outcomes. Existing paper APIs retain
+that contract. Native projects total risk only and multiplies marginal raw-risk
+means. A four-chain4,000-draw/2,000-warmup guide pilot (seed20261012) has maximum
+betaRhat1.00035 and raw-riskRhat1.00050 but paper projection minimum-0.010342.
+No silent clipping or profile substitution is supported by this evidence.
+Saved-conduct execution, quality holds and full calendar/batch/report integration
+remain required before entry69 can be promoted.

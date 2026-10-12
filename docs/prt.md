@@ -4,9 +4,8 @@ Catalog entry **69 remains partial**. Python now implements the discrete probit
 hazard likelihood, conditional remaining toxicity probabilities, PRT predictive
 criteria, cohort decisions and final selection. The state-space posterior fit and published covariance-weighted isotonic
 transformation are now available below. An [explicit-input calendar replay](prt-calendar.md)
-connects these components to cohort enrollment and follow-up. Native projection
-safeguards, patient-file conversion and native timing/operating-characteristic
-replication remain outstanding. The predictive
+connects these components to cohort enrollment and follow-up. Explicit native arithmetic diagnostics and patient-file conversion are available.
+Complete native conduct, timing and operating-characteristic replication remain outstanding. The predictive
 function accepts aligned isotonic posterior draws; fitting and projection are
 separate steps.
 
@@ -250,3 +249,36 @@ It is not an exponential inter-arrival generator. These primitives do not yet
 constitute the complete desktop trial runner. Original simulation text import now
 requires its native integer-day assessment window; direct Python study endpoints
 can represent a separate continuous-time extension.
+
+## Explicit native arithmetic diagnostics
+
+The `prt_legacy_*` functions expose independently recovered PRT1.0 behavior;
+they are not scientific defaults. `prt_legacy_projection` uses the native
+max-min ordering and lower floor, retains values above one, and marks them
+invalid. Singular/ill-conditioned covariance is rejected without regularization.
+`prt_legacy_beta_moments` exposes strictly-negative-only shape fallback to the
+native float32 .05 constant. Zero, infinity and NaN are not repaired. Its
+`valid_moments` flag describes the original moments independently of fallback.
+
+`prt_legacy_predictive` uses products of fixed patient-mean risks, strict beta-tail
+categories and at most ten pending patients. It rejects endpoint risks because
+native jitter can produce total probability mass near four for two patients.
+It never normalizes that defect. Empty-pending arithmetic is distinct from
+controller-specific bypasses.
+
+`prt_legacy_conduct_decision`, `prt_legacy_simulation_decision`,
+`prt_legacy_final_selection` and `prt_legacy_screening` expose their separate
+native contracts. Conduct hard-codes dose ten, sometimes generates an
+out-of-design escalation, and code6.0 has no decision-text output branch. Rule4
+prints de-escalation without selecting an exact lower dose. The returned
+`source_dose` is a retained native register, not an actionable recommendation.
+Simulation/final selection have distinct eligibility, tie and fallback defects;
+invalid selections are flagged. Abstract screening counts must be derived from
+actual patient records by any future runner.
+
+Validation includes 2,867 focused tests, including 72 native moments/summary
+cases, 1,368 full predictive/controller cases and 17 original-executable output
+dispatch probes, alongside existing projection, predictive, simulation, final
+selection and screening fixtures. These close supplied-input arithmetic and
+branch contracts, not posterior RNG, full desktop file formatting, complete trial
+simulation or clinical validity.

@@ -1611,6 +1611,20 @@ from .prt_hazard import (
     prt_arrivals_from_uniforms,
     prt_hazard_delays,
 )
+from .prt_legacy import (
+    PRTLegacyDecision,
+    PRTLegacyMoments,
+    PRTLegacyPredictive,
+    PRTLegacyProjection,
+    PRTLegacyScreening,
+    prt_legacy_beta_moments,
+    prt_legacy_conduct_decision,
+    prt_legacy_final_selection,
+    prt_legacy_predictive,
+    prt_legacy_projection,
+    prt_legacy_screening,
+    prt_legacy_simulation_decision,
+)
 from .prt_study import (
     PRTPatient,
     PRTStudy,
@@ -2289,6 +2303,18 @@ from .windows import (
 )
 
 __all__ = [
+    "PRTLegacyProjection",
+    "PRTLegacyMoments",
+    "PRTLegacyPredictive",
+    "PRTLegacyDecision",
+    "PRTLegacyScreening",
+    "prt_legacy_projection",
+    "prt_legacy_beta_moments",
+    "prt_legacy_predictive",
+    "prt_legacy_simulation_decision",
+    "prt_legacy_final_selection",
+    "prt_legacy_screening",
+    "prt_legacy_conduct_decision",
     "COMPAS_PROFILE",
     "COMPAS_SHRINKAGE_WEIGHTS",
     "ComPASStudy",

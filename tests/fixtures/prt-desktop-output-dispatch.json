@@ -1,0 +1,123 @@
+{
+  "executable_sha256": "2943f71ab27e300c1168b2d9f6a93815b75efe753b6af2b543c1370d077a1123",
+  "scope": "native decision label dispatch, Fortran formatting/I/O calls skipped",
+  "cases": [
+    {
+      "code": 3,
+      "stored_code": 3.0,
+      "decision_branches": [
+        "stop"
+      ]
+    },
+    {
+      "code": 4,
+      "stored_code": 4.0,
+      "decision_branches": [
+        "deescalate"
+      ]
+    },
+    {
+      "code": 5.1,
+      "stored_code": 5.099999904632568,
+      "decision_branches": [
+        "stay"
+      ]
+    },
+    {
+      "code": 5.11,
+      "stored_code": 5.110000133514404,
+      "decision_branches": [
+        "stay"
+      ]
+    },
+    {
+      "code": 5.2,
+      "stored_code": 5.199999809265137,
+      "decision_branches": [
+        "suspend"
+      ]
+    },
+    {
+      "code": 6.0,
+      "stored_code": 6.0,
+      "decision_branches": []
+    },
+    {
+      "code": 6.1001,
+      "stored_code": 6.100100040435791,
+      "decision_branches": [
+        "stay"
+      ]
+    },
+    {
+      "code": 6.1,
+      "stored_code": 6.099999904632568,
+      "decision_branches": [
+        "stay"
+      ]
+    },
+    {
+      "code": 6.11,
+      "stored_code": 6.110000133514404,
+      "decision_branches": [
+        "stay"
+      ]
+    },
+    {
+      "code": 6.12,
+      "stored_code": 6.119999885559082,
+      "decision_branches": [
+        "suspend"
+      ]
+    },
+    {
+      "code": 6.2,
+      "stored_code": 6.199999809265137,
+      "decision_branches": [
+        "escalate"
+      ]
+    },
+    {
+      "code": 6.21,
+      "stored_code": 6.210000038146973,
+      "decision_branches": [
+        "escalate"
+      ]
+    },
+    {
+      "code": 6.22,
+      "stored_code": 6.21999979019165,
+      "decision_branches": [
+        "escalate"
+      ]
+    },
+    {
+      "code": 6.23,
+      "stored_code": 6.230000019073486,
+      "decision_branches": [
+        "escalate"
+      ]
+    },
+    {
+      "code": 6.3,
+      "stored_code": 6.300000190734863,
+      "decision_branches": [
+        "suspend"
+      ]
+    },
+    {
+      "code": 6.33,
+      "stored_code": 6.329999923706055,
+      "decision_branches": [
+        "suspend"
+      ]
+    },
+    {
+      "code": 6.4,
+      "stored_code": 6.400000095367432,
+      "decision_branches": [
+        "suspend"
+      ]
+    }
+  ]
+}
