@@ -579,3 +579,13 @@ Continue immediately with recovered Dose Schedule Finder75 and preserve the
 separate web-app contracts128/129; no arbitrary stopping count.
 Six unavailable exact fits, mixed-license distribution decision and Forbidden PR
 creation remain separate blockers. No merge/release/deployment/outreach occurred.
+
+## Dose Schedule Finder75 current-workflow acceptance
+
+Current2.2.0 guide-defined scope is closed; counts101 implemented/31 partial/6 pending.
+See [acceptance](dose-schedule-desktop-complete-checkpoint-2026-10-12.md) and its
+validation manifest. Continue source-recoverable UAROET92 and PRT69 immediately: both
+original archives are recovered. UAROET current-guide efficacy futility, calibration,
+partial outcomes, cohorts and saved workflows require explicit integration beyond
+the paper API. Preserve the separate web-app128/129 and six unavailable-fit blockers.
+Mixed-license distribution and Forbidden PR creation remain parent decisions.

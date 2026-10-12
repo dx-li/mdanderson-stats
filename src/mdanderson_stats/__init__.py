@@ -910,6 +910,35 @@ from .dose_schedule import (
     dose_schedule_patient_loglikelihood,
 )
 from .dose_schedule_decision import DoseScheduleDecision, dose_schedule_decision
+from .dose_schedule_desktop_kernel import (
+    DoseScheduleDesktopObservation,
+    dose_schedule_desktop_decision,
+    dose_schedule_desktop_event_time,
+    dose_schedule_desktop_lognormal,
+    dose_schedule_desktop_observation,
+)
+from .dose_schedule_desktop_report import (
+    DoseScheduleDesktopSavedReport,
+    dose_schedule_desktop_analysis_report,
+    dose_schedule_desktop_distribution_json,
+    dose_schedule_desktop_simulation_report,
+    dose_schedule_desktop_trial_json,
+    read_dose_schedule_desktop_report,
+)
+from .dose_schedule_desktop_study import (
+    DoseScheduleDesktopPatient,
+    DoseScheduleDesktopStudy,
+    read_dose_schedule_desktop_study,
+)
+from .dose_schedule_desktop_workflow import (
+    DoseScheduleDesktopAnalysis,
+    DoseScheduleDesktopSampler,
+    DoseScheduleDesktopSimulation,
+    DoseScheduleDesktopTrial,
+    analyze_dose_schedule_desktop,
+    replay_dose_schedule_desktop_trial,
+    simulate_dose_schedule_desktop,
+)
 from .dose_schedule_fit import DoseScheduleFit, fit_dose_schedule
 from .dose_schedule_observation import (
     DoseScheduleEpisodeStatus,
@@ -2406,6 +2435,27 @@ __all__ = [
     "run_pinnacle",
     "quantify_selected_peaks",
     "write_pinnacle_selection_csv",
+    "DoseScheduleDesktopObservation",
+    "dose_schedule_desktop_decision",
+    "dose_schedule_desktop_event_time",
+    "dose_schedule_desktop_lognormal",
+    "dose_schedule_desktop_observation",
+    "DoseScheduleDesktopPatient",
+    "DoseScheduleDesktopStudy",
+    "read_dose_schedule_desktop_study",
+    "DoseScheduleDesktopAnalysis",
+    "DoseScheduleDesktopSampler",
+    "DoseScheduleDesktopSimulation",
+    "DoseScheduleDesktopTrial",
+    "analyze_dose_schedule_desktop",
+    "replay_dose_schedule_desktop_trial",
+    "simulate_dose_schedule_desktop",
+    "DoseScheduleDesktopSavedReport",
+    "dose_schedule_desktop_analysis_report",
+    "dose_schedule_desktop_distribution_json",
+    "dose_schedule_desktop_simulation_report",
+    "dose_schedule_desktop_trial_json",
+    "read_dose_schedule_desktop_report",
     "DoseSchedulePatient",
     "DoseScheduleEpisodeStatus",
     "DoseSchedulePatientObservation",

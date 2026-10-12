@@ -110,7 +110,7 @@ Unrepresentable arithmetic raises an error. Patient counts, administration
 counts, retained arrays, likelihood calls and administration/prediction work
 are bounded before or during computation. The fit permits at most 200 patients,
 20 doses, 10,000 actual administrations, and 20 nested schedules with at most
-20 administrations each (200 across all schedules). Schedule lengths must
+50 administrations each (200 across all schedules). Schedule lengths must
 increase, and each must contain its predecessor as a subsequence; administration
 times need not form a prefix of the longer schedule.
 
@@ -140,8 +140,8 @@ fully specify the no-skip convention. The default `escalation_rule="coordinate_m
 allows at most one level beyond the largest tried dose and largest tried
 schedule, separately. `"observed_pair"` instead requires that a candidate be at
 most one level above both coordinates of at least one previously tried pair.
-Both permit diagonal one-level escalation, revisits and de-escalation. These
-are documented Python conventions, not verified executable behavior. The
+Both permit diagonal one-level escalation, revisits and de-escalation. The recovered native controller confirms coordinate-wise no-skip;
+`observed_pair` remains a documented Python extension. The
 optional `current` pair is validated but does not change either history-based
 rule.
 
@@ -169,6 +169,9 @@ memory/work and recorded random tapes.
 serially with Monte Carlo errors. [Delayed-toxicity observations](dose-schedule-observation.md)
 accept explicit adjudications, backdate qualifying events to onset, and report
 whether unresolved episodes can still change the final analysis.
-Automatic calibration, generated low-grade episode histories, within-patient
-adaptation policies and native files/reports remain open. The original Windows executable has not been
-run for equivalence; the executable and article are not bundled.
+The [desktop workflow](dose-schedule-desktop.md) now integrates current-guide
+nu calibration, generated low-grade simulation, original saved inputs, conduct,
+reports and distribution export. Actual dose changes are supported; the separate
+2013 automatic adaptation policy is not substituted. Native contract probes and
+independent posterior checks are distinct from complete Windows/native-integration
+parity. See the [completion checkpoint](../research/dose-schedule-desktop-complete-checkpoint-2026-10-12.md).

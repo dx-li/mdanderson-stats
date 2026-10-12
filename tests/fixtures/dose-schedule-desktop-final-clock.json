@@ -1,0 +1,110 @@
+[
+  {
+    "entries": [
+      0
+    ],
+    "times": [
+      10
+    ],
+    "duration": 10.0,
+    "analysis_time": 11.0
+  },
+  {
+    "entries": [
+      0
+    ],
+    "times": [
+      60
+    ],
+    "duration": 60.0,
+    "analysis_time": 61.0
+  },
+  {
+    "entries": [
+      0
+    ],
+    "times": [
+      1
+    ],
+    "duration": 1.0,
+    "analysis_time": 2.0
+  },
+  {
+    "entries": [
+      0,
+      7
+    ],
+    "times": [
+      10,
+      10
+    ],
+    "duration": 17.0,
+    "analysis_time": 18.0
+  },
+  {
+    "entries": [
+      0,
+      7
+    ],
+    "times": [
+      60,
+      60
+    ],
+    "duration": 67.0,
+    "analysis_time": 68.0
+  },
+  {
+    "entries": [
+      0,
+      7
+    ],
+    "times": [
+      1,
+      2
+    ],
+    "duration": 9.0,
+    "analysis_time": 10.0
+  },
+  {
+    "entries": [
+      0,
+      7,
+      8
+    ],
+    "times": [
+      10,
+      10,
+      10
+    ],
+    "duration": 18.0,
+    "analysis_time": 19.0
+  },
+  {
+    "entries": [
+      0,
+      7,
+      8
+    ],
+    "times": [
+      60,
+      60,
+      60
+    ],
+    "duration": 68.0,
+    "analysis_time": 69.0
+  },
+  {
+    "entries": [
+      0,
+      7,
+      8
+    ],
+    "times": [
+      1,
+      2,
+      3
+    ],
+    "duration": 11.0,
+    "analysis_time": 12.0
+  }
+]

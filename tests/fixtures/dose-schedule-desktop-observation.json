@@ -1,0 +1,6940 @@
+[
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 0,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 5,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 10,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 24,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 60,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 69,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 90,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 0,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 5,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 10,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 24,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 60,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 69,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 90,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 0,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 5,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 10,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 24,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 60,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 69,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 90,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 0,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 5,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 10,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 24,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 60,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 69,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 90,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 0,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 5,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 10,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 24,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 60,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 69,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 90,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 0,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 5,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 10,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 24,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 60,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 69,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 10,
+    "study": 90,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 0,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 5,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 10,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 24,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 60,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 69,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 90,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 0,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 5,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 10,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 24,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 60,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 69,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 90,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 0,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 5,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 10,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 24,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 60,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 69,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 90,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 0,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 5,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 10,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 24,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 60,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 69,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 90,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 0,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 5,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 10,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 24,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 60,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 69,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 90,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 0,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 5,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 10,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 24,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 60,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 69,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 55,
+    "study": 90,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 0,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 5,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 10,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 24,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 60,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 69,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 90,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 0,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 5,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 10,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 24,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 60,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 69,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 90,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 0,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 5,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 10,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 24,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 60,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 69,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 90,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 0,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 5,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 10,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 24,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 60,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 69,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 90,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 0,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 5,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 10,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 24,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 60,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 69,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 90,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 0,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 5,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 10,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 24,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 60,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 69,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 0,
+    "onset": 70,
+    "study": 90,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 0,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 5,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 10,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 24,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 60,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 69,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 90,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 0,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 5,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 10,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 24,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 60,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 69,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 90,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 0,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 5,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 10,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 24,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 60,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 69,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 90,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 0,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 5,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 10,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 24,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 60,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 69,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 90,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 0,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 5,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 10,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 24,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 60,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 69,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 90,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 0,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 5,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 10,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 24,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 60,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 69,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 10,
+    "study": 90,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 0,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 5,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 10,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 24,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 60,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 69,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 90,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 0,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 5,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 10,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 24,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 60,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 69,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 90,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 0,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 5,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 10,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 24,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 60,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 69,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 90,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 0,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 5,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 10,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 24,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 60,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 69,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 90,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 0,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 5,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 10,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 24,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 60,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 69,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 90,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 0,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 5,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 10,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 24,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 60,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 69,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 55,
+    "study": 90,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 0,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 5,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 10,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 24,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 60,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 69,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        69.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 90,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        70.0
+      ],
+      [
+        "survival",
+        70.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 0,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 5,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 10,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 24,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 60,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 69,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        69.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 90,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        70.0
+      ],
+      [
+        "survival",
+        70.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 0,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 5,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 10,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 24,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 60,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 69,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        69.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 90,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        70.0
+      ],
+      [
+        "survival",
+        70.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 0,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 5,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 10,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 24,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 60,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 69,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        62.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 90,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        70.0
+      ],
+      [
+        "survival",
+        70.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 0,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 5,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 10,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 24,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 60,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 69,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        62.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 90,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        70.0
+      ],
+      [
+        "survival",
+        70.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 0,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 5,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 10,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 24,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 60,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 69,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        62.0
+      ]
+    ]
+  },
+  {
+    "outcome": 1,
+    "onset": 70,
+    "study": 90,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        70.0
+      ],
+      [
+        "survival",
+        70.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 0,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 5,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 10,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 24,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 60,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 69,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 90,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 0,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 5,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 10,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 24,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 60,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 69,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 90,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 0,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 5,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 10,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 24,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 60,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 69,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 90,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 0,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 5,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 10,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 24,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 60,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 69,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 90,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 0,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 5,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 10,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 24,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 60,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 69,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 90,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 0,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 5,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 10,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 24,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 60,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 69,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 10,
+    "study": 90,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        10.0
+      ],
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 0,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 5,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 10,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 24,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 60,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 69,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 90,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 0,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 5,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 10,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 24,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 60,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 69,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 90,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 0,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 5,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 10,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 24,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 60,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 69,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        69.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 90,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 0,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 5,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 10,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 24,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 60,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 69,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 90,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 0,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 5,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 10,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 24,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 60,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 69,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        62.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 90,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 0,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 5,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 10,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 24,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 60,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 69,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        62.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 55,
+    "study": 90,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        55.0
+      ],
+      [
+        "survival",
+        55.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 0,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 5,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 10,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 24,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 60,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 69,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        69.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 90,
+    "entry": 0,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        70.0
+      ],
+      [
+        "survival",
+        70.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 0,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 5,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 10,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 24,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 60,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 69,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        69.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 90,
+    "entry": 0,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        70.0
+      ],
+      [
+        "survival",
+        70.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 0,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        0.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 5,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        5.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 10,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        10.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        23.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 24,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        24.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 60,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        60.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 69,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        69.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 90,
+    "entry": 0,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        70.0
+      ],
+      [
+        "survival",
+        70.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 0,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 5,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 10,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 24,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 60,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 69,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        62.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 90,
+    "entry": 7,
+    "delay": 0,
+    "horizon": 60,
+    "calls": [
+      [
+        "hazard",
+        70.0
+      ],
+      [
+        "survival",
+        70.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 0,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 5,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 10,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 24,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 60,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 69,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        62.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 90,
+    "entry": 7,
+    "delay": 14,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        83.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 0,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 5,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": []
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 10,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        3.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 23.999,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        16.999
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 24,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 24.001,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        17.001
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 60,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        53.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 69,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        62.0
+      ]
+    ]
+  },
+  {
+    "outcome": 2,
+    "onset": 70,
+    "study": 90,
+    "entry": 7,
+    "delay": 20,
+    "horizon": 60,
+    "calls": [
+      [
+        "survival",
+        83.0
+      ]
+    ]
+  }
+]

@@ -1483,3 +1483,10 @@ numerical or cached result fixtures. No original binaries, VBA, R program,
 manuscript, guide or report prose is redistributed. The legacy profile exposes
 recovered computational defects explicitly; numerical agreement is not clinical
 validation or new distribution permission. Existing mixed-license terms remain.
+
+Dose Schedule Finder2.2.0 desktop recovery uses externally supplied original
+assets only for bounded reference execution. New Python integration and reference
+harnesses are independently authored; synthetic numeric/saved-study fixtures do
+not include the original DLL, executable, installer or guide. The original
+no-redistribution terms and all existing repository notices remain unchanged.
+See research/dose-schedule-desktop-recovery-2026-10-12.md for hashes and scope.

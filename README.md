@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-100 implemented, 32 partial, and 6 pending. Each method's guide explains its
+101 implemented, 31 partial, and 6 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -1726,8 +1726,11 @@ Monte Carlo errors and replayable event/sampler seed pairs.
 adjudications as they become known, backdate qualifying events to onset, and
 separate delivered treatment from likelihood exposure. Grade-2 snapshots apply
 the paper's persistence or attributed-dose-reduction rule to supplied episode
-histories, with an explicit deadline convention. Automatic calibration,
-generated low-grade episodes and native workflows remain open.
+histories, with an explicit deadline convention. The [current desktop workflow](docs/dose-schedule-desktop.md)
+adds original saved studies, recovered nu calibration, generated low-grade events,
+as-of conduct, all-scenario simulation and reopenable reports with distribution
+and trial-detail exports. Explicit compatibility profiles preserve native defects;
+independent integration validates posterior accuracy.
 
 [CiBolus](docs/cibolus.md) models immediate and subsequent response to a bolus
 plus continuous infusion, with response-dependent toxicity. Exact and interval

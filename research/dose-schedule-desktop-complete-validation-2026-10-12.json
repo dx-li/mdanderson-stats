@@ -1,0 +1,64 @@
+{
+  "scope": "Dose Schedule Finder75 current2.2.0 guide-defined Python workflow",
+  "full_suite": {
+    "passed": 61195,
+    "seconds": 916.34,
+    "all_extras": true,
+    "warnings_as_errors": true,
+    "log_sha256": "130cbb36618ba964ce98ceecd40b49bc9b4a158d9dcbd3aa0fdb196fc0d2011e",
+    "production_python_sha256": "84953d8020855493f98bbb7c3de0fe5c17ea3378631da89232053bbe66559ddc"
+  },
+  "fresh_wheel": {
+    "tests": 5575,
+    "example": true,
+    "quality_trials": 192,
+    "independent_Sobol_points": 262144,
+    "maximum_posterior_mean_difference": 0.0005294020127793453,
+    "accuracy_study_maximum_Rhat": 1.0000570590403255
+  },
+  "source_reference": {
+    "byte_identically_regenerated_files": 7,
+    "prior_cases": 45,
+    "selector_cases": 5133,
+    "observation_branch_cases": 486,
+    "lognormal_cases": 30,
+    "schedule_cases": 40,
+    "final_clock_cases": 9,
+    "original_managed_serializer_studies": 1,
+    "existing_R_files": 5,
+    "R_byte_identical_files": 4,
+    "R_remaining_difference": "One posterior area_mean printed at .395537892938716 vs .395537892938717; numeric agreement about1e-15"
+  },
+  "qualifications": [
+    "Bounded native probes use host CRT/vector services; they do not reproduce native inference or Windows execution",
+    "Managed serializer probe disables only native module initializer in a temporary copy",
+    "Safe defaults and explicit desktop_legacy defects differ intentionally",
+    "Accurate Python lognormal inversion differs from native approximation within recorded tolerances",
+    "Short32-draw workflow simulations establish execution coverage, not posterior precision; reported Rhat exceeds2",
+    "Independent posterior accuracy uses a separate four-chain2000-draw fit and262144 Sobol points",
+    "Actual within-patient histories supported; distinct2013 automatic adaptation policy is not substituted",
+    "Source compatibility, mathematical correctness and clinical validity are separate"
+  ],
+  "artifacts": {
+    "package_Python_JSON_files": 754,
+    "notice_files_retained": 29,
+    "raw_original_assets_excluded": true,
+    "hashes": "Final artifact hashes recorded in preservation commit message"
+  },
+  "lint": "passed",
+  "format": "2638 files already formatted",
+  "types": "750 source files passed",
+  "catalog": {
+    "implemented": 101,
+    "partial": 31,
+    "pending": 6
+  },
+  "post_full_suite_change": "Only catalog75 metadata changed in production package; production Python hash verified unchanged. Final rebuilt wheel rechecked.",
+  "next_application_recovery": {
+    "UAROET_native_eta_cases": 360,
+    "UAROET_native_marginal_cases": 360,
+    "independent_focused_tests": 720,
+    "fixture_regenerated_byte_identically": true,
+    "catalog_promotion": false
+  }
+}

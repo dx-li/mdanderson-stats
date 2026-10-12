@@ -1,0 +1,87 @@
+{
+  "independent_Sobol_points": 262144,
+  "posterior_mean": [
+    [
+      0.14708161100871134,
+      0.2569468465639723
+    ],
+    [
+      0.30408372521180693,
+      0.4820504590589582
+    ]
+  ],
+  "independent_reference_mean": [
+    [
+      0.14730493795658928,
+      0.25747624857675167
+    ],
+    [
+      0.30416518563243267,
+      0.481869665585128
+    ]
+  ],
+  "reference_mcse": [
+    [
+      4.1800105072829055e-06,
+      5.689053703543136e-06
+    ],
+    [
+      5.16340149346641e-06,
+      5.315760766240774e-06
+    ]
+  ],
+  "absolute_difference": [
+    [
+      0.00022332694787793872,
+      0.0005294020127793453
+    ],
+    [
+      8.146042062573411e-05,
+      0.00018079347383020972
+    ]
+  ],
+  "six_joint_mcse_plus_001": [
+    [
+      0.007823922272703645,
+      0.011282812035823507
+    ],
+    [
+      0.011040765684042508,
+      0.01457631464470726
+    ]
+  ],
+  "maximum_posterior_rhat": 1.0000570590403255,
+  "workflow_checks": [
+    {
+      "profile": "safe",
+      "trials": 96,
+      "maximum_selection_mcse": 0.08821554523934542,
+      "maximum_posterior_rhat": 2.158411680760649,
+      "maximum_posterior_risk_mcse": 0.062063279598248665,
+      "maximum_posterior_tail_mcse": 0.13889898953170718,
+      "pending_final_probability": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "likelihood_evaluations": 60872,
+      "work_units": 1044234
+    },
+    {
+      "profile": "desktop_legacy",
+      "trials": 96,
+      "maximum_selection_mcse": 0.08838834764831845,
+      "maximum_posterior_rhat": 2.0661643247899075,
+      "maximum_posterior_risk_mcse": 0.062063279598248665,
+      "maximum_posterior_tail_mcse": 0.1336171222319032,
+      "pending_final_probability": [
+        0.0,
+        0.25,
+        0.375
+      ],
+      "likelihood_evaluations": 59276,
+      "work_units": 1027444
+    }
+  ],
+  "qualification": "Short-chain workflow simulations exercise complete operations; their posterior diagnostics do not establish clinical precision. Independent posterior accuracy is checked separately against scrambled Sobol integration."
+}

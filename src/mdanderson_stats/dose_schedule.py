@@ -279,9 +279,9 @@ def validate_schedules(schedules: object, horizon: float) -> tuple[FloatArray, .
     rows: list[FloatArray] = []
     total = 0
     for index, schedule in enumerate(schedules):
-        row = _numeric(schedule, f"schedules[{index}]", max_size=20)
-        if row.ndim != 1 or not 1 <= row.size <= 20:
-            raise ValueError("each candidate schedule must contain 1..20 administration times")
+        row = _numeric(schedule, f"schedules[{index}]", max_size=50)
+        if row.ndim != 1 or not 1 <= row.size <= 50:
+            raise ValueError("each candidate schedule must contain 1..50 administration times")
         if np.any(row < 0) or np.any(np.diff(row) <= 0) or np.any(row >= horizon):
             raise ValueError("schedule times must be strictly increasing in [0,horizon)")
         if rows and (row.size <= rows[-1].size or not _subsequence(rows[-1], row)):
