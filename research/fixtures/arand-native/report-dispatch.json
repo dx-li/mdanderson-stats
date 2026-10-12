@@ -2,10 +2,199 @@
   "constructor_rva": "0x17b48",
   "vtable_field": "0x040006f6",
   "vtable_rva": "0x395538",
-  "report_slot": 12,
-  "report_thunk_rva": "0x57b60",
+  "report_slot": 16,
+  "accumulation_slot": 32,
+  "slots": {
+    "0": {
+      "base": {
+        "kind": "managed",
+        "rva": "0x52c78",
+        "thunk": "0x52cc0",
+        "fixup": "0x3962a0",
+        "token": "0x6000122"
+      },
+      "derived": {
+        "kind": "managed",
+        "rva": "0xe3bdc",
+        "thunk": "0xe3c38",
+        "fixup": "0x3968d4",
+        "token": "0x6000033"
+      }
+    },
+    "4": {
+      "base": {
+        "kind": "managed",
+        "rva": "0x52cc8",
+        "thunk": "0x574c4",
+        "fixup": "0x3962a4",
+        "token": "0x600009a"
+      },
+      "derived": {
+        "kind": "managed",
+        "rva": "0x52cc8",
+        "thunk": "0x574c4",
+        "fixup": "0x3962a4",
+        "token": "0x600009a"
+      }
+    },
+    "8": {
+      "base": {
+        "kind": "managed",
+        "rva": "0x574cc",
+        "thunk": "0x579ac",
+        "fixup": "0x3962a8",
+        "token": "0x600009b"
+      },
+      "derived": {
+        "kind": "managed",
+        "rva": "0x574cc",
+        "thunk": "0x579ac",
+        "fixup": "0x3962a8",
+        "token": "0x600009b"
+      }
+    },
+    "12": {
+      "base": {
+        "kind": "managed",
+        "rva": "0x579b4",
+        "thunk": "0x57b60",
+        "fixup": "0x3962ac",
+        "token": "0x600009c"
+      },
+      "derived": {
+        "kind": "native",
+        "rva": "0x18d3e0"
+      }
+    },
+    "16": {
+      "base": {
+        "kind": "managed",
+        "rva": "0x57b68",
+        "thunk": "0x59334",
+        "fixup": "0x3962b0",
+        "token": "0x600009d"
+      },
+      "derived": {
+        "kind": "native",
+        "rva": "0x18bf90"
+      }
+    },
+    "20": {
+      "base": {
+        "kind": "managed",
+        "rva": "0x5933c",
+        "thunk": "0x59359",
+        "fixup": "0x3962b4",
+        "token": "0x600009e"
+      },
+      "derived": {
+        "kind": "managed",
+        "rva": "0x5933c",
+        "thunk": "0x59359",
+        "fixup": "0x3962b4",
+        "token": "0x600009e"
+      }
+    },
+    "24": {
+      "base": {
+        "kind": "managed",
+        "rva": "0x59360",
+        "thunk": "0x599fc",
+        "fixup": "0x3962b8",
+        "token": "0x600009f"
+      },
+      "derived": {
+        "kind": "managed",
+        "rva": "0x59360",
+        "thunk": "0x599fc",
+        "fixup": "0x3962b8",
+        "token": "0x600009f"
+      }
+    },
+    "28": {
+      "base": {
+        "kind": "managed",
+        "rva": "0x59a04",
+        "thunk": "0x59ab8",
+        "fixup": "0x3962bc",
+        "token": "0x60000a0"
+      },
+      "derived": {
+        "kind": "managed",
+        "rva": "0x59a04",
+        "thunk": "0x59ab8",
+        "fixup": "0x3962bc",
+        "token": "0x60000a0"
+      }
+    },
+    "32": {
+      "base": {
+        "kind": "managed",
+        "rva": "0x59ac0",
+        "thunk": "0x5a294",
+        "fixup": "0x3962c0",
+        "token": "0x60000a1"
+      },
+      "derived": {
+        "kind": "managed",
+        "rva": "0x59ac0",
+        "thunk": "0x5a294",
+        "fixup": "0x3962c0",
+        "token": "0x60000a1"
+      }
+    },
+    "36": {
+      "base": {
+        "kind": "managed",
+        "rva": "0x5a29c",
+        "thunk": "0x5aac4",
+        "fixup": "0x3962c4",
+        "token": "0x60000a2"
+      },
+      "derived": {
+        "kind": "managed",
+        "rva": "0x5a29c",
+        "thunk": "0x5aac4",
+        "fixup": "0x3962c4",
+        "token": "0x60000a2"
+      }
+    },
+    "40": {
+      "base": {
+        "kind": "managed",
+        "rva": "0x5aacc",
+        "thunk": "0x5b31c",
+        "fixup": "0x3962c8",
+        "token": "0x60000a3"
+      },
+      "derived": {
+        "kind": "managed",
+        "rva": "0x5aacc",
+        "thunk": "0x5b31c",
+        "fixup": "0x3962c8",
+        "token": "0x60000a3"
+      }
+    },
+    "44": {
+      "base": {
+        "kind": "managed",
+        "rva": "0x5b324",
+        "thunk": "0x5b634",
+        "fixup": "0x3962cc",
+        "token": "0x60000a4"
+      },
+      "derived": {
+        "kind": "managed",
+        "rva": "0x5b324",
+        "thunk": "0x5b634",
+        "fixup": "0x3962cc",
+        "token": "0x60000a4"
+      }
+    }
+  },
   "base_report_method_rva": "0x57b68",
-  "actual_wrapper_entry_rva": "0x18d3e0",
+  "native_simulation_entry_rva": "0x18d3e0",
+  "native_report_entry_rva": "0x18bf90",
   "derived_vtable_field": "0x04000524",
   "derived_vtable_rva": "0x395e18",
   "derived_vtable_assignment_xml_offset": 410,

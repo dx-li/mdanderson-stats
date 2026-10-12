@@ -253,13 +253,14 @@ noncovariate report candidate is RVA0x57b68, reached through base constructor
 0x17b48's vtable field0x040006f6. Its arithmetic/control layout matches the earlier
 covariate report, apart from class offsets and metadata token substitutions.
 However, wrapper XMLPopulate0x23fa8/IL410 **replaces** that vtable with field
-0x04000524. Its slot12 is native x86 **0x18d3e0**, not the base report candidate.
+0x04000524. CLR fixup tokens resolve slot12 to native simulation **0x18d3e0**, slot16 to
+native report **0x18bf90**, not the base report candidate.
 Therefore the 12 base-report percentile probes do not establish the advertised
 wrapper's final report. `verify_report_dispatch.py` now records the complete
 base/derived boundary; full derived report execution remains open. An interim
 name-based interpretation was corrected before committing this evidence.
 
-Accumulation slot28 is shared. `arand_accumulate_reference.py` executes the full
+Accumulation slot32 is shared. `arand_accumulate_reference.py` executes the full
 original noncovariate accumulation body at0x59ac0 using final-record services and
 counter sinks; 12 fixtures cover all status families, absent/present winners,
 early selection and completion. It records per-arm enrollment/final status,
@@ -284,3 +285,49 @@ asserted its previous environment path; these harness issues were corrected.
 Full final-code regression is running. Two earlier follow-on regressions were
 stopped because implementation was still changing; neither is counted as a pass.
 No application promotion, release, merge, PR bypass, or license change.
+
+Managed history follow-up inspection (original ARand.Design.dll):
+`TrialDetails.get_CurrentTime` RVA0x381c calls DateTime.Now.ToOADate;
+`set_CurrentTime`0x3836 is an empty return. `PatientOutcome.get_time`0x9d13
+returns `TimeOfOutcome`; `set_time`0x9d1b is an empty return. The genuine stored
+property is `TimeOfOutcome` (getter0x9be2/setter0x9bea). Thus the synthetic probe's
+assignment to `time` is intentionally insufficient to create an observed record;
+its zero serialized times must not be read as proof of a GUI history defect.
+Native XMLPopulatePatientOutcome0xb2f98 multiplies serialized time by the director
+unit factor (Days1, Weeks1/7, Months12/365, Years1/365). Recover complete date-origin
+and pending-history conventions before integration. The source-retaining fresh
+simulation reader does not depend on those unfinished history semantics.
+
+Dispatch correction: resolve each `ff25` thunk through its CLR fixup cell's
+MethodDef token; the adjacent IL body is not necessarily its target. This corrects
+the interim slot labels in c45b46b1. The reproducible manifest now contains every
+base/derived slot, thunk/fixup/token and target RVA. Simulation override is
+0x18d3e0 (slot12), report override0x18bf90 (slot16), shared accumulator0x59ac0
+(slot32). No actual-report parity was claimed or catalog promotion made.
+
+### Advertised simulation outputs and actual native probes
+
+The Python summary/report now includes per-arm selected-early and final-drop
+counts plus full final-status histograms. Full original accumulation fixtures
+validate those counters. New bounded x86 probes execute the actual derived
+report at0x18bf90: it sums statuses2,1,3, confirming permanent closures belong in
+the reported early-drop count. Its enrollment intervals are suppressed below100
+replications and read zero-based indicesceil(n*p-1)+1 above that boundary.
+The report's explicit `legacy-5.2.2` percentile option reproduces these values;
+the default remains mathematically standard type7. Thirteen actual-report-slice
+fixtures are preserved, not merely base-template probes.
+
+Six bounded native replication-loop cases (0x18d4b5..0x18d51a) confirm each
+replication performs director reset, trial run and accumulation in that order.
+Five original SetSeed IL cases confirm base seed plus scenario index. Native
+random-number values are not substituted into a claimed RNG identity: independent
+NumPy streams and recorded replay seeds remain the declared production profile.
+
+The guide explicitly advertises simulation, not clinical conduct. See
+[guide-scope assessment](arand-simulation-scope-2026-10-12.md) for the completed
+simulation contracts versus optional latent clinical-file APIs. Application
+promotion is pending final regression/artifact verification. Current native
+workflow targeted suite:427 passed; final full regression is running on frozen
+production logic. Earlier exploratory runs were stopped as report work continued
+and are not counted as passing results. Original managed XML normalization now
+uses numeric0 for current_time, preserving a valid numeric field in fixtures.

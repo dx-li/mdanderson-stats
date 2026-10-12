@@ -275,8 +275,21 @@ Original binary/TTE XML now maps to fresh simulation studies, preserving source
 text/history metadata. Per-arm parameter thresholds and response delays are
 integrated. Clinical-history import/editing is deliberately still open.
 IMPORTANT: base noncovariate report0x57b68 is overridden by native x86 entry
-0x18d3e0 through vtable field0x04000524 assigned at wrapper XMLPopulate IL410.
+0x18bf90 (slot16); simulation override is0x18d3e0 (slot12), through vtable field0x04000524 assigned at wrapper XMLPopulate IL410.
 Do not claim actual report parity from the base percentile fixtures. Shared
 accumulation0x59ac0 now has12 full-body original fixtures. See the integration
 checkpoint's new section for exact evidence, harness issues and next contracts.
 Full final-code tests are running; only completed final results may be reported.
+
+### Per-arm report completion and source-scope correction
+
+Guide-required per-arm early selection/drop reporting is implemented; the actual
+native report sums final statuses1+2+3. The explicit legacy-5.2.2 percentile mode
+matches actual x86 report probes and suppresses intervals below100. Actual
+native replication-loop and original scenario-seed probes are preserved.
+CLR FIXUP CORRECTION: source dispatch must resolve the thunk's MethodDef token,
+not its neighboring IL body. Native simulation is0x18d3e0/slot12; native report
+is0x18bf90/slot16; shared accumulation0x59ac0/slot32. The revised manifest records
+all slots. See arand-simulation-scope-2026-10-12.md: the advertised application is
+simulation; latent clinical-history conduct is a separate scope, not an automatic
+blocker for guide-scope implementation. No promotion before final verification.

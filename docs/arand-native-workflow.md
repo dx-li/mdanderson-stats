@@ -191,3 +191,24 @@ for imported simulation studies. For fractional `a`, initial enrollment is
 is built from `ceil(a)` in both cases. This legacy disagreement is explicit.
 Empty/zero-increment/overflow schedules fail instead of inheriting undefined
 native behavior.
+
+## Complete per-arm simulation output
+
+The summary retains `selected_early`, `dropped_early`, and all ten final-status
+count columns for each arm. Early drops include final temporary, other-winner
+and permanent closures (1, 2, 3); an arm that reopened is not a final drop.
+These counts match bounded execution of the actual desktop report and the full
+original accumulation body. HTML includes per-arm selection, early selection,
+early drop, enrollment and empirical enrollment intervals, plus trial duration.
+
+The default empirical interval uses type 7. For the original desktop percentile
+convention, use `arand_native_report(summary, percentile_profile="legacy-5.2.2")`.
+This explicit compatibility profile uses zero-based `ceil(n*p - 1) + 1` indices
+and omits intervals below100 replications. It is not a confidence interval, and
+it is not silently substituted for the standard quantile definition.
+
+For a multi-scenario original document, run each `document.studies[i]` with
+`trials=document.replications[i]` and `seed=document.seed + i`, then save each
+HTML result. The original wrapper uses base seed plus scenario index; Python
+uses independent NumPy replicate streams and records every replay seed. This
+preserves reproducibility without claiming the original RNG sequence.

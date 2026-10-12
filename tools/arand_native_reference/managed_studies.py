@@ -57,7 +57,7 @@ def main() -> None:
     for p in sorted(args.output_dir.glob("*.xml")):
         root = ET.fromstring(p.read_text())
         # Native getter uses the wall clock even after CurrentTime is explicitly assigned.
-        root.find("./trial_details/current_time").text = "NORMALIZED_WALL_CLOCK"
+        root.find("./trial_details/current_time").text = "0"
         p.write_text(ET.tostring(root, encoding="unicode") + "\n")
         outputs[p.name] = hashlib.sha256(p.read_bytes()).hexdigest()
     for family in ("binary", "tte"):
@@ -67,7 +67,7 @@ def main() -> None:
         libraries=hashes,
         outputs=outputs,
         validation=result.stdout.splitlines(),
-        normalization=["trial_details/current_time only"],
+        normalization=["trial_details/current_time replaced with numeric zero only"],
         limitations=[
             "Does not execute mixed-mode native trial engine.",
             "Synthetic history fields exhibit original managed setter/validator behavior.",

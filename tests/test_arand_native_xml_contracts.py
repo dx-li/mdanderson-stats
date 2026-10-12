@@ -250,3 +250,102 @@ def test_xml_time_units_are_not_silently_relabelled():
     )
     with pytest.raises(ValueError, match="Months"):
         read_arand_native_xml(xml)
+
+
+def test_summary_counters_against_full_original_accumulation(monkeypatch):
+    import numpy as np
+
+    import mdanderson_stats.arand_native_study as module
+    from mdanderson_stats import ArandNativeObservation, ArandNativeSelection, ArandNativeTrial
+    from mdanderson_stats.arand_native_trial import ArandNativeDecision
+
+    cases = [
+        json.loads(line)
+        for line in (ROOT / "arand-accumulation-fixtures.jsonl").read_text().splitlines()
+    ]
+    document = __import__("mdanderson_stats").read_arand_native_xml(
+        (ROOT / "managed-studies/binary.xml").read_text()
+    )
+    outcomes = []
+    selected = np.zeros(2, dtype=int)
+    early = np.zeros(2, dtype=int)
+    statuses = np.zeros((2, 10), dtype=int)
+    for case in cases:
+        c = case["input"]
+        records = tuple(
+            ArandNativeObservation(a, 0, 1, 1)
+            for a, count in enumerate(c["counts"])
+            for _ in range(count)
+        )
+        state = ArandNativeState(
+            ArandNativeMonitor(0), tuple(c["statuses"]), ArandNativeEvidence([0.5, 0.5])
+        )
+        decision = ArandNativeDecision(
+            state,
+            c["duration"],
+            "reference",
+            c["completed"],
+            ArandNativeSelection(c["winner"], c["early"]),
+            None,
+            None,
+            (),
+            (),
+        )
+        outcomes.append(ArandNativeTrial(records, (decision,), "binary", "mean"))
+        for call in case["native"]["calls"]:
+            if call[0] == "selected":
+                selected[call[1]] += 1
+            elif call[0] == "selected_early":
+                early[call[1]] += 1
+            elif call[0] == "status":
+                statuses[call[1], call[2]] += 1
+    sequence = iter(outcomes)
+    monkeypatch.setattr(
+        module, "simulate_arand_native_trial", lambda *args, **kwargs: next(sequence)
+    )
+    summary = module.simulate_arand_native(document.studies[0], trials=len(cases), seed=123)
+    assert summary.selected == tuple(selected)
+    assert summary.selected_early == tuple(early)
+    np.testing.assert_array_equal(summary.final_status_counts, statuses)
+    assert summary.completed == sum(c["native"]["completed"] for c in cases)
+    assert summary.duration_mean == sum(c["native"]["duration_sum"] for c in cases) / len(cases)
+    np.testing.assert_array_equal(summary.mean_enrollment, [2, 4])
+    # Explicit Python report definition includes permanent closures as drops.
+    assert summary.dropped_early == tuple(statuses[:, 1:4].sum(axis=1))
+    html = module.arand_native_report(summary)
+    assert "Early selection probability" in html and "Early drop probability" in html
+
+
+@pytest.mark.parametrize(
+    "case",
+    [
+        json.loads(line)["native"]
+        for line in (ROOT / "desktop-report-slices.jsonl").read_text().splitlines()
+        if json.loads(line)["kind"] == "percentiles"
+    ],
+)
+def test_actual_desktop_percentile_profile(case):
+    import numpy as np
+
+    from mdanderson_stats.arand_native_study import _legacy_enrollment_percentiles
+
+    values = np.arange(case["size"], dtype=float)[::-1, None]
+    actual = _legacy_enrollment_percentiles(values)
+    if case["suppressed"]:
+        assert actual is None
+    else:
+        np.testing.assert_array_equal(actual[0], case["indices"][::-1])
+
+
+def test_legacy_report_profile_is_explicit():
+    from mdanderson_stats import read_arand_native_xml
+    from mdanderson_stats.arand_native_study import arand_native_report, simulate_arand_native
+
+    study = read_arand_native_xml((ROOT / "managed-studies/binary.xml").read_text()).studies[0]
+    summary = simulate_arand_native(study, trials=2, seed=123)
+    assert "type 7" in arand_native_report(summary)
+    assert "omitted below 100 trials" in arand_native_report(
+        summary, percentile_profile="legacy-5.2.2"
+    )
+    with pytest.raises(ValueError, match="percentile_profile"):
+        arand_native_report(summary, percentile_profile="unknown")

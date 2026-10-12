@@ -131,13 +131,30 @@ and normalizes only the wall-clock current_time. It does not run the native
 mixed-mode engine. Original binaries and Mono are not redistributed here.
 
 `verify_report_dispatch.py` resolves the noncovariate BASE report candidate via the
-constructor at0x17b48, vtable field0x040006f6 and slot12, reached by wrapper
-StartSimulation at0xbe19c/IL459. Its report body is0x57b68; accumulation is0x59ac0.
+constructor at0x17b48, vtable field0x040006f6 and slot16. CLR fixup tokens
+(not adjacency of thunks and IL) resolve report0x57b68 and accumulation0x59ac0.
 Metadata truncates these long template names. The wrapper then REPLACES the
-vtable at XMLPopulate0x23fa8/IL410 with field0x04000524: slot12 is native x86
-0x18d3e0, not the base report. Accumulation slot28 remains shared. Instruction layout matches the
+vtable at XMLPopulate0x23fa8/IL410 with field0x04000524: slot12 is native simulation
+0x18d3e0, slot16 is native report0x18bf90. Accumulation slot32 remains shared. Instruction layout matches the
 previous covariate-instantiation probes except class offsets and metadata tokens;
 all12 percentile probes also execute at the BASE noncovariate report RVA.
 This establishes the override boundary and bounded base arithmetic, not the actual
 application HTML/CSV report. `arand_accumulate_reference.py` executes the shared
 original accumulation body with explicit counter-sink services (12 fixtures).
+
+Managed history caution: `time` and `CurrentTime` setters are no-ops in the
+original classes. `time` serializes the separate `TimeOfOutcome` property;
+`CurrentTime` serializes DateTime.Now.ToOADate. The synthetic probe deliberately
+retains evidence of these setter behaviors. Its zero-time histories are not
+proof that the original GUI produces invalid histories. See the integration
+checkpoint for exact getter/setter RVAs and remaining date-origin work.
+
+`arand_desktop_report_reference.py` now executes the **actual** native report's
+stopped-count slice0x18ca87..0x18cad5 and enrollment-percentile slice
+0x18cf36..0x18d039 (or small-N branch0x18d061). Services are status-count lookup
+and scalar Ceiling. Its13 probes verify counts1+2+3 and legacy percentiles,
+including omission below100. Sorting/whole HTML execution are not asserted.
+`arand_desktop_loop_reference.py` executes the actual replication loop with
+recorded reset/run/accumulate services and a skipped progress-print sink (six
+cases). `arand_desktop_seed_reference.py` executes SetSeed IL with recorded seed
+writes (five cases). These do not assert original RNG-sequence identity.

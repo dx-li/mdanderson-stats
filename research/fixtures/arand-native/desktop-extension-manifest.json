@@ -1,0 +1,90 @@
+{
+  "original_native_library_sha256": "a11d60157236bdf2e3395de39909dbb029b22bae52bcee5dd6d8ee4eebb3a6e3",
+  "managed_library_manifest": "managed-studies/manifest.json",
+  "fixtures": [
+    {
+      "file": "constraint-gates.json",
+      "sha256": "a90b70fd8d738557db752eeb8b17028001226d91a19e0f96cf059581f50ca6a0",
+      "count": 256,
+      "scope": "eight independent native gate flags",
+      "runner": "tools/arand_native_reference/generate_gate_fixtures.py"
+    },
+    {
+      "file": "per-arm-rules.json",
+      "sha256": "d26e2f943ff9cf2559233e0f67fee002ff3dc626e4a1e85e6325d7ad39c3fa8f",
+      "count": 60,
+      "scope": "status and whole/group selectors, three results per case",
+      "runner": "tools/arand_native_reference/verify_arm_rules.py"
+    },
+    {
+      "file": "arand-batch-init-fixtures.jsonl",
+      "sha256": "f06526cda04f987e4749b27a5f943d3a1bb859db9123476d33fd49b2115a27de",
+      "count": 6,
+      "scope": "native batch construction and reset instruction slices",
+      "runner": "tools/arand_native_reference/arand_batch_reference.py"
+    },
+    {
+      "file": "arand-accumulation-fixtures.jsonl",
+      "sha256": "989523ef25b9089b6035dee6dd746ef404ad6b8c4902d2e9f1201ef1a29cb0ef",
+      "count": 12,
+      "scope": "full noncovariate accumulation body; map/string/final-record/counter services",
+      "runner": "tools/arand_native_reference/arand_accumulate_reference.py"
+    },
+    {
+      "file": "report-dispatch.json",
+      "sha256": "2c2ec7fa9e892aeaf16ebf8759daa4e1c19af6d2bb0653953262c919cb762811",
+      "count": 1,
+      "scope": "base and derived vtable boundary; no actual x86 report execution",
+      "runner": "tools/arand_native_reference/verify_report_dispatch.py"
+    },
+    {
+      "file": "managed-studies/binary-roundtrip.xml",
+      "sha256": "a0b99b952d0987b73f1991e93ba546236b305ed4fa302377d924d8ed703a2175",
+      "count": 1,
+      "scope": "original managed synthetic serialization with wall-clock field normalization",
+      "runner": "tools/arand_native_reference/managed_studies.py"
+    },
+    {
+      "file": "managed-studies/binary.xml",
+      "sha256": "a0b99b952d0987b73f1991e93ba546236b305ed4fa302377d924d8ed703a2175",
+      "count": 1,
+      "scope": "original managed synthetic serialization with wall-clock field normalization",
+      "runner": "tools/arand_native_reference/managed_studies.py"
+    },
+    {
+      "file": "managed-studies/tte-roundtrip.xml",
+      "sha256": "e0c2db60c482b26efd8d2f081a9a1362f31e1d3d41a71c69153354b0adbbc22d",
+      "count": 1,
+      "scope": "original managed synthetic serialization with wall-clock field normalization",
+      "runner": "tools/arand_native_reference/managed_studies.py"
+    },
+    {
+      "file": "managed-studies/tte.xml",
+      "sha256": "e0c2db60c482b26efd8d2f081a9a1362f31e1d3d41a71c69153354b0adbbc22d",
+      "count": 1,
+      "scope": "original managed synthetic serialization with wall-clock field normalization",
+      "runner": "tools/arand_native_reference/managed_studies.py"
+    },
+    {
+      "file": "desktop-report-slices.jsonl",
+      "sha256": "31c5b9df00f1c3c09063a839da67d37be4ac183fa2f259c4fb64c521dc9335bd",
+      "count": 13,
+      "scope": "actual native report stopped-count and enrollment-percentile slices",
+      "runner": "tools/arand_native_reference/arand_desktop_report_reference.py"
+    },
+    {
+      "file": "desktop-loop.jsonl",
+      "sha256": "59f11ce9d0ec8d642ccb4c990f1feda89774f2ac1278b34042a9eb73e45007a3",
+      "count": 6,
+      "scope": "actual native replication loop with reset/run/accumulate services",
+      "runner": "tools/arand_native_reference/arand_desktop_loop_reference.py"
+    },
+    {
+      "file": "desktop-seeds.jsonl",
+      "sha256": "562415f94616fa39477caf7ef2b1694a30169e8ff24be7e639532bf8e2441782",
+      "count": 5,
+      "scope": "actual wrapper SetSeed IL with scenario seed-write service",
+      "runner": "tools/arand_native_reference/arand_desktop_seed_reference.py"
+    }
+  ]
+}

@@ -22,21 +22,39 @@ def main():
     constructor = body(0x17B48)
     assert constructor[1].mnemonic == "ldsflda" and constructor[1].operand.rid == 0x6F6
     table = fields[0x6F6]
-    thunk = struct.unpack("<I", p.get_data(table + 12, 4))[0] - p.OPTIONAL_HEADER.ImageBase
-    assert thunk == 0x57B60
-    assert p.get_data(thunk, 2) == b"\xff\x25"
-    assert any(r.Rva == 0x57B68 for r in p.net.mdtables.MethodDef)
-    # Wrapper StartSimulation invokes the scenario's vtable offset 12.
+
+    def resolve(table_rva, slot):
+        pointer = struct.unpack("<I", p.get_data(table_rva + slot, 4))[0]
+        rva = pointer - p.OPTIONAL_HEADER.ImageBase
+        code = p.get_data(rva, 6)
+        if code[:2] != b"\xff\x25":
+            return {"kind": "native", "rva": hex(rva)}
+        fixup = struct.unpack("<I", code[2:])[0] - p.OPTIONAL_HEADER.ImageBase
+        token = struct.unpack("<I", p.get_data(fixup, 4))[0]
+        assert token >> 24 == 6
+        method = p.net.mdtables.MethodDef.rows[(token & 0xFFFFFF) - 1]
+        return {
+            "kind": "managed",
+            "rva": hex(method.Rva),
+            "thunk": hex(rva),
+            "fixup": hex(fixup),
+            "token": hex(token),
+        }
+
     wrapper = {i.offset: i for i in body(0xBE19C)}
     assert wrapper[455].operand == 12 and wrapper[459].mnemonic == "calli"
     xml = {i.offset: i for i in body(0x23FA8)}
     assert xml[410].mnemonic == "ldsflda" and xml[410].operand.rid == 0x524
     derived_table = fields[0x524]
-    derived_entry = (
-        struct.unpack("<I", p.get_data(derived_table + 12, 4))[0] - p.OPTIONAL_HEADER.ImageBase
-    )
-    assert derived_entry == 0x18D3E0
-    assert p.get_data(derived_table + 28, 4) == p.get_data(table + 28, 4)
+    slots = {
+        str(slot): {"base": resolve(table, slot), "derived": resolve(derived_table, slot)}
+        for slot in range(0, 48, 4)
+    }
+    assert slots["12"]["derived"]["rva"] == "0x18d3e0"
+    assert slots["16"]["base"]["rva"] == "0x57b68"
+    assert slots["16"]["derived"]["rva"] == "0x18bf90"
+    assert slots["32"]["base"] == slots["32"]["derived"]
+    assert slots["32"]["derived"]["rva"] == "0x59ac0"
     comparisons = []
     for label, old, new, offsets in [
         ("report", 0x60A14, 0x57B68, {1194: (1560, 720)}),
@@ -68,10 +86,12 @@ def main():
         constructor_rva="0x17b48",
         vtable_field="0x040006f6",
         vtable_rva=hex(table),
-        report_slot=12,
-        report_thunk_rva=hex(thunk),
+        report_slot=16,
+        accumulation_slot=32,
+        slots=slots,
         base_report_method_rva="0x57b68",
-        actual_wrapper_entry_rva=hex(derived_entry),
+        native_simulation_entry_rva="0x18d3e0",
+        native_report_entry_rva="0x18bf90",
         derived_vtable_field="0x04000524",
         derived_vtable_rva=hex(derived_table),
         derived_vtable_assignment_xml_offset=410,
@@ -87,7 +107,10 @@ def main():
     Path("research/fixtures/arand-native/report-dispatch.json").write_text(
         json.dumps(out, indent=2) + "\n"
     )
-    print("Derived wrapper override found at 0x18d3e0; 12 BASE-report percentile probes agree")
+    print(
+        "CLR fixups resolved: native simulation 0x18d3e0, native report 0x18bf90, "
+        "shared accumulation 0x59ac0"
+    )
 
 
 if __name__ == "__main__":

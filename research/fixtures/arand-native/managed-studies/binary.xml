@@ -2,7 +2,7 @@
   <MyProperty>0</MyProperty>
   <trial_details min_trial_length="-1" max_trial_length="20" min_qty_pats_in_trial="2" max_qty_pats_in_trial="6" min_pats_per_arm="-1" max_pats_per_arm="-1" min_pats_per_group="-1" max_pats_per_group="-1" monitoring_type="continuous" monitor_times="[]" qty_pats_betw_eval="-1" a="-1" b="-1">
     <BinStatModel>BINARY_NO_COVARIATES</BinStatModel>
-    <current_time>NORMALIZED_WALL_CLOCK</current_time>
+    <current_time>0</current_time>
     <time_type>Months</time_type>
     <arm name="Arm1" description="Arm1 Description">
       <arm_group name="No Groups" description="No Groups" />

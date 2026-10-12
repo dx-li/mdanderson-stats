@@ -207,6 +207,18 @@ class ArandNativeSummary:
     enrollment_quantiles: FloatArray
     duration_mean: float
     duration_mcse: float
+    selected_early: tuple[int, ...]
+    dropped_early: tuple[int, ...]
+    final_status_counts: tuple[tuple[int, ...], ...]
+    legacy_enrollment_quantiles: FloatArray | None
+
+
+def _legacy_enrollment_percentiles(counts: FloatArray) -> FloatArray | None:
+    n = len(counts)
+    if n < 100:
+        return None
+    indices = (np.ceil(n * np.array([0.025, 0.975]) - 1) + 1).astype(int)
+    return _freeze(np.sort(counts, axis=0)[indices].T)
 
 
 def simulate_arand_native(
@@ -233,6 +245,9 @@ def simulate_arand_native(
     counts = np.zeros((trials, k))
     durations = np.zeros(trials)
     selected = [0] * k
+    selected_early = [0] * k
+    dropped_early = [0] * k
+    status_counts = [[0] * 10 for _ in range(k)]
     no_selection = completed = early = 0
     for i, trial_seed in enumerate(seeds):
         trial = simulate_arand_native_trial(study, seed=trial_seed)
@@ -241,12 +256,18 @@ def simulate_arand_native(
         final = trial.final
         durations[i] = final.time
         completed += int(final.completed)
+        for arm, status in enumerate(final.state.statuses):
+            status_counts[arm][status] += 1
+            # Count terminal posterior/futility closures, including permanent
+            # closure (3). Temporary closures that reopened are not final drops.
+            dropped_early[arm] += int(status in (1, 2, 3))
         assert final.selection is not None
         early += int(final.selection.early)
         if final.selection.winner is None:
             no_selection += 1
         else:
             selected[final.selection.winner] += 1
+            selected_early[final.selection.winner] += int(final.selection.early)
     return ArandNativeSummary(
         arand_native_study_json(study),
         seeds,
@@ -259,22 +280,41 @@ def simulate_arand_native(
         _freeze(np.quantile(counts, [0.025, 0.975], axis=0, method="linear").T),
         float(durations.mean()),
         float(durations.std(ddof=1) / np.sqrt(trials)) if trials > 1 else float("nan"),
+        tuple(selected_early),
+        tuple(dropped_early),
+        tuple(tuple(row) for row in status_counts),
+        _legacy_enrollment_percentiles(counts),
     )
 
 
-def arand_native_report(summary: ArandNativeSummary) -> str:
+def arand_native_report(summary: ArandNativeSummary, *, percentile_profile: str = "type7") -> str:
     """Self-contained HTML summary with captured versioned inputs and replay seeds."""
+    if percentile_profile not in ("type7", "legacy-5.2.2"):
+        raise ValueError("percentile_profile must be type7 or legacy-5.2.2")
+    legacy = percentile_profile == "legacy-5.2.2"
+    quantiles = summary.legacy_enrollment_quantiles if legacy else summary.enrollment_quantiles
+    convention = (
+        "Legacy 5.2.2 percentiles use the original zero-based ceil(n*p) indices; "
+        "they are omitted below 100 trials."
+        if legacy
+        else "Percentiles use type 7; they are not confidence intervals."
+    )
     n = len(summary.trial_seeds)
     rows = []
     for i, selected in enumerate(summary.selected):
         probability = selected / n
         _unit(probability, "selection probability")
         mcse = np.sqrt(probability * (1 - probability) / (n - 1)) if n > 1 else float("nan")
-        lo, hi = summary.enrollment_quantiles[i]
+        interval = (
+            "omitted below 100 trials"
+            if quantiles is None
+            else f"{quantiles[i, 0]:.6g}, {quantiles[i, 1]:.6g}"
+        )
         rows.append(
             f"<tr><td>{i}</td><td>{selected}/{n}</td><td>{probability:.6g}</td>"
-            f"<td>{mcse:.6g}</td><td>{summary.mean_enrollment[i]:.6g}</td>"
-            f"<td>{summary.enrollment_mcse[i]:.6g}</td><td>{lo:.6g}, {hi:.6g}</td></tr>"
+            f"<td>{mcse:.6g}</td><td>{summary.selected_early[i] / n:.6g}</td>"
+            f"<td>{summary.dropped_early[i] / n:.6g}</td><td>{summary.mean_enrollment[i]:.6g}</td>"
+            f"<td>{summary.enrollment_mcse[i]:.6g}</td><td>{interval}</td></tr>"
         )
     return (
         "<!doctype html><html lang='en'><meta charset='utf-8'><title>ARAND native profile</title>"
@@ -286,10 +326,13 @@ def arand_native_report(summary: ArandNativeSummary) -> str:
         f"early selection: {summary.early_selection}. Final time mean: {summary.duration_mean:.6g} "
         f"months; MCSE: {summary.duration_mcse:.6g}.</p>"
         "<table><tr><th>Arm (zero-based)</th><th>Selected</th><th>Probability</th><th>MCSE</th>"
+        "<th>Early selection probability</th><th>Early drop probability</th>"
         "<th>Mean enrollment</th><th>MCSE</th><th>Enrollment 2.5/97.5 percentiles</th></tr>"
         + "".join(rows)
-        + "</table><p>Percentiles use type 7; they are not confidence intervals. "
-        "NaN MCSE means fewer than two trials.</p><h2>Saved inputs</h2><pre>"
+        + f"</table><p>{convention} "
+        "Early drops count final temporary, other-winner, or permanent closures (statuses 1–3); "
+        "a reopened arm is not counted as a final drop. Full final status counts are retained "
+        "in the summary. NaN MCSE means fewer than two trials.</p><h2>Saved inputs</h2><pre>"
         + escape(summary.study_json)
         + "</pre><h2>Trial replay seeds</h2><pre>"
         + escape(json.dumps(summary.trial_seeds))
