@@ -44,7 +44,7 @@ def run(assigned, assessed, observed, first_interval, current, final):
     put(0x450230, "i", first_interval)
     u.reg_write(UC_X86_REG_EBP, bp)
     u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
-    u.reg_write(UC_X86_REG_FPCW, 0x37F)
+    u.reg_write(UC_X86_REG_FPCW, 0x23F)
     u.hook_add(
         UC_HOOK_CODE,
         lambda machine, a, size, data: machine.emu_stop(),

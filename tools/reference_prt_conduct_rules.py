@@ -45,7 +45,7 @@ def run(xi, current, assigned, assessed, pn, pe, next_pe):
     put(0x46CEB0, "d" * len(assessed), *assessed)
     u.reg_write(UC_X86_REG_EBP, bp)
     u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
-    u.reg_write(UC_X86_REG_FPCW, 0x37F)
+    u.reg_write(UC_X86_REG_FPCW, 0x23F)
     u.emu_start(base + 0x4FC8, base + 0x5552, count=10000)
     if u.reg_read(UC_X86_REG_EIP) != base + 0x5552:
         raise RuntimeError("native controller instruction budget exhausted")

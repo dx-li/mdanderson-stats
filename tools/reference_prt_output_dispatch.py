@@ -54,7 +54,7 @@ def run(code):
     u.mem_write(bp - 8, struct.pack("<i", 6))
     u.reg_write(UC_X86_REG_EBP, bp)
     u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
-    u.reg_write(UC_X86_REG_FPCW, 0x37F)
+    u.reg_write(UC_X86_REG_FPCW, 0x23F)
     seen = []
 
     def hook(uc, address, size, _):

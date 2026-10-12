@@ -42,7 +42,7 @@ def run(probabilities, alpha, beta, target, upper):
             put(0x7CA068 + 4 * j + 0x1000 * i, "i", bit)
     u.reg_write(UC_X86_REG_EBP, bp)
     u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
-    u.reg_write(UC_X86_REG_FPCW, 0x37F)
+    u.reg_write(UC_X86_REG_FPCW, 0x23F)
     # The first two register values are live at4d3d from the preceding classifier.
     from unicorn.x86_const import UC_X86_REG_EDI, UC_X86_REG_ESI
 

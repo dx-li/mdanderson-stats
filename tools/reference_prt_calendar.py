@@ -51,7 +51,7 @@ def run(rows, endpoints, clock, final=False):
         put(0x47A240 + 8 * i, "d", delay)
     u.reg_write(UC_X86_REG_EBP, bp)
     u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
-    u.reg_write(UC_X86_REG_FPCW, 0x37F)
+    u.reg_write(UC_X86_REG_FPCW, 0x23F)
     if final:
         put(bp - 0x74, "i", n)
         put(bp - 0xD0, "i", n)

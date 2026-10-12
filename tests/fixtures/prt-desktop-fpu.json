@@ -1,0 +1,53 @@
+{
+  "scope": "actual CRT precision initializer; both PRT1.0 executables",
+  "cases": [
+    {
+      "executable": "Sims",
+      "executable_sha256": "52903a7af2e75998bf2a8cbda6e2049e7fa25e0981cf9806317841da13a91b54",
+      "initializer_rva": 250825,
+      "controlfp_rva": 239332,
+      "initial_fpcw": 127,
+      "result_fpcw": 575
+    },
+    {
+      "executable": "Sims",
+      "executable_sha256": "52903a7af2e75998bf2a8cbda6e2049e7fa25e0981cf9806317841da13a91b54",
+      "initializer_rva": 250825,
+      "controlfp_rva": 239332,
+      "initial_fpcw": 639,
+      "result_fpcw": 575
+    },
+    {
+      "executable": "Sims",
+      "executable_sha256": "52903a7af2e75998bf2a8cbda6e2049e7fa25e0981cf9806317841da13a91b54",
+      "initializer_rva": 250825,
+      "controlfp_rva": 239332,
+      "initial_fpcw": 895,
+      "result_fpcw": 575
+    },
+    {
+      "executable": "Conduct",
+      "executable_sha256": "2943f71ab27e300c1168b2d9f6a93815b75efe753b6af2b543c1370d077a1123",
+      "initializer_rva": 241305,
+      "controlfp_rva": 229812,
+      "initial_fpcw": 127,
+      "result_fpcw": 575
+    },
+    {
+      "executable": "Conduct",
+      "executable_sha256": "2943f71ab27e300c1168b2d9f6a93815b75efe753b6af2b543c1370d077a1123",
+      "initializer_rva": 241305,
+      "controlfp_rva": 229812,
+      "initial_fpcw": 639,
+      "result_fpcw": 575
+    },
+    {
+      "executable": "Conduct",
+      "executable_sha256": "2943f71ab27e300c1168b2d9f6a93815b75efe753b6af2b543c1370d077a1123",
+      "initializer_rva": 241305,
+      "controlfp_rva": 229812,
+      "initial_fpcw": 895,
+      "result_fpcw": 575
+    }
+  ]
+}

@@ -304,3 +304,18 @@ def test_protocol_sample_size_extremes(n, successes, expected):
     ).fit()
     assert fit.decisions == expected
     assert max(max(errors) for errors in fit.tail_error_estimates) < 1e-7
+
+
+@pytest.mark.parametrize("threshold", [0.000001, 0.001, 0.5, 0.999, 0.999999])
+def test_six_arm_evidence_is_threshold_invariant_against_independent_reference(threshold):
+    from mdanderson_stats._compas_quadrature import compas_group_integral
+
+    reference = json.loads(
+        (Path(__file__).parent / "fixtures/compas-six-arm-reference.json").read_text()
+    )
+    refinement = reference["refinements"]
+    assert abs(refinement[-1]["log_evidence"] - refinement[-2]["log_evidence"]) < 1e-9
+    result = compas_group_integral((100,) * 6, (50,) * 6, 1000.0, threshold, 1e-7)
+    assert result[0] == pytest.approx(refinement[-1]["log_evidence"], abs=1e-9)
+    if threshold == 0.5:
+        assert result[1] == pytest.approx((0.5,) * 6, abs=1e-12)

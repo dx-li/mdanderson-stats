@@ -60,7 +60,7 @@ def run(maximum, decisions, delays):
         put(bp - 0xBC, "i", dose)
         u.reg_write(UC_X86_REG_EBP, bp)
         u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
-        u.reg_write(UC_X86_REG_FPCW, 0x37F)
+        u.reg_write(UC_X86_REG_FPCW, 0x23F)
         u.emu_start(base + 0x36AB, base + 0x3F2F, count=100000)
         if u.reg_read(UC_X86_REG_EIP) != base + 0x3F2F:
             raise RuntimeError("instruction budget")

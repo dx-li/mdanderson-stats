@@ -34,7 +34,7 @@ def run(x):
     bp = 0x20100000
     u.reg_write(UC_X86_REG_EBP, bp)
     u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
-    u.reg_write(UC_X86_REG_FPCW, 0x37F)
+    u.reg_write(UC_X86_REG_FPCW, 0x23F)
 
     def put(address, fmt, *values):
         u.mem_write(address, struct.pack("<" + fmt, *values))

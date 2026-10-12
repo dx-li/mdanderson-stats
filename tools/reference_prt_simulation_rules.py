@@ -67,7 +67,7 @@ def run(xi, current, pending, pn, pe, next_pe, distances=None):
     put(0x47CB88, "d" * D, *distances)
     u.reg_write(UC_X86_REG_EBP, bp)
     u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
-    u.reg_write(UC_X86_REG_FPCW, 0x37F)
+    u.reg_write(UC_X86_REG_FPCW, 0x23F)
     u.emu_start(base + 0x8FF1, base + 0x97E1, count=100000)
     if u.reg_read(UC_X86_REG_EIP) != base + 0x97E1:
         raise RuntimeError("native simulation controller budget exhausted")

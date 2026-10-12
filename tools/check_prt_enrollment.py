@@ -1,11 +1,10 @@
-"""Independent exact-sum check for the supplied native enrollment trace grid.
+"""Independent binary64-sum check for the supplied native enrollment trace grid.
 
-This checks these fixtures only; it does not claim exact-sum comparison reproduces
+This checks these fixtures only; it does not claim binary64 comparison reproduces
 x87 rounding for every possible floating-point calendar input.
 """
 
 import json
-from fractions import Fraction
 from pathlib import Path
 
 import numpy as np
@@ -36,7 +35,7 @@ for case in x["cases"]:
         censored = []
         intervals = []
         for a, t in zip(enrolled, case["delays"]):
-            event = Fraction(clock) >= Fraction(a) + Fraction(t) and t <= 10
+            event = clock >= a + t and t <= 10
             observed.append(t if event else clock - a)
             censored.append(int(not event))
             o = observed[-1]

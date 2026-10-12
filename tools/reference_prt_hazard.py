@@ -54,7 +54,7 @@ def run(alpha, beta, probability, window):
 
     u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
     u.reg_write(UC_X86_REG_EBP, bp)
-    u.reg_write(UC_X86_REG_FPCW, 0x37F)
+    u.reg_write(UC_X86_REG_FPCW, 0x23F)
     put(0x78BF48, "i", window)
     u.reg_write(UC_X86_REG_EBX, 99)
     u.reg_write(UC_X86_REG_ESI, 0x47CC78)

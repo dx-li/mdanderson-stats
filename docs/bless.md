@@ -72,3 +72,11 @@ and [recovery/validation record](../research/bless-published-recovery-2026-10-12
 Mathematical agreement does not establish clinical validation or exact deployed
 application parity. The original PDF is not redistributed and existing package
 licensing restrictions remain unchanged.
+
+The published decimal linear predictor is evaluated with400-digit Decimal
+arithmetic from exact normalized binary64 inputs before converting eta to float.
+This preserves centering when large opposing terms cancel; summing already-rounded
+binary64 products is insufficient. No clinical input ranges are inferred from
+this numerical safeguard. Fifteen cancellation regressions supplement the458
+independent published-expression references. See the
+[executed review follow-up](../research/review-followup-2026-10-12.md).

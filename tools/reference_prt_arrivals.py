@@ -38,7 +38,7 @@ def run(values, mean):
     u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
     u.reg_write(UC_X86_REG_ESI, 800)
     u.reg_write(UC_X86_REG_EDI, 0xCCD648)
-    u.reg_write(UC_X86_REG_FPCW, 0x37F)
+    u.reg_write(UC_X86_REG_FPCW, 0x23F)
     index = 0
 
     def hook(machine, address, size, data):

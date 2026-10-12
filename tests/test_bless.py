@@ -153,3 +153,24 @@ def test_input_mutation_cannot_change_saved_study():
     study = BLESSPublishedStudy("lung", x)
     x["ecog"] = 4
     assert study.predictors["ecog"] == 0
+
+
+@pytest.mark.parametrize("exponent", [0, 30, 100, 500, 1000])
+@pytest.mark.parametrize(
+    "model,expected", [("lung", 1.93518), ("breast", 1.072698), ("gcmm", 0.05557)]
+)
+def test_large_exact_cancellation_preserves_printed_centering(model, expected, exponent):
+    scale = 2**exponent
+    x = dict(ecog=0, benign_cytology=0, protein_g_dl=scale, ldh_u_l=3100 * scale)
+    if model == "lung":
+        x.update(surgery_within_30_days=0, bilateral=0)
+    elif model == "breast":
+        x.update(nlr=379 * scale, protein_g_dl=54 * scale, ldh_u_l=0)
+    else:
+        x.update(cancer="lung", nlr=497 * scale, protein_g_dl=9 * scale, ldh_u_l=0, bilateral=0)
+    result = bless_published_prediction(model, x)
+    assert result.linear_predictor == pytest.approx(expected, abs=1e-15)
+    np.testing.assert_allclose(
+        result.survival, np.asarray(result.reference_survival) ** np.exp(expected), rtol=1e-14
+    )
+    assert BLESSPublishedStudy.from_json(result.study.to_json()).predict() == result

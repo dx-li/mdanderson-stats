@@ -40,7 +40,7 @@ def run(coefficients, rows):
             put(bp - offset, "i", value)
         u.reg_write(UC_X86_REG_EBP, bp)
         u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
-        u.reg_write(UC_X86_REG_FPCW, 0x37F)
+        u.reg_write(UC_X86_REG_FPCW, 0x23F)
         u.emu_start(base + 0x3493, base + 0x35D7, count=1000000)
         if u.reg_read(UC_X86_REG_EIP) != base + 0x35D7:
             raise RuntimeError("native pending-risk instruction budget exhausted")

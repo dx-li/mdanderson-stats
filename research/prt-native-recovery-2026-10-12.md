@@ -253,14 +253,24 @@ that candidate before evaluating at the following arrival. Resumption enrolls
 from the then-current candidate index. Final cohorts shrink3 to1/2 as required.
 The final clock still considers only the last three enrolled patients.
 
-These composed traces also expose x87 timing precision: with arrival7 and delay.1,
-the stored final clock7.1 can compare below the extended-precision sum of the two
-binary64 inputs. That patient remains censored with observed time
-.09999999999999964 at this source boundary. Do not rewrite the comparison as
-binary64 `clock >= arrival + delay` and claim identical native boundary behavior.
-The independent exact-sum check agrees on this fixture grid; it is not a proof
-that unrounded rational addition reproduces every x87 input. Complete simulation
-must declare its arithmetic profile and preserve this boundary caveat.
+Precision audit correction: the first probes forced x87 control word0x37f
+(64-bit significand), which exposed a boundary difference at arrival7+delay.1.
+That is not the desktop startup precision. Tracing the actual CRT initializer
+finds the `_controlfp(0x10000,0x30000)` call; original instructions in both
+executables set0x23f (53-bit significand), independently of initial24/53/64-bit
+precision. The Fortran initializer preserves those precision bits. Six direct
+initializer probes are in `prt-desktop-fpu.json`. All reference generators are
+corrected to startup precision. Prior37f fixtures remain available in git history,
+not as default desktop claims.
+
+The additional `prt-desktop-calendar-precision.json` has111 native boundary cases.
+A separate integer/Fraction rounding implementation and a binary64 calendar
+oracle validate these and72 enrollment steps. Startup precision observes the
+arrival7/delay.1 event at stored clock7.1. Eight of20 non-initializer reference
+files changed numerically after correction; every5,044 installed PRT test still
+passes, so no production arithmetic change was necessary. The correction affects
+reference provenance and exact timing claims, not the demonstrated controller,
+projection, moment-fallback, endpoint-jitter or last-three-follow-up defects.
 
 This evidence composes enrollment and as-of conversion, not posterior/controller
 or whole-trial execution. The saved-conduct implementation and its frozen769-file

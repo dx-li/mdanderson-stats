@@ -41,7 +41,7 @@ def run(mean, sd, current, draws=None):
         put(bp - offset, "d", 0.0)
     u.reg_write(UC_X86_REG_EBP, bp)
     u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
-    u.reg_write(UC_X86_REG_FPCW, 0x37F)
+    u.reg_write(UC_X86_REG_FPCW, 0x23F)
     if draws is not None:
         N = len(draws)
         put(bp - 0x3C, "i", 0)

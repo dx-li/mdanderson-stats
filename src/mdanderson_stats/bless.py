@@ -10,6 +10,7 @@ import json
 import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+from decimal import Decimal, localcontext
 from numbers import Integral, Real
 from types import MappingProxyType
 
@@ -124,54 +125,92 @@ def _times(values: Sequence[int]) -> tuple[int, ...]:
 
 
 def _eta(model: str, x: Mapping[str, object]) -> float:
-    # Values have been normalized by _inputs. Explicit terms keep centering and
-    # cancer/laterality interactions reviewable against the printed equations.
-    v = {k: float(value) for k, value in x.items() if k != "cancer"}  # type: ignore[arg-type]
+    # Printed coefficients are decimal quantities. Evaluating their products in
+    # binary64 before fsum can erase centering when large opposing terms cancel.
+    # 400 digits cover every normalized finite binary64 input's integer part,
+    # the printed decimal factors/centers, and substantial cancellation guard.
+    with localcontext() as context:
+        context.prec = 400
+        return _eta_decimal(model, x)
+
+
+def _eta_decimal(model: str, x: Mapping[str, object]) -> float:
+    v = {
+        k: Decimal.from_float(float(value))  # type: ignore[arg-type]
+        for k, value in x.items()
+        if k != "cancer"
+    }
     ecog = int(v["ecog"])
-    benign, protein = v["benign_cytology"], v["protein_g_dl"]
-    terms: tuple[float, ...]
+    benign, protein = (v["benign_cytology"], v["protein_g_dl"])
+    terms: tuple[Decimal, ...]
     if model == "lung":
         terms = (
-            (0.0, 0.51, 1.32, 1.23, 1.49)[ecog],
-            0.806 * v["surgery_within_30_days"],
-            0.812 * v["bilateral"],
-            -0.621 * benign,
-            0.018 * (v["ldh_u_l"] / 100 - 7.19),
-            -0.558 * (protein - 3.7),
+            (Decimal("0.0"), Decimal("0.51"), Decimal("1.32"), Decimal("1.23"), Decimal("1.49"))[
+                ecog
+            ],
+            Decimal("0.806") * v["surgery_within_30_days"],
+            Decimal("0.812") * v["bilateral"],
+            -Decimal("0.621") * benign,
+            Decimal("0.018") * (v["ldh_u_l"] / 100 - Decimal("7.19")),
+            -Decimal("0.558") * (protein - Decimal("3.7")),
         )
     elif model == "breast":
         terms = (
-            0.648 * (ecog >= 2),
-            -0.987 * benign,
-            0.054 * (v["nlr"] - 5.398),
-            0.011 * (v["ldh_u_l"] / 100 - 6.91),
-            -0.379 * (protein - 3.8),
+            Decimal("0.648") * (ecog >= 2),
+            -Decimal("0.987") * benign,
+            Decimal("0.054") * (v["nlr"] - Decimal("5.398")),
+            Decimal("0.011") * (v["ldh_u_l"] / 100 - Decimal("6.91")),
+            -Decimal("0.379") * (protein - Decimal("3.8")),
         )
     elif model == "hematologic":
         terms = (
-            0.84 * (ecog >= 2),
-            0.50 * v["high_clinical_suspicion_pneumonia"],
-            -0.53 * v["bilateral"],
-            -0.73 * benign,
-            -0.41 * (protein - 2.8),
+            Decimal("0.84") * (ecog >= 2),
+            Decimal("0.5") * v["high_clinical_suspicion_pneumonia"],
+            -Decimal("0.53") * v["bilateral"],
+            -Decimal("0.73") * benign,
+            -Decimal("0.41") * (protein - Decimal("2.8")),
         )
     else:
         cancer = str(x["cancer"])
         nlr, ldh, prot, unilateral, bilateral = {
-            "lung": (0.009, 0.016, -0.497, 0.0, 0.825),
-            "hematologic": (0.002, -0.001, -0.420, 0.556, -0.026),
-            "breast": (0.051, 0.008, -0.449, 0.407, -0.047),
+            "lung": (
+                Decimal("0.009"),
+                Decimal("0.016"),
+                -Decimal("0.497"),
+                Decimal("0.0"),
+                Decimal("0.825"),
+            ),
+            "hematologic": (
+                Decimal("0.002"),
+                -Decimal("0.001"),
+                -Decimal("0.42"),
+                Decimal("0.556"),
+                -Decimal("0.026"),
+            ),
+            "breast": (
+                Decimal("0.051"),
+                Decimal("0.008"),
+                -Decimal("0.449"),
+                Decimal("0.407"),
+                -Decimal("0.047"),
+            ),
         }[cancer]
         terms = (
-            (-1.485, -0.631, 0.0, -0.033, 0.269)[ecog],
-            -0.649 * benign,
-            nlr * (v["nlr"] - 6.11),
-            ldh * (v["ldh_u_l"] / 100 - 5.89),
-            prot * (protein - 3.4),
+            (
+                -Decimal("1.485"),
+                -Decimal("0.631"),
+                Decimal("0.0"),
+                -Decimal("0.033"),
+                Decimal("0.269"),
+            )[ecog],
+            -Decimal("0.649") * benign,
+            nlr * (v["nlr"] - Decimal("6.11")),
+            ldh * (v["ldh_u_l"] / 100 - Decimal("5.89")),
+            prot * (protein - Decimal("3.4")),
             bilateral if v["bilateral"] else unilateral,
         )
     try:
-        eta = math.fsum(terms)
+        eta = float(sum(terms, Decimal(0)))
     except OverflowError as exc:
         raise ValueError("linear predictor exceeds finite floating-point range") from exc
     if not math.isfinite(eta):

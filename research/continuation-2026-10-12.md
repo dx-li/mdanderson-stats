@@ -757,3 +757,26 @@ Independent Fraction/integer checks match this grid; exact-sum arithmetic is not
 claimed as a universal x87 replacement. No production code changed during the
 combined conduct full suite. See tools/reference_prt_enrollment.py and
 check_prt_enrollment.py. This enables the next generated-simulation integration.
+
+Critical reference correction during acceptance: actual CRT startup selects53-bit
+x87 precision (control word0x23f), not the earlier probes' forced64-bit0x37f.
+Both executables' actual initializer was executed for three initial precisions.
+Twenty reference generators are corrected; eight fixture files change numeric
+values. All5,044 PRT tests independently pass from the installed wheel using
+corrected fixtures; no production change is needed. Arrival7/delay.1 is observed
+at stored7.1 under actual startup precision. Preserve the earlier37f evidence in
+git history as an alternate arithmetic diagnostic only. New111 precision cases
+and six runtime-initializer probes qualify this correction. Full769-file source
+suite continues unchanged; corrected fixture regression is separate evidence.
+
+Parent review follow-up executed. ComPAS counterexample not reproduced: log
+ evidence-.5/.999 differs2.1e-14; independent six-dimensional marginal-prior
+reference agrees1.4e-12 and five thresholds pass. No ComPAS production patch.
+BLESS huge-input cancellation confirmed and fixed with400-digit evaluation of
+printed decimal coefficients/exact normalized inputs;15 new regressions pass.
+Combined5,635 focused tests pass51.89s. Earlier combined full run interrupted at
+66,529 passes due this production fix; do not call it accepted. Fresh final full
+suite is running with769 source files and all corrected PRT fixtures frozen:
+/tmp/review-final-full-suite.log and /tmp/review-final-tested-python.json.
+See review-followup-2026-10-12.md. No catalog promotion. A simulation-analysis
+refactor draft remains isolated under /tmp/prt-simulation-draft and is not accepted.

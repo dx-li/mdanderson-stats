@@ -1,0 +1,34 @@
+{
+  "completed": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ],
+  "successes": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+  ],
+  "variance": 1000.0,
+  "method": "Laplace-centered six-dimensional marginal-prior Gaussian quadrature, without a response threshold",
+  "refinements": [
+    {
+      "order": 8,
+      "log_evidence": -49.90009369866118
+    },
+    {
+      "order": 10,
+      "log_evidence": -49.900093693925214
+    },
+    {
+      "order": 12,
+      "log_evidence": -49.900093693854615
+    }
+  ]
+}

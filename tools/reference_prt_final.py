@@ -40,7 +40,7 @@ def run(assessed, exceedance, distance, current):
         put(address, "d" * len(values), *values)
     u.reg_write(UC_X86_REG_EBP, bp)
     u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
-    u.reg_write(UC_X86_REG_FPCW, 0x37F)
+    u.reg_write(UC_X86_REG_FPCW, 0x23F)
     u.emu_start(base + 0x97E1, base + 0x98FE, count=10000)
     if u.reg_read(UC_X86_REG_EIP) != base + 0x98FE:
         raise RuntimeError("native final instruction budget exhausted")

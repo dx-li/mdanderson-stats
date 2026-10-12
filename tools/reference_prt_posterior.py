@@ -49,7 +49,7 @@ def run(rows, intervals, doses, prior_mean, prior_variance):
         put(0x46E850 + 4 * i, "i", censored)
     u.reg_write(UC_X86_REG_EBP, bp)
     u.reg_write(UC_X86_REG_ESP, bp - 0x1000)
-    u.reg_write(UC_X86_REG_FPCW, 0x37F)
+    u.reg_write(UC_X86_REG_FPCW, 0x23F)
     u.emu_start(base + 0x213B, base + 0x35F0, count=500_000_000)
     if u.reg_read(UC_X86_REG_EIP) != base + 0x35F0 or get(0x77DC20, "d")[0] != 5000:
         raise RuntimeError("native posterior instruction/retention budget exhausted")
