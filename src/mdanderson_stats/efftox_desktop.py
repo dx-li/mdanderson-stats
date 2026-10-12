@@ -232,8 +232,8 @@ def read_efftox_desktop_xml(document: str) -> EffToxDesktopStudy:
         )
         scenario.joint_probabilities()
         scenarios.append(scenario)
-    if len(scenarios) > 100 or (root.get("TypeOfTrial") == "Simulation" and not scenarios):
-        raise ValueError("EffTox simulation requires 1..100 scenarios")
+    if len(scenarios) > 100:
+        raise ValueError("EffTox saved studies support at most 100 scenarios")
     if newest == "input":
         for path in ("ElicitedToxProbs/TVal", "ElicitedResProbs/RVal"):
             if any(not 0 < p < 1 for p in _probabilities(sim, path, size)):

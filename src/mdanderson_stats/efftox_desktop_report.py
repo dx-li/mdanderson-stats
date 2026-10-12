@@ -98,6 +98,35 @@ def efftox_desktop_conduct_html(
         if settings
         else ("<p>Inference settings were not supplied.</p>")
     )
+    baseline = recommendation.baseline
+    if baseline is not None:
+        body += "<h2>Observed-prefix baseline dose diagnostics</h2>" + _table(
+            (
+                "Dose",
+                "Mean efficacy",
+                "Mean toxicity",
+                "Efficacy tail",
+                "Toxicity tail",
+                "Utility",
+                "Admissible",
+            ),
+            [
+                (
+                    dose,
+                    baseline.mean_efficacy[i]
+                    if baseline.mean_efficacy is not None
+                    else "not supplied",
+                    baseline.mean_toxicity[i]
+                    if baseline.mean_toxicity is not None
+                    else "not supplied",
+                    baseline.efficacy_tail_probability[i],
+                    baseline.toxicity_tail_probability[i],
+                    baseline.utility[i],
+                    bool(baseline.admissible[i]),
+                )
+                for i, dose in enumerate(study.doses)
+            ],
+        )
     body += "<h2>Patient history</h2>" + _table(
         (
             "ID",

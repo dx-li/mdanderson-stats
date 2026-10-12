@@ -26,7 +26,7 @@ def update_efftox_desktop_patient(
     nodes = [
         n
         for n in root.findall("Cohorts/Cohort/Patient")
-        if int(n.findtext("ID", "-1")) == identifier
+        if float(n.findtext("ID", "-1")) == identifier
     ]
     if len(nodes) != 1:
         raise ValueError("patient_id must identify exactly one existing patient")
@@ -74,7 +74,7 @@ def add_efftox_desktop_patient(
     if len(study.patients) >= study.max_patients:
         raise ValueError("patient capacity has been reached")
     root = ET.fromstring(study.xml)
-    if root.findtext("TrialIsShutDown") != "0":
+    if float(root.findtext("TrialIsShutDown", "nan")) != 0:
         raise ValueError("the saved trial is shut down")
     admin = (
         None
@@ -94,6 +94,7 @@ def add_efftox_desktop_patient(
         cohort = ET.SubElement(cohorts, "Cohort")
     else:
         cohort = next(g for g in reversed(groups) if g.findall("Patient"))
+    root.set("TypeOfTrial", "TrialConduct")
     patient = ET.SubElement(cohort, "Patient")
     for name, value in {
         "ID": identifier,
@@ -117,6 +118,8 @@ def delete_last_efftox_desktop_patient(study: EffToxDesktopStudy) -> EffToxDeskt
     cohort.remove(cohort.findall("Patient")[-1])
     if not cohort.findall("Patient"):
         cohorts.remove(cohort)
+    if not root.findall("Cohorts/Cohort/Patient"):
+        root.set("TypeOfTrial", "Simulation")
     return read_efftox_desktop_xml(ET.tostring(root, encoding="unicode"))
 
 
@@ -124,6 +127,7 @@ def clear_efftox_desktop_patients(study: EffToxDesktopStudy) -> EffToxDesktopStu
     """Return an empty patient history, retaining design/scenarios/other metadata."""
     root = ET.fromstring(study.xml)
     cohorts = root.find("Cohorts")
+    root.set("TypeOfTrial", "Simulation")
     if cohorts is not None:
         for group in cohorts.findall("Cohort"):
             cohorts.remove(group)

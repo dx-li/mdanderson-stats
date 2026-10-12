@@ -286,3 +286,37 @@ original-default example completed two 39-patient trials at 1000 draws/500 warmu
 4 chains, with maximum split R-hat1.074 across its fits. A higher-precision check
 is being recorded separately. Historical trinary/legacy-utility scope remains
 separate. Do not relabel the other 35 partial rows as simple interface work.
+
+### All-scenario/batch and saved-file acceptance follow-up
+
+`efftox_desktop_batches.py` now runs every saved scenario using validated saved
+repetitions/seed or explicit overrides, with whole-request preflight. Unequal-size
+batches aggregate by trial count, and conditional Rselect uses only selected
+trials. Repeated outcome seeds and incompatible saved designs/settings are
+rejected. Reports retain every batch's actual settings, prior summaries and
+posterior diagnostics. Seven focused tests independently check weighted summaries,
+seed separation/replay, full preflight, invalid aggregation and real posterior
+report plumbing.
+
+The installed original-file exercise identified and fixed whitespace handling in
+`TrialIsShutDown`: the original document stores a newline-padded zero, not the
+literal string `"0"`. Numeric settings accepted by the reader are now interpreted
+consistently by conduct and add-patient APIs; three regressions cover whitespace,
+decimal and exponent spellings of zero.
+
+Original client `m_btnAddPatient_Click` RVA0xbddc, IL512..553 switches Simulation
+to TrialConduct after addition. `DeleteLastPatient` RVA0xc2b8, IL41..83 switches
+back to Simulation when the final patient is deleted; delete-all calls that same
+method. Python now follows these file-mode transitions. Empty saved studies can
+remain editable without scenarios; actual simulation rejects the absence of
+scenarios. These are source-inspected contracts, not extra original-instruction
+fixture counts. The source set stays738.
+
+The three installed precision runs (2x39patients each) used model summaries at
+1000draws/500warmup/4chains, model summaries at3000/1500/4, and explicit legacy
+summaries at1000/500/4. All three retained identical count histories and selected
+zero-based dose3 in both trials. Rselect was0.8664555937167867. Maximum split
+R-hat was1.07402055 at default precision and1.05227437 at higher precision;
+final-fit maxima were1.04192806 and1.02153324 respectively. This supports the
+observed workflow/precision stability, **not** an unqualified convergence or
+operating-characteristic accuracy claim from two replications.

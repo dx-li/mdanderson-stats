@@ -74,6 +74,8 @@ class EffToxDesktopDecision:
     utility: FloatArray
     efficacy_tail_probability: FloatArray
     toxicity_tail_probability: FloatArray
+    mean_efficacy: FloatArray | None = None
+    mean_toxicity: FloatArray | None = None
 
 
 def efftox_desktop_decision(
@@ -121,4 +123,12 @@ def efftox_desktop_decision(
     )
     selected = _select(counts, acceptable, utility, start)
     acceptable.flags.writeable = False
-    return EffToxDesktopDecision(selected, acceptable, _owned(utility), p_e, p_t)
+    return EffToxDesktopDecision(
+        selected,
+        acceptable,
+        _owned(utility),
+        p_e,
+        p_t,
+        _owned(fit.efficacy_probabilities.mean(axis=(0, 1))),
+        _owned(toxicity_probabilities.mean(axis=(0, 1))),
+    )

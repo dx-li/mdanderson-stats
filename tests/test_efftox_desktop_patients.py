@@ -21,6 +21,7 @@ def test_edit_and_append_preserve_metadata_cohort_and_actual_dose():
     added = add_efftox_desktop_patient(
         updated, lambda _: decision(0), patient_id=99, begin_date="day2", administered_dose_index=1
     )
+    assert 'TypeOfTrial="TrialConduct"' in added.xml
     assert added.patients[-1].cohort == 2
     assert added.patients[-1].calculated_dose_index == 0
     assert added.patients[-1].administered_dose_index == 1
@@ -78,6 +79,9 @@ def test_delete_last_and_clear_history_preserve_design_without_recalculating_dos
         cleared, lambda _: decision(0), patient_id=1, begin_date="new start"
     )
     assert restarted.patients[0].cohort == 1
+    empty_again = delete_last_efftox_desktop_patient(restarted)
+    assert 'TypeOfTrial="Simulation"' in empty_again.xml
+    assert 'TypeOfTrial="Simulation"' in clear_efftox_desktop_patients(restarted).xml
 
 
 def test_edit_patient_id_retains_calculated_dose_and_rejects_duplicate_id():
@@ -94,3 +98,35 @@ def test_prior_calibration_cannot_change_an_accruing_trial_design():
 
     with pytest.raises(ValueError, match="after patient accrual"):
         calibrate_efftox_desktop(read_efftox_desktop_xml(document()), monotone_toxicity=False)
+
+
+@pytest.mark.parametrize("zero", ["\n  0\n ", "0.0", " 0e0 "])
+def test_valid_numeric_xml_shutdown_whitespace_cannot_disable_patient_workflows(zero):
+    from mdanderson_stats.efftox_desktop_controller import recommend_efftox_desktop
+
+    saved = document().replace("<TrialIsShutDown>0<", f"<TrialIsShutDown>{zero}<")
+    study = read_efftox_desktop_xml(saved)
+    assert recommend_efftox_desktop(study, lambda _: decision(0)).status == "go"
+    updated = add_efftox_desktop_patient(
+        study, lambda _: decision(0), patient_id=99, begin_date="literal date"
+    )
+    assert len(updated.patients) == 6
+
+
+def test_clearing_a_conduct_file_without_scenarios_preserves_an_editable_empty_study():
+    import xml.etree.ElementTree as ET
+
+    from mdanderson_stats.efftox_desktop_batches import simulate_efftox_desktop_scenarios
+    from mdanderson_stats.efftox_desktop_patients import clear_efftox_desktop_patients
+
+    root = ET.fromstring(document())
+    root.set("TypeOfTrial", "TrialConduct")
+    simulation = root.find("SimulationParams")
+    for scenario in simulation.findall("ScenarioParams"):
+        simulation.remove(scenario)
+    saved = read_efftox_desktop_xml(ET.tostring(root, encoding="unicode"))
+    empty = clear_efftox_desktop_patients(saved)
+    assert not empty.patients and not empty.scenarios
+    assert 'TypeOfTrial="Simulation"' in empty.xml
+    with pytest.raises(ValueError, match="no simulation scenarios"):
+        simulate_efftox_desktop_scenarios(empty, lambda _: decision(0), trials=1, seed=1)

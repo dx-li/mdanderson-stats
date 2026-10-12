@@ -103,6 +103,8 @@ def test_report_preserves_inputs_prior_means_and_all_fit_diagnostics():
     report = efftox_desktop_conduct_html(study, recommendation, diagnostics=service.diagnostics)
     assert "<script>" not in report and "&lt;script&gt;" in report
     assert "Capacity safeguard applied" in report and "Maximum split R-hat" in report
+    assert "Observed-prefix baseline dose diagnostics" in report
+    assert "Mean efficacy" in report and "Admissible" in report
     result = simulate_efftox_desktop(study, service, scenario_index=0, trials=1, seed=13)
     report = efftox_desktop_simulation_html(result)
     assert "Rselect conditional on selection" in report

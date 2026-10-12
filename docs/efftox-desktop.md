@@ -186,3 +186,25 @@ identity and native calibration optimizer identity remain distinct from these
 executed integrand/control-flow results. Full workflow acceptance, including
 all-scenario/batched operating-characteristic reporting and precision sensitivity,
 remains open before catalog promotion.
+
+## All scenarios and unequal batches
+
+`simulate_efftox_desktop_scenarios(study, inference)` runs every saved scenario,
+using the XML `QtyReps` and `Seed` unless overridden. It preflights the entire
+request before the first fit and records independently derived outcome seeds.
+An empty editable study can be saved without scenarios; execution requires at
+least one scenario. Patient addition switches the file to `TrialConduct`;
+removing all patients switches it back to `Simulation`, matching the current GUI.
+
+For larger runs, use separate services/budgets and distinct outcome seeds for each
+batch. `summarize_efftox_desktop_batches(batches)` weights by trial counts, not
+by the number of batches; conditional Rselect weights only selected trials. It
+rejects repeated outcome seeds, different saved designs/scenarios and incompatible
+recorded inference settings. Different sampler seeds and work budgets are allowed.
+It retains the original batches and all settings. Missing custom-service settings
+remain an explicit provenance limitation, not a claim of compatible inference.
+
+`efftox_desktop_batches_html(batches)` groups all supplied scenarios, lists their
+indices and the total saved scenario count, shows actual seeds/settings for every
+batch, and retains separate prior-only and posterior diagnostics. Saved/native
+layout identity is not needed to interpret the report.

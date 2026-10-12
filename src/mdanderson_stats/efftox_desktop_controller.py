@@ -110,7 +110,7 @@ def recommend_efftox_desktop(
     """
     if not isinstance(study, EffToxDesktopStudy) or not callable(analyze):
         raise TypeError("expected an EffToxDesktopStudy and callable analysis service")
-    if ET.fromstring(study.xml).findtext("TrialIsShutDown") != "0":
+    if float(ET.fromstring(study.xml).findtext("TrialIsShutDown", "nan")) != 0:
         raise ValueError("the saved trial is shut down")
     limit = _integer(max_analyses, "max_analyses", 1, 100_000)
     if capacity_profile not in {"safe", "desktop_legacy"}:

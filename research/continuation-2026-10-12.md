@@ -431,3 +431,30 @@ Complete final verification and preserve the evidence, then continue all-scenari
 batch aggregation and precision acceptance. Counts stay97/35/6. The6 unavailable
 contracts and distribution/PR restrictions are unchanged. No release, merge,
 permission change, outreach or license split has been performed.
+
+### Latest stable EffTox verification and next source lead
+
+All-scenario/batch reporting and the remaining patient-file mode transitions are
+implemented. The original-file exercise caught a newline-padded shutdown zero;
+the numeric check is corrected and independently exercised against the original
+study. Add switches to TrialConduct; last/all deletion switches to Simulation,
+as confirmed in original client IL. Empty saved studies remain editable without
+scenarios but cannot run simulation. The focused suite now passes691tests.
+
+The authoritative final full-suite run is now
+`/tmp/efftox-current-final-suite-v5.log`, started after all behavioral edits.
+Do not count v3 as a valid completed run: it loaded an old Decision class and a
+new lazily imported report while edits continued, producing one mixed-revision
+AttributeError. V4 was terminated for the subsequently discovered original-file
+fix. Installed final-code checks are `/tmp/efftox-current-wheel-tests-v6.log`:
+**1567passed in124.44seconds**. Latest built artifact checks use
+`/tmp/efftox-current-artifact-audit-v6.log`. The original-file all-scenario/patient
+exercise is `/tmp/efftox-current-workflow-examples/validation.json`.
+The precision comparison completed and is recorded under the paths above.
+
+While EffTox final verification runs, the next high-confidence source lead is
+[BOIN desktop source recovery](boin-desktop-source-recovery-2026-10-12.md).
+Its official installer contains active readable R wrappers and managed conduct
+code;30 original startup/run-in cases are now preserved. This is research only,
+not a BOIN implementation/status promotion. Its original-program redistribution
+restriction is recorded; no original assets are bundled.
