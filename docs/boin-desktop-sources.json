@@ -3,13 +3,13 @@
     99,
     129
   ],
-  "audited_at_utc": "2026-09-27",
+  "audited_at_utc": "2026-10-12",
   "desktop_version": "1.1.0",
   "desktop_modified": "2021-12-22",
   "sources": [
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99",
-      "role": "Desktop 1.1.0 capability specification; embedded help and installer behavior are not verified."
+      "role": "Capability specification; current installer source, managed IL and native serialization inspected separately."
     },
     {
       "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/Guide.pdf",
@@ -27,6 +27,11 @@
       "url": "https://cran.r-project.org/src/contrib/BOIN_2.7.2.tar.gz",
       "sha256": "be643939639ccc70dd236712047056e051f7aa019a7230d09caf1f646dd0060e",
       "role": "Previously acquired numerical reference source; inspected for shared contracts and outstanding waterfall workflow."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BOINDeskTop/BOIN_V1.1.0.zip",
+      "sha256": "f9f2bd574d4e72192ffe9b76e7c3486098d7fc36748e2f5d6cebfdf077754af2",
+      "role": "External-only source/managed-code reference; original program redistribution prohibited."
     }
   ],
   "local_reference_source_sha256": {
@@ -41,5 +46,5 @@
     "docs/rolling-six-sources.json",
     "docs/boin-combination-source.md"
   ],
-  "limitations": "Shared method implementations and explicit Python simulation/report conventions; desktop installer, embedded help, native project/report formats and random/scheduling equivalence are not verified."
+  "limitations": "Current source-reference scope and substitutions recorded in research/boin-desktop-workflow-checkpoint-2026-10-12.md. Native RNG/Iso identity, complete saved TITE calendar/comparison workflows and historical GUI identity remain unclaimed."
 }

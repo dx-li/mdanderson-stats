@@ -501,3 +501,24 @@ preflight, CRM final-consensus uncertainty reporting, and ToxFinder MAP diagnost
 propagation. Their7 targeted regression instances were rerun during this BOIN
 work and all passed (ARAND4, CRM1, ToxFinder2). Previous35,394 full-suite acceptance
 covers the last EffTox checkpoint, not unfinished BOIN changes.
+
+### BOIN combination workflow checkpoint; continue single/TITE
+
+[Scope and exact remaining contracts](boin-desktop-workflow-checkpoint-2026-10-12.md)
+and [validation manifest](boin-desktop-workflow-validation-2026-10-12.json) record
+41,052 full-suite tests,5,742 clean installed BOIN tests,28 installed extras tests,
+all four original defaults and seven retained independent-review regressions.
+10,000 installed safe combination trials cover all five original scenarios.
+No catalog promotion:98 implemented/34 partial/6 pending. All original assets
+remain excluded, with mixed-license notices retained.
+
+Continue immediately with UseDefaultBounds active/inactive mapping, saved single
+simulation/3+3 and desktop TITE/Rolling Six/calendar/protocol contracts. Native
+TITE references now include2304 traces; single-agent simulation192; Rolling Six96;
+STFT84 executed IL cases. Draft independent kernels exist locally in
+/tmp/boin_desktop_tite_calendar.py and /tmp/boin_single_kernel_draft.py; they match
+2304 and192 source fixtures respectively but are not integrated production APIs.
+/tmp/boin_tite_settings_draft.py is an unvalidated settings-adapter draft. Native
+STFT saved follow-up is alwaysdays, and native simulation normalizes timing
+weights while the calculator uses raw weights (valid GUI priors sum to one).
+Do not silently replace the desktop calendar with the existing web calendar.

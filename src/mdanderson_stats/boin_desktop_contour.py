@@ -52,6 +52,12 @@ def desktop_contour_decision(
     state, posterior = design._state(n, y, None)
 
     def result(action, next_dose=None):
+        if (
+            compatibility_profile == "safe"
+            and next_dose is not None
+            and state[next_dose[0] - 1, next_dose[1] - 1]
+        ):
+            return BOINCombDecision("stop_safety", None, state, posterior)
         return BOINCombDecision(action, next_dose, state, posterior)
 
     if n.sum() >= limits.sum():

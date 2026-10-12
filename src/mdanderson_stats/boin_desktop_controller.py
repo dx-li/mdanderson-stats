@@ -1,13 +1,17 @@
 """BOIN desktop patient/cohort controller with explicit capacity compatibility."""
 
+import hashlib
 import xml.etree.ElementTree as ET
 from collections.abc import Callable
 from dataclasses import dataclass
+
+import numpy as np
 
 from .boin_combination import BOINCombDecision, BOINCombSelection
 from .boin_desktop import BOINDesktopStudy, _boolean, _integer, _number
 from .boin_desktop_contour import desktop_contour_decision
 from .boin_desktop_decision import BOINDesktopCombDesign
+from .boin_desktop_selection import BOINDesktopSelection, select_boin_desktop_mtd
 
 
 @dataclass(frozen=True)
@@ -18,6 +22,11 @@ class BOINDesktopRecommendation:
     reason: str
     pending_patients: int
     selection: BOINCombSelection | None = None
+    selection_details: BOINDesktopSelection | None = None
+    capacity_profile: str = "safe"
+    selection_profile: str = "safe"
+    seed: int = 0
+    study_sha256: str = ""
 
 
 def desktop_combination_design(study: BOINDesktopStudy) -> BOINDesktopCombDesign:
@@ -43,6 +52,7 @@ def recommend_boin_desktop(
     *,
     seed: int,
     capacity_profile: str = "safe",
+    selection_profile: str = "safe",
     analyze: Callable[[BOINDesktopStudy], BOINCombDecision] | None = None,
     select: Callable[[BOINDesktopStudy], BOINCombSelection] | None = None,
 ) -> BOINDesktopRecommendation:
@@ -56,8 +66,17 @@ def recommend_boin_desktop(
     """
     if study.mode not in ("combination", "contour"):
         raise ValueError("managed combination conduct requires a combination/contour study")
+    if (
+        isinstance(seed, (bool, np.bool_))
+        or not isinstance(seed, (int, np.integer))
+        or not 0 <= seed < 2**64
+    ):
+        raise ValueError("seed must be an integer in [0,2**64)")
     if capacity_profile not in ("safe", "desktop_legacy"):
         raise ValueError("capacity_profile must be safe or desktop_legacy")
+    if selection_profile not in ("safe", "desktop_legacy"):
+        raise ValueError("selection_profile must be safe or desktop_legacy")
+    selection_details = None
     patients = study.patients
     pending = sum(p.outcome == 2 for p in patients)
     cohort = patients[-1].cohort if patients else 1
@@ -71,15 +90,33 @@ def recommend_boin_desktop(
         cohort += 1
 
     def result(status, dose, reason, selection=None):
-        return BOINDesktopRecommendation(status, cohort, dose, reason, pending, selection)
+        return BOINDesktopRecommendation(
+            status,
+            cohort,
+            dose,
+            reason,
+            pending,
+            selection,
+            selection_details,
+            capacity_profile,
+            selection_profile,
+            int(seed),
+            hashlib.sha256(study.xml.encode()).hexdigest(),
+        )
 
     def final_selection():
+        nonlocal selection_details
         if select is not None:
             return select(study)
         n, y, _ = study.counts()
-        return desktop_combination_design(study).select_mtd(
-            n, y, mtd_contour=study.mode == "contour"
+        selection_details = select_boin_desktop_mtd(
+            desktop_combination_design(study),
+            n,
+            y,
+            contour=study.mode == "contour",
+            profile=selection_profile,
         )
+        return selection_details.selection
 
     capacity = (
         sum(study.subtrial_maximums)

@@ -1453,3 +1453,21 @@ binaries, installer or manual. This is source-informed compatibility work, not a
 claim of clean-room authorship or a new grant for the original program. Its
 original redistribution prohibition and all existing package notices remain.
 Native/XML/RNG/report identity limits are documented in the workflow guide.
+
+## BOIN desktop 1.1.0 workflow references
+
+The `boin_desktop*.py` modules independently express saved-project interchange,
+BOIN statistical methods and explicitly labeled compatibility profiles. The
+existing `boin_waterfall_trial.py` adds bounded titration and separately retained
+legacy reported counts. Original English/Chinese protocol prose and native
+HTML templates are not included. Original R, DLLs, installer and default projects
+are external reference inputs only and are excluded from distribution artifacts.
+
+The official BOIN desktop 1.1.0 archive's License.rtf states that redistribution
+of the original program is not permitted. That restriction is preserved here;
+it is not permission to redistribute original assets or a blanket clearance for
+this mixed-license package. Independently authored reference drivers execute
+user-supplied, hash-pinned originals and retain synthetic numerical outputs.
+See `research/boin-desktop-source-recovery-2026-10-12.md` and
+`research/boin-desktop-workflow-checkpoint-2026-10-12.md` for exact source versions,
+execution substitutions, numerical qualifications and outstanding scope.

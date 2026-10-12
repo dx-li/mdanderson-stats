@@ -11,7 +11,9 @@ from mdanderson_stats.boin_desktop_decision import BOINDesktopCombDesign
 
 ROWS = list(
     csv.DictReader(
-        (Path(__file__).parents[1] / "research/fixtures/boin-desktop/contour-conduct.csv").open()
+        (Path(__file__).parents[1] / "research/fixtures/boin-desktop/contour-conduct.csv")
+        .read_text()
+        .splitlines()
     )
 )
 ROWS = [r for r in ROWS if r["runin"] == "FALSE" or float(r["target"]) == 0.25]

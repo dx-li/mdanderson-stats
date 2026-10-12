@@ -26,3 +26,8 @@ simulation and reports, with738 original-instruction cases and an explicit
 negative-slope summary compatibility profile. All-scenario/batch and qualified precision acceptance passed; catalog2 is implemented.
 Next resolve BOIN desktop interactive/source differences before integrating its
 remaining titration/run-in, project and protocol workflows. Counts are98/34/6.
+
+BOIN combination saved workflows now reach simulation/batches and bilingual reports;
+single/TITE saved final counts are integrated. Continue the [desktop calendar and
+comparison contracts](boin-desktop-workflow-checkpoint-2026-10-12.md), using256 new
+original TITE traces and keeping future-outcome stopping in an explicit legacy profile.

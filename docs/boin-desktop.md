@@ -45,16 +45,53 @@ when a DLT occurs conditional on its occurrence, not overall DLT incidence.
 `tite_boin_decision` already calculates the per-dose weighted totals from pending
 follow-up times. No separate numerical engine is needed for the calculator.
 
+## Saved desktop workflows
+
+`read_boin_desktop_project` reads the current native XML/HTML envelope and retains
+inactive/unknown metadata. `add_boin_desktop_patient`, `update_boin_desktop_patient`,
+`delete_last_boin_desktop_patient` and `clear_boin_desktop_patients` support the
+combination patient file. `recommend_boin_desktop` connects managed cohort/pending
+rules to active single-MTD or contour decisions and final selection.
+`boin_desktop_conduct_html` creates escaped, reopenable diagnostic reports.
+
+```python
+from pathlib import Path
+import mdanderson_stats as m
+
+study = m.read_boin_desktop_project(Path("my-study.html").read_text())
+batch = m.simulate_boin_desktop_scenarios(study, batches=2, trials=100, seed=2026)
+Path("simulation.html").write_text(m.boin_desktop_simulation_html(batch))
+Path("methods-en.md").write_text(m.boin_desktop_combination_protocol(study))
+Path("methods-zh.md").write_text(
+    m.boin_desktop_combination_protocol(study, language="zh"))
+```
+
+Simulation requires an empty combination/contour study. Every batch retains its
+seed and full observations. Complete-request resource bounds are checked before
+running. Safe profiles preserve actual counts and planned enrollment; explicit
+`desktop_legacy` profiles expose original phantom enrollment, discarded outcomes,
+unsafe selection and cross-replication state. Reports show actual and reported
+patients/DLTs separately. Legacy nominal binomial errors are not validated
+uncertainty estimates because replications can share defective state.
+
+For single-agent/TITE final data, `set_boin_desktop_single_counts` edits the native
+row-major count array; `boin_desktop_single_counts` reads it. Call
+`select_boin_desktop_single(study, outcomes_complete=True)` only once all outcomes
+are complete. The array itself cannot establish that fact. The shared selector
+uses mathematical tie ordering rather than the native 1e-10 perturbation.
+
 ## What remains
 
-Entry 99 is partial. Combination titration/run-in
-workflows, combination and TITE-specific protocol generation, native Word/HTML
-layouts and saved-project interoperability remain open.
+Entry 99 remains **partial**. Current saved-project combination conduct, final
+selection, simulation, scenario batches, bilingual methods and HTML reports are
+integrated. Single/TITE saved final selection is integrated, but saved simulation,
+comparison and TITE calendar/protocol adapters still need validation. In particular,
+the desktop TITE simulator starts its first arrival at zero and checks pending
+outcomes on additional random arrival increments, differing from the existing
+Python calendar's conventions. Do not silently substitute one for the other.
 
-The official1.1.0 installer has now been inspected and78 original R reference
-cases executed; [source recovery](../research/boin-desktop-source-recovery-2026-10-12.md)
-records active entry points, different run-in rules and legacy titration defects.
-The remaining desktop workflows are not yet integrated. The Python APIs follow the cited methods and audited
-R/web contracts, whose defaults and scheduling conventions can differ from
-desktop version 1.1.0. No desktop executable, native project file or unverified
-simulation result is bundled.
+Source compatibility, correct mathematical implementation and clinical validity
+are separate claims. Native RNG/Iso solver identity, historical GUI appearance,
+and exact proprietary template layout are not promised. The original program
+is not redistributable and none of its executable/source/template assets are
+bundled. See the [current evidence and remaining contracts](../research/boin-desktop-workflow-checkpoint-2026-10-12.md).

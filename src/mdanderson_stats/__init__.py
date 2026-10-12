@@ -376,6 +376,30 @@ from .boin_design_report import (
     BOINScenarioSummary,
     boin_design_report,
 )
+from .boin_desktop import (
+    BOINDesktopPatient,
+    BOINDesktopScenario,
+    BOINDesktopStudy,
+    read_boin_desktop_project,
+)
+from .boin_desktop_batch import BOINDesktopBatch, simulate_boin_desktop_scenarios
+from .boin_desktop_controller import BOINDesktopRecommendation, recommend_boin_desktop
+from .boin_desktop_patients import (
+    add_boin_desktop_patient,
+    clear_boin_desktop_patients,
+    delete_last_boin_desktop_patient,
+    update_boin_desktop_patient,
+)
+from .boin_desktop_protocol import boin_desktop_combination_protocol
+from .boin_desktop_report import boin_desktop_conduct_html, boin_desktop_simulation_html
+from .boin_desktop_selection import BOINDesktopSelection, select_boin_desktop_mtd
+from .boin_desktop_simulation import BOINDesktopSimulation, simulate_boin_desktop_combination
+from .boin_desktop_single import (
+    boin_desktop_single_counts,
+    desktop_single_design,
+    select_boin_desktop_single,
+    set_boin_desktop_single_counts,
+)
 from .boin_protocol import boin_protocol
 from .boin_simulation import BOINSimulation, simulate_boin
 from .boin_time_comparison import (
@@ -4193,4 +4217,30 @@ __all__ += [
     "recommend_toxfinder_study",
     "simulate_toxfinder_study",
     "write_toxfinder_subject_csv",
+]
+
+__all__ += [
+    "BOINDesktopPatient",
+    "BOINDesktopScenario",
+    "BOINDesktopStudy",
+    "read_boin_desktop_project",
+    "BOINDesktopBatch",
+    "simulate_boin_desktop_scenarios",
+    "BOINDesktopRecommendation",
+    "recommend_boin_desktop",
+    "add_boin_desktop_patient",
+    "clear_boin_desktop_patients",
+    "delete_last_boin_desktop_patient",
+    "update_boin_desktop_patient",
+    "boin_desktop_combination_protocol",
+    "boin_desktop_conduct_html",
+    "boin_desktop_simulation_html",
+    "BOINDesktopSelection",
+    "select_boin_desktop_mtd",
+    "BOINDesktopSimulation",
+    "simulate_boin_desktop_combination",
+    "boin_desktop_single_counts",
+    "desktop_single_design",
+    "select_boin_desktop_single",
+    "set_boin_desktop_single_counts",
 ]
