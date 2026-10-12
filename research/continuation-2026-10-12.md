@@ -697,3 +697,12 @@ b7a5cef6c4a0a8114aa1abd7ba00ca1f96c98dafbca297a123401b0bd1cfe894.
 Preserved at research/compas-pnoc022-specification-2026-10-12.json. First author is
 Rui Tang. Published core is actionable with explicit group/model weights and
 independently validated integration; original PDF is not redistributed.
+
+BLESS final acceptance completed:73,155 full tests passed (985.48s),765 unchanged
+production Python files,683 focused and9,347 broader installed-wheel checks,
+683 fresh-environment checks plus28 real plotting/TIFF tests, example execution,
+15 byte-identical PRT native references and458 independent Decimal BLESS cases.
+Ruff/format/mypy/build and retained-notice/raw-asset audits pass. See
+bless-published-validation-2026-10-12.json. Implementation b1722d6f524d1ee87410499087f336763022a224
+was independently verified at the remote feature branch. ComPAS development is
+still isolated in /tmp at this checkpoint and is not included in these claims.

@@ -9,7 +9,8 @@ meets the guide-defined simulation workflow; see its scope crosswalk below. This
 adds the mTPI R final estimator, recovered EffTox contour fitter, CRM desktop
 study/controller workflow, ToxFinder native allocation/simulation workflow, and
 the complete ARAND guide-defined simulation workflow. ARAND, desktop CRM81/132 and ToxFinder14 are promoted
-for their declared completed workflows; other application labels remain unchanged.
+for their declared completed workflows. BLESS149 now moves from pending to partial
+for its recovered published-grid workflow; its deployed daily fit remains unavailable.
 It does not re-certify every historical numerical reference or installed example.
 The validation report identifies exactly which checks were rerun.
 

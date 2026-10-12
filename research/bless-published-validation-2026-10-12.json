@@ -1,0 +1,56 @@
+{
+  "scope": "BLESS four-model published-grid saved workflow, plus prior PRT hazard increment; BLESS149 partial, counts102/31/5",
+  "implementation_commit": "b1722d6f524d1ee87410499087f336763022a224",
+  "full_suite": {
+    "passed": 73155,
+    "seconds": 985.48,
+    "all_extras": true,
+    "warnings_as_errors": true,
+    "log_sha256": "7a5c34ec65fbddc9d70d976827e104c282b60d0fb205051cc15cb1009c0c8495",
+    "production_python_files": 765,
+    "production_unchanged_during_acceptance": true,
+    "snapshot_sha256": "0333406095d23f88d40b5a75603adb430eef1ca472cb043722b667b4379285bb"
+  },
+  "installed_wheel": {
+    "focused_BLESS_PRT_tests": 683,
+    "broader_regression_tests": 9347,
+    "fresh_environment_tests": 683,
+    "fresh_environment_extras_tests": 28,
+    "extras": [
+      "plot",
+      "image"
+    ],
+    "example": "bless_published.py passed outside checkout, reused and fresh environments"
+  },
+  "source_references": {
+    "BLESS_Decimal_cases": 458,
+    "BLESS_fixture_sha256": "a6812704d6f6a33f4b566bd154e04041566a19ba188bd2cde74bb23485e24059",
+    "PRT_native_files_byte_identically_regenerated": 15
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format": "2729 files formatted",
+    "mypy": "765 source files passed"
+  },
+  "artifacts": {
+    "package_python_json_files_byte_matched_wheel_and_sdist": 769,
+    "notice_files_retained": 29,
+    "raw_original_assets_excluded": true,
+    "hash_location": "final preservation commit message"
+  },
+  "remaining": {
+    "BLESS": "deployed daily baseline, full-precision fit, additional uncertainty contracts",
+    "ComPAS": "recovered explicit hierarchy under isolated development; no package integration claimed in this checkpoint",
+    "PRT": "source-specific controller, calendar integration, complete simulation and reports",
+    "release": "mixed-license distribution decision and prior PR Forbidden remain; no merge/release/deploy/outreach"
+  },
+  "logs": {
+    "lint": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "format": "4fb216a56edcaa0412e0451531c36977cf7a70cf88d68fb1e814bc9697670e55",
+    "mypy": "b26bf5531a0affb4a2e07cfd4501c33d3f5b97380472f05b12182826021b0f0b",
+    "wheel-tests": "3e8fb39a18e422980d7577f59ef288113db2e5c5f13f1c73a05313691c3618d4",
+    "wheel-regression": "982c08c71b4bddd9cce672847f9bae5beeedda0fe436a947ff3a59c5a9cdd926",
+    "clean-tests": "e029d947e149a0e01614fe01c37426b539b32ef9385190c00129179a5d30acdb",
+    "clean-extras": "c148ca4e0425e81ed9f7380ce3b815b55defda82f65266d790088460fed56e48"
+  }
+}
