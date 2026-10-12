@@ -1,6 +1,6 @@
 # ARAND guide-scope completion assessment
 
-The recovered version5.2 guide defines ARAND as software for **simulating**
+The recovered version 5.2 guide defines ARAND as software for **simulating**
 clinical trials with binary or time-to-event outcomes. It does not advertise a
 clinical recommendation service. Its required outputs are per-arm selected,
 selected-early, dropped-early and enrollment summaries, with empirical intervals,
@@ -8,8 +8,9 @@ plus average trial length and saved input/output. A source library's latent
 patient-file APIs are not themselves an additional advertised application.
 
 The Python native-controller profile now provides the following end-to-end
-simulation contracts. Final catalog promotion awaits the final regression and
-artifact checkpoint, not a claim of original machine-code identity.
+simulation contracts. Entry 62 is classified as implemented for these contracts after the independent
+reference and installed-workflow checks. The final regression/artifact checkpoint
+is recorded in the integration report. This is not original machine-code identity.
 
 | Guide/workflow contract | Implementation and independent evidence |
 |---|---|
@@ -18,7 +19,7 @@ artifact checkpoint, not a claim of original machine-code identity.
 | Separate native enable flags and arm-specific stopping | All eight gate combinations (256 cases);60 original per-arm cases exercise status and both final selectors. |
 | Batch monitoring initialization and replications | Six construction/reset slices establish ceil(a) versus int(a). The actual native wrapper loop has six original x86 probes showing director-reset → trial-run → accumulation per replication. |
 | Original simulation input files and saved Python studies | Hash-pinned original managed serializer validation/round trips for Binary/TTE; strict noncovariate Months XML mapping, retained entire source XML/history metadata; versioned Python JSON read/write and immutable inputs. |
-| Reproducible scenarios and replications | Original SetSeed IL confirms base seed plus scenario index (five probes). Explicit independent NumPy streams record each replay seed. |
+| Reproducible scenarios and replications | Original SetSeed IL confirms base seed plus scenario index (five probes). Explicit independent NumPy streams record each replay seed. Four original clock-slice fixtures confirm a zero first candidate; independent Poisson/Gamma identities verify enrollment and terminal timing. |
 | Per-arm selection, early selection, early drop, enrollment | Full original accumulation body0x59ac0 (12 fixtures) and actual native report0x18bf90 slices. The actual report counts statuses1+2+3 as drops, unlike the earlier base-template candidate's1+2. |
 | Empirical enrollment intervals | Actual native x86 report probes establish suppression below100 and legacy sorted indices3/98 at100. The standard type7 default and explicit legacy-5.2.2 report option are independently checked. |
 | HTML input/output and export | Self-contained report captures all study parameters and replay seeds. Original XML can be retained byte-for-byte as text; modified Python inputs use versioned JSON. Installed examples execute Binary/TTE import→simulation→report. |

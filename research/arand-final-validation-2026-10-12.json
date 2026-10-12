@@ -1,0 +1,60 @@
+{
+  "scope": "ARAND guide-defined simulation completion; no whole-catalog scientific re-certification",
+  "production_files": 712,
+  "production_manifest_sha256": "99c1f5ede0c638ffc290d7733adf7a806de17d0303c164670bc43cc0ed9a204f",
+  "full_regression": {
+    "command": "UV_CACHE_DIR=/tmp/uv-cache uv run --extra plot --extra image pytest -W error -q",
+    "passed": 34533,
+    "seconds": 837.77,
+    "log_sha256": "ab099a314f412308089d7ed4c8c9a5878241a74b295001fe1add6476737a0fe2"
+  },
+  "affected_arand_tests": 443,
+  "installed_wheel": {
+    "tests_passed": 477,
+    "seconds": 8.6,
+    "extras": [
+      "plot",
+      "image"
+    ],
+    "examples": [
+      "native study JSON/simulation/report/replay",
+      "original Binary XML/simulation/report",
+      "original TTE XML/simulation/report"
+    ],
+    "catalog_counts_verified": true,
+    "environment": "isolated /tmp environment, imported site-packages outside checkout"
+  },
+  "reference_checks": {
+    "baseline_fixtures_regenerated_byte_identically": 98,
+    "baseline_families": 13,
+    "seeded_differential_comparisons": 4200,
+    "managed_binary_tte_roundtrips_regenerated": true,
+    "actual_report_loop_seed_clock_and_accumulation_fixtures_regenerated": true,
+    "extended_manifest": "research/fixtures/arand-native/desktop-extension-manifest.json",
+    "baseline_fixture_scope": "Includes latent branches; only applicable single-endpoint Python contracts are compared; not 98 complete-trial comparisons",
+    "r_reference": "52 preserved independent R probability references exercised by tests; R was not re-executed in this checkpoint"
+  },
+  "quality": {
+    "ruff_check": "passed",
+    "ruff_format_check": "passed",
+    "mypy_source_files": 708,
+    "wheel_sdist_build": "passed",
+    "artifact_python_json_source_byte_matches": 712,
+    "native_root_exports_verified": 31,
+    "retained_notices_match": true,
+    "original_binaries_raw_excluded": true,
+    "affected_provenance_hashes_verified": true
+  },
+  "catalog": {
+    "implemented": 94,
+    "partial": 38,
+    "pending": 6,
+    "only_promoted_id": 62
+  },
+  "limits": [
+    "No original RNG/integrator bit identity or clinical validation claim",
+    "Guide simulation scope excludes latent clinical-history conduct and unsupported covariate/predictive branches",
+    "Mixed licenses retained; no package split, relicensing, merge, release, deployment, outreach, permission changes or PR bypass"
+  ],
+  "interrupted_runs": "Earlier obsolete-code full-suite attempts were deliberately stopped and are not reported as completed regressions."
+}

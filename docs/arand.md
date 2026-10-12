@@ -1,14 +1,14 @@
-# Adaptive Randomization: posterior core
+# Adaptive Randomization
 
-Catalog entry **62 remains partial**. The binary and time-to-event posterior
-models, best-arm probabilities and exponential tuning are implemented for one
-through ten independent arms. [Calendar replay](arand-calendar.md) now connects
-these building blocks to explicit patient tapes, allocation floors, reversible
-suspension, permanent futility, monitoring gates and final selection. The replay
-requires explicit policies where the guide leaves native behavior unspecified.
-[Serial simulation](arand-simulation.md) adds Poisson accrual, binary and
-exponential scenarios, reproducible trial seeds and compact operating
-characteristics. Full native simulation/reporting parity remains open.
+Catalog entry **62 is implemented for the version 5.2 guide's simulation
+workflow**. The [native controller workflow](arand-native-workflow.md) connects
+binary/TTE models, original simulation XML, saved Python studies, reproducible
+scenarios and all required per-arm reports. The
+[scope assessment](../research/arand-simulation-scope-2026-10-12.md) maps each
+required contract to independent evidence and records compatibility limits.
+Native RNG identity, Windows GUI rendering and latent clinical-history conduct
+are not claimed. The separately named [calendar](arand-calendar.md) and
+[simulation](arand-simulation.md) APIs retain their explicit Python policies.
 
 Sources: [MD Anderson entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62),
 [version 5.2 guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ARAND/ARandUsersGuide.pdf),
@@ -133,15 +133,11 @@ Vectorized CDF evaluation reduced one local pass through the 52-reference
 workload from 2.62 to 1.12 seconds; this is a workload measurement, not a general
 performance guarantee or native program benchmark.
 
-The [calendar workflow](arand-calendar.md) implements arrival-time and scheduled
-looks, accrued-outcome handling, enrollment gates, final follow-up and selection.
-It exposes floor, ranking, simultaneous-trigger and duration/minimum choices as
-Python policies. The [simulation workflow](arand-simulation.md) provides
-per-arm selection, patient-count and status summaries. Native random streams,
-exact native control semantics and original report formatting remain open. No native numerical-engine or full
-trial-controller parity is claimed.
-
-The separately named [ARAND native controller workflow](arand-native-workflow.md)
-now supports recovered candidate-time rules, censor indicators, Python saved
-studies, reproducible simulation and explicit reports. Existing policy APIs remain
-unchanged; full original XML/RNG/report identity remains unclaimed.
+The separately named [calendar workflow](arand-calendar.md) and
+[policy simulator](arand-simulation.md) retain explicit policy choices.
+Use the [native controller workflow](arand-native-workflow.md) for the recovered
+original stopping/monitoring rules, original simulation XML and complete
+per-arm operating-characteristic reports. Its first candidate begins at zero;
+its default empirical intervals use type7, with the original percentile behavior
+available only through an explicit compatibility option. Independent posterior
+integration and NumPy streams do not reproduce the native numerical/RNG bitstream.

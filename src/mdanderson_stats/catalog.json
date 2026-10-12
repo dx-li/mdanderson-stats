@@ -2337,7 +2337,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Binary beta and exponential inverse-gamma conjugate posteriors, including censored exposure and mean/median time parameterizations",
         "One-through-ten-arm largest/smallest parameter probabilities with exact exchangeability, reused two-arm identities and vectorized multi-arm quadrature",
@@ -2347,8 +2347,10 @@
         "Required explicit Python policies for floor transformation, futile-arm ranking, trigger order, duration/minimum precedence, ties and all-suspended behavior; no inferred native defaults; docs/arand-calendar.md",
         "Preflight tape, retained-look, patient-scan and posterior-work bounds before full outcome arrays; absolute event deadlines, forwarded integration tolerance and no allocation weighting at terminal/final inspections",
         "Named native single-endpoint controller with six monitoring modes, ordered constraints, all-arm posterior ranking, explicit censor indicators, proportional allocation floors and native final selection; docs/arand-native-workflow.md",
-        "Versioned Python studies, independently seeded binary/TTE simulation and captured-input HTML reports; original XML/defaults, batch-reset and complete native report/RNG integration remain partial",
-        "Bounded serial Poisson-accrual simulation for binary and exponential mean/median scenarios, replayable trial seeds and compact selection, arm-status, enrollment and duration operating characteristics; explicit candidate-exhaustion errors and aggregate work/storage budgets."
+        "Versioned Python studies, strict original Binary/TTE simulation XML import with retained source metadata, independently seeded simulations and captured-input HTML reports; native gate defaults, per-arm cutoffs/delays and batch reset are explicit",
+        "Bounded serial Poisson-accrual simulation for binary and exponential mean/median scenarios, replayable trial seeds and compact selection, arm-status, enrollment and duration operating characteristics; explicit candidate-exhaustion errors and aggregate work/storage budgets.",
+        "Guide-complete native-profile simulation outputs: per-arm selected/selected-early/dropped-early counts, enrollment means/MCSE/empirical intervals and trial duration; mathematically standard type-7 intervals plus explicitly selected legacy-5.2.2 percentiles",
+        "Original first-candidate-at-zero convention and post-enrollment gap before the cap check; scenario seed offset and reset/run/accumulate ordering independently recovered. Original RNG bit identity, GUI styling and latent clinical-history conduct are outside the declared simulation workflow."
       ],
       "validation": [
         "52 probabilities checked against independent R integration in original parameter coordinates: beta/inverse-gamma, 3/10 arms and both directions; maximum absolute difference 6.26e-11",
@@ -2357,7 +2359,10 @@
         "Eleven focused calendar scenarios cover initial allocation, binary/exponential outcomes, delayed and exact-deadline availability, suspension/reactivation, strict monitoring gates, all-futile/no-winner, suspended final winners, incomplete follow-up, terminal clipping, scheduled looks after the last arrival and zero-enrollment duration termination; tests/test_arand_calendar.py",
         "Controller rules reviewed against local version 5.2 guide sections 3.1–3.4; unresolved native conventions exposed as required Python policy; research/arand-controller-audit.md",
         "Executable guide examples independently check Beta(4,1) versus Beta(1,4) final best-arm probability 69/70 and reconstruct exponential event/exposure totals; docs/arand-calendar.md",
-        "Fifteen posterior/calendar/simulation tests, three seeded mean-versus-median trial comparisons, a 512-trial Poisson expected-enrollment/zero-enrollment check and the executable simulation guide; docs/arand-simulation.md and research/arand-simulation-audit.md. Native RNG and desktop report equivalence remain open."
+        "Fifteen posterior/calendar/simulation tests, three seeded mean-versus-median trial comparisons, a 512-trial Poisson expected-enrollment/zero-enrollment check and the executable simulation guide; docs/arand-simulation.md and research/arand-simulation-audit.md. Native RNG and desktop report equivalence remain open.",
+        "98 hash-pinned original instruction fixtures regenerated, all six applicable integrated controller cases checked, and 4200 seeded original status/selection/constraint/minimum/per-arm comparisons passed",
+        "Original managed Binary/TTE validation and normalized serialization round trips; actual native x86 report and replication-loop slices, complete shared accumulation body, wrapper scenario-seed IL and single-trial clock slices; research/fixtures/arand-native/desktop-extension-manifest.json",
+        "443 ARAND tests, including independent 1+Poisson duration-limited enrollment, exponential overshoot and Gamma enrollment-cap duration identities; isolated wheel/extras tests and original XML-to-report examples; research/arand-simulation-scope-2026-10-12.md"
       ]
     },
     {

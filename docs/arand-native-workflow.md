@@ -75,7 +75,8 @@ in the exposed desktop default. Binary scenarios use the fixed `binary_delay`.
   targets. There are no independent timer-triggered looks. Supply the initial
   thresholds and target sequence explicitly in `ArandNativeMonitor`. Mode 4's
   `targets` are increments, with its separate `batch_index`; the native
-  noninteger batch-construction/reset inconsistency is not guessed by a factory.
+  noninteger batch-construction/reset difference is exposed by the explicit
+  `arand_native_batch_monitor(..., reset=...)` factory.
 - Integer-time equality can cause another look. Discrete targets skip strictly
   smaller entries. Mode 4 checks exact enrollment equality. Pending outcomes
   close every arm temporarily; subsequent constraints can stop the trial.
@@ -110,16 +111,17 @@ in the exposed desktop default. Binary scenarios use the fixed `binary_delay`.
 Status values are exposed by `ArandNativeStatus`: open 0, temporary closure 1,
 other-arm winner 2, permanent closure 3, enrollment maximum 4, not started 5,
 and duration maximum 9. `ArandNativeRules` provides explicit closure actions,
-futility and final cutoffs. Native XML missing-attribute defaults are not claimed.
+futility and final cutoffs. Python rule defaults are distinct from the native
+missing-attribute defaults mapped by `read_arand_native_xml`.
 A futility threshold uses the posterior probability the parameter exceeds it,
 independently of the direction chosen for best-arm ranking.
 
 ## Simulation and reporting boundaries
 
 Simulation uses three independent NumPy streams for arrivals, outcomes and
-assignment, and independent replicate seeds. The first arrival is an exponential
-gap from zero. No original RNG sequence, wrapper seed mapping, or native
-posterior integrator identity is asserted. Each call has bounded candidates;
+assignment, and independent replicate seeds. The first arrival is at zero; later
+gaps are exponential. Original scenario seeds use base seed plus scenario index,
+as shown below. No original RNG sequence or posterior integrator identity is asserted. Each call has bounded candidates;
 serial summaries also bound trial count and aggregate candidate work.
 
 Summaries count selection over every completed simulation call, including calls
@@ -127,8 +129,8 @@ with no selected arm. Enrollment intervals are type-7 empirical 2.5/97.5
 percentiles, **not confidence intervals**. MCSE is sample SD divided by the square
 root of replicate count, undefined (`NaN`) with one replicate. Duration is the
 final controller time, including completion follow-up and overshoot. These are
-explicit Python report conventions; native report aggregation and quantiles are
-still an evidence gate. An exhausted replicate raises and produces no summary.
+explicit Python report conventions; the original aggregation and percentile
+contracts are independently checked as described below. An exhausted replicate raises and produces no summary.
 
 ## Evidence and remaining scope
 
@@ -138,16 +140,18 @@ families. The new tests cover applicable single-endpoint primitives and all six
 integrated controller cases; the remaining fixtures include latent multi-endpoint,
 multi-group and dormant predictive behavior outside this public API. Thus
 “98 fixtures regenerated” does not mean 98 complete Python workflow comparisons.
-An additional deterministic tool compares 900 randomized status/selection cases
-against original instructions. Independent exact beta/Gamma probabilities,
+Additional deterministic tools compare 4,200 seeded status/selection,
+constraint, minimum-gate and per-arm cases against original instructions. Independent exact beta/Gamma probabilities,
 mean/median equivalence and Poisson enrollment/overshoot identities supplement
 source compatibility checks.
 
-This closes the named supplied-calendar and explicit Python-study workflow, not
-the entire application. Original XML/defaults, native report semantics, stochastic
-wrapper policy, and the batch-construction/reset boundary remain separately
-tracked. Scientific validity, original compatibility and clinical validation are
-separate claims; no clinical validation or catalog promotion is made here.
+This completes the version 5.2 guide's simulation workflow. Original XML/defaults,
+per-arm reports, batch reset, scenario seed offset and reset/run/accumulate order
+now have independent evidence. Exact native RNG/GUI identity and latent clinical
+history conduct remain outside that advertised scope. See the
+[completion crosswalk](../research/arand-simulation-scope-2026-10-12.md).
+Scientific correctness, source compatibility and clinical validation remain
+separate claims; no clinical validation is asserted.
 
 ## Original desktop simulation files
 

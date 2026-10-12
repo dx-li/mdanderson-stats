@@ -4,11 +4,12 @@ Catalog membership was rechecked against both official API lists: 80 desktop +
 58 online entries, with identical response hashes to the preserved inventory.
 No entry was added or dropped. See [membership evidence](catalog-membership-2026-10-12.json).
 
-Counts remain **93 implemented / 39 partial / 6 pending**. This continuation
+Current counts are **94 implemented / 38 partial / 6 pending**. ARAND62 now
+meets the guide-defined simulation workflow; see its scope crosswalk below. This continuation
 adds the mTPI R final estimator, recovered EffTox contour fitter, CRM desktop
 study/controller workflow, ToxFinder native allocation/simulation workflow, and
-the named ARAND native supplied-calendar/Python-study workflow,
-without promoting their application coverage labels.
+the complete ARAND guide-defined simulation workflow. Only ARAND is promoted
+in this continuation; other application labels remain unchanged.
 It does not re-certify every historical numerical reference or installed example.
 The validation report identifies exactly which checks were rerun.
 
@@ -69,7 +70,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 59 | SURVAN | implemented | Declared recovered workflow implemented; [Guide](../docs/survan.md) retains scope and compatibility limits. |
 | 60 | TRAX | implemented | Declared recovered workflow implemented; [Guide](../docs/trax.md) retains scope and compatibility limits. |
 | 61 | WINDOWS | implemented | Declared recovered workflow implemented; [Guide](../docs/windows.md) retains scope and compatibility limits. |
-| 62 | Adaptive Randomization | partial | Named native single-endpoint controller, all-arm posterior replay with censor indicators, fixed-delay/survival simulation, versioned Python studies and reports are implemented and independently checked. Native enable flags, per-arm cutoffs/parameter thresholds/delays, batch construction/reset and original binary/TTE simulation XML mapping now have independent evidence. Remaining clinical-history import/editing, full native report aggregation/rendering and wrapper RNG/reset policy; the derived x86 report override is identified, with bounded base-method percentiles and shared accumulation fixtures. [Native workflow](../docs/arand-native-workflow.md); [integration checkpoint](arand-native-integration-2026-10-12.md) |
+| 62 | Adaptive Randomization | implemented | Guide-defined Binary/TTE simulation, original simulation XML/Python studies, native monitoring/stopping, independently seeded scenarios and all required per-arm reports are complete. Original RNG identity, GUI styling and latent clinical-history conduct are explicit boundaries. [Scope/evidence crosswalk](arand-simulation-scope-2026-10-12.md); [native workflow](../docs/arand-native-workflow.md); [integration checkpoint](arand-native-integration-2026-10-12.md) |
 | 63 | TTEConduct | implemented | Declared recovered workflow implemented; [Guide](../docs/tteconduct.md) retains scope and compatibility limits. |
 | 64 | CONFINT | implemented | Declared recovered workflow implemented; [Guide](../docs/confint.md) retains scope and compatibility limits. |
 | 65 | CI of Interaction Index | implemented | Declared recovered workflow implemented; [Catalog](../src/mdanderson_stats/catalog.json) retains scope and compatibility limits. |

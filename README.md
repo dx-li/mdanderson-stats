@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-93 implemented, 39 partial, and 6 pending. Each method's guide explains its
+94 implemented, 38 partial, and 6 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -1297,17 +1297,15 @@ archive's separate final cutoff and exact burn-in transition. Original compiled
 methods validate 5,914 block plans and 180 stopping cases; repeated simulations
 share a bounded posterior cache.
 
-[Adaptive Randomization](docs/arand.md) now has its binary and exponential
-survival posterior core for up to ten arms: largest/smallest parameter
-probabilities, mean/median survival parameterizations, threshold exceedance and
-stable exponential tuning. Vectorized multi-arm integration agrees with 52
-independent R calculations. [Calendar replay](docs/arand-calendar.md) now adds
-delayed-outcome handling, adaptive allocation, reversible suspension, permanent
-futility, enrollment/duration limits and final selection. Explicit controller
-policies document choices the native guide leaves unspecified.
-[Serial simulation](docs/arand-simulation.md) adds Poisson accrual, binary or
-exponential scenarios and per-arm operating characteristics with reproducible
-trial seeds and bounded storage. Native-engine and report parity remain open.
+[Adaptive Randomization](docs/arand.md) supports the guide's complete binary and
+exponential simulation workflow for up to ten arms. The separately named
+[native controller workflow](docs/arand-native-workflow.md) integrates recovered
+stopping/monitoring rules, original simulation XML, versioned Python studies,
+reproducible scenarios and per-arm selection, early-selection/drop, enrollment
+and duration reports. Independent mathematics and original-instruction references
+validate the declared profile. Standard empirical intervals are the default;
+legacy report percentiles require an explicit option. Native RNG identity,
+Windows GUI appearance and latent clinical-history conduct are not claimed.
 
 [PRT](docs/prt.md) now computes predictive toxicity risks from aligned posterior
 draws and applies the published cohort-suspension, dose-movement and final-selection

@@ -1,5 +1,8 @@
 # Community completion continuation — October 12, 2026
 
+Latest checkpoint: ARAND62 now meets its guide-defined simulation workflow.
+See the final ARAND section below and the [next native contracts](next-native-completion-contracts-2026-10-12.md). Earlier dated sections retain historical counts and evidence.
+
 ## Recovered checkout and scope
 
 Repository: https://github.com/dx-li/mdanderson-stats.
@@ -15,7 +18,7 @@ The original scope is every desktop and online application, with an intermediate
 target of at least 100 implemented and no pending entries. Live membership was
 rechecked: both API response hashes match the preserved September inventory,
 80 desktop plus 58 online entries. This does not assert a fresh version-specific
-audit of every app. The count remains **93 implemented / 39 partial / 6 pending**;
+audit of every app. The current count is **94 implemented / 38 partial / 6 pending**;
 the intermediate and full-project goals remain unmet.
 
 ## Completed in this continuation
@@ -293,3 +296,29 @@ is0x18bf90/slot16; shared accumulation0x59ac0/slot32. The revised manifest recor
 all slots. See arand-simulation-scope-2026-10-12.md: the advertised application is
 simulation; latent clinical-history conduct is a separate scope, not an automatic
 blocker for guide-scope implementation. No promotion before final verification.
+
+### Final ARAND guide-scope completion
+
+ARAND62 is now implemented for its advertised version5.2 simulation workflow:
+Binary/TTE models, original simulation XML, native monitoring/stopping and
+batch reset, per-arm thresholds/delays, first-candidate timing, scenario seed
+offset, saved Python studies and complete per-arm reports. Explicit standard
+and legacy percentile profiles remain separate. The recovered original simulator
+starts its first candidate at0; the production correction is preserved at
+`da61cc310f60f62cb138ffdd32f63f2a70504def`.
+
+Final code: **34,533 tests passed in837.77 seconds**, warnings as errors. All443
+ARAND and477 isolated-wheel/extras tests pass, as do installed JSON/replay and
+original Binary/TTE XML-to-report examples. All98 baseline fixtures regenerate;
+4,200 differential comparisons and extended native/managed probes pass.
+Lint/types/build,712 source-file artifact matches,31 root exports and retained
+notice/provenance/exclusion checks pass. See [validation](arand-final-validation-2026-10-12.json).
+
+Current counts: **94 implemented / 38 partial / 6 pending**. Only62 is promoted.
+The [scope crosswalk](arand-simulation-scope-2026-10-12.md) excludes latent conduct,
+RNG/integrator bit identity and GUI formatting from the advertised simulation
+contract; clinical validity is not asserted. Next use the
+[CRM/BMA-CRM and ToxFinder contract notes](next-native-completion-contracts-2026-10-12.md),
+then the remaining per-application roadmap. The six fitted models still require
+exact unavailable contracts. Mixed-license distribution and Forbidden PR creation
+remain unresolved; no split, release, merge, outreach or bypass is authorized.

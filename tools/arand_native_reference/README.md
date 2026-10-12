@@ -158,3 +158,11 @@ including omission below100. Sorting/whole HTML execution are not asserted.
 recorded reset/run/accumulate services and a skipped progress-print sink (six
 cases). `arand_desktop_seed_reference.py` executes SetSeed IL with recorded seed
 writes (five cases). These do not assert original RNG-sequence identity.
+
+`arand_clock_reference.py` executes original `SimulateSingleTrial` initialization
+(0x59360, IL92..105) and post-attempt clock updates (IL452..482), with a supplied
+interarrival-gap service. Four fixtures establish a zero first-candidate clock
+and subsequent gap sums. Source call ordering places GetTreatment at IL407
+before the first gap draw at IL469. This is bounded slice evidence, not full
+trial or RNG execution. It corrects the earlier positive-first-gap assumption
+in the Python native profile.

@@ -349,3 +349,36 @@ A second check uses a four-patient cap: terminal time is Gamma(4,rate)+followup
 because the original controller tests the cap at the next candidate. Both mean
 checks pass within six analytical MCSEs. All443 ARAND tests pass on corrected
 code. Full final-code regression and installed-artifact results follow below.
+
+## Final guide-scope completion checkpoint
+
+The final production code passes **34,533 tests in837.77 seconds**, with warnings
+as errors and both plot/image extras. All443 ARAND tests pass. The rebuilt wheel
+installed outside the checkout passes477 tests in8.60 seconds, including ARAND,
+BLiP and plot/TIFF workflows; the saved-study/replay example and original Binary
+and TTE XML→simulation→report examples pass. The installed catalog has94
+implemented,38 partial,6 pending entries. Earlier stopped full-suite attempts
+were obsolete-code runs and are not counted as completed regressions.
+
+Lint, format and mypy708 source files pass. Wheel and sdist builds pass; all712
+Python/JSON source files byte-match,31 native ARAND exports exist exactly once,
+retained notices match, and original binaries/raw artifacts are excluded.
+Affected provenance hashes match. All98 baseline fixtures and their manifest
+regenerate byte-identically,4,200 seeded original-reference comparisons pass,
+and the extended report/loop/seed/clock/accumulation/batch fixtures and original
+managed Binary/TTE round trips regenerate identically. The52 preserved
+independent R references are exercised by tests; R itself was not rerun.
+See [machine-readable evidence](arand-final-validation-2026-10-12.json).
+
+Entry62 is promoted based on the [guide-scope crosswalk](arand-simulation-scope-2026-10-12.md),
+not by equating bounded instruction probes with execution of the entire desktop.
+Closed contracts are the advertised Binary/TTE models, controller, original
+simulation inputs, saved Python studies, reproducible scenarios and all per-arm
+reports. Native RNG/integrator bit identity, GUI format and latent clinical
+history conduct remain explicit boundaries. No clinical validation is claimed.
+The earlier report/wrapper next steps in this document are superseded by the
+actual native probes above. Continue with the [next concrete native contracts](next-native-completion-contracts-2026-10-12.md).
+
+License terms and original-artifact restrictions remain intact. No packaging
+split, merge, release, deployment, outreach, permission change or PR bypass
+occurred. Only the existing feature branch receives preservation pushes.

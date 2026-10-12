@@ -10,8 +10,8 @@ links current scope and each remaining statistical contract.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 93 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 39 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 94 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 38 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 6 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -31,6 +31,7 @@ some legacy adaptations retain commercial-use restrictions.
 
 | Program | Source entry | Python documentation |
 | --- | --- | --- |
+| Adaptive Randomization | [desktop #62](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62) | [Posterior](arand.md), [calendar](arand-calendar.md), [simulation](arand-simulation.md), [native controller/studies](arand-native-workflow.md) |
 | CONFINT | [desktop #64](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/64) | [Guide](confint.md) |
 | CID2BP | [desktop #38](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/38) | [Guide](cid2bp.md) |
 | STPLAN | [desktop #41](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/41) | [Guide](stplan.md) |
@@ -130,7 +131,6 @@ some legacy adaptations retain commercial-use restrictions.
 | Program | Source entry | Python documentation |
 | --- | --- | --- |
 | 1+2+3: to find the optimal biological dose for rare diseases | [online #172](https://biostatistics.mdanderson.org/shinyapps/1plus2plus3) | [Guide](rare-disease-123.md) |
-| Adaptive Randomization | [desktop #62](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62) | [Posterior](arand.md), [calendar](arand-calendar.md), [simulation](arand-simulation.md), [native controller/studies](arand-native-workflow.md) |
 | Bayesian Adaptive Randomization and Efficacy Monitoring with Posterior Probability | [online #130](https://biostatistics.mdanderson.org/shinyapps/BARPO/) | [Guide](barpo-reference.md) |
 | Bayesian Chi Square TTE fit | [desktop #66](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/66) | [Guide](bayesian-chi-square.md) |
 | Bayesian Effective Sample Size Calculator | [online #154](https://biostatistics.mdanderson.org/shinyapps/BayesESS) | [Guide](conjugate-ess.md) |
