@@ -76,14 +76,26 @@ def wfmm_pass_filter(
     removes the l finest detail bands. Zero highpass removes nothing.
     Invalid/empty selections raise ValueError instead of native indexing or
     zero-column failures. Returned metadata retain original coefficient IDs.
+    Pyramid spatial bases apply each level decision to every orientation.
+    Rectangular spatial transforms remain unsupported.
     This operation precedes any separately requested energy compression.
     """
     if not isinstance(basis, WFMMBasis) or (
-        basis.transform != "wavelet" and basis.extended_boundary is None
+        basis.transform != "wavelet"
+        and basis.extended_boundary is None
+        and basis.spatial_layout != "pyramid"
     ):
         raise ValueError("pass filtering requires a complete wavelet basis")
     high = _setting(highpass, "highpass", 0, basis.levels)
     low = _setting(lowpass, "lowpass", 0, basis.levels)
+    if basis.spatial_layout == "pyramid":
+        detail = basis.coefficient_partition != 0
+        retained = (basis.coefficient_scale > low) | ~detail
+        if high:
+            retained &= detail & (basis.coefficient_scale <= basis.levels - high)
+        if not np.any(retained):
+            raise ValueError("pass flags retain no coefficients")
+        return wfmm_select_coefficients(coefficients, basis, indices=np.flatnonzero(retained))
     first = high + 1 if high else 0
     last = basis.levels - low
     if first > last:

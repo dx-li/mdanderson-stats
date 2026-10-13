@@ -1,0 +1,61 @@
+{
+  "base_commit": "92c8688a34a26fe8dc161c89da1f933738ad764a",
+  "full_suite": {
+    "passed": 77187,
+    "seconds": 496.2,
+    "log_sha256": "07ef66fde53b0e818cfaa161ba47627fc996cba170ae202ea45b58402d07f492",
+    "all_extras": true,
+    "warnings_as_errors": true,
+    "workers": 4,
+    "pretest_snapshot_files": 2402,
+    "unchanged_since_pretest_snapshot": true,
+    "scope_clarification": "Implementation and tests changed relative to base commit; unchanged means byte-identical from pre-test snapshot through validation. It does not mean unchanged from upstream or preceding commit."
+  },
+  "focused": {
+    "passed": 1055,
+    "seconds": 60.27,
+    "log_sha256": "4df56a5e4a416adc1442acab133270585e4b82184e1567c9cb992a224ade1e6a"
+  },
+  "installed_wheel": {
+    "passed": 1083,
+    "seconds": 89.66,
+    "log_sha256": "cb765d4cb6a324edef6d53bad812f98615bd3302d29b2eb7ab973cf06c02a65f",
+    "outside_checkout": true,
+    "wfmm": 1055,
+    "extras": 28,
+    "examples": 6,
+    "dependencies": "passed"
+  },
+  "artifact_audit": {
+    "package_files": 790,
+    "retained_notices": 29,
+    "source_bytes_equal": true,
+    "notices_equal": true,
+    "original_binaries_excluded": true,
+    "hashes": {
+      "mdanderson_stats-0.1.0-py3-none-any.whl": "c200f056aed46c489822a7ae30ba13bc4544bb0c4f580847b0b3d6efc4dbca78",
+      "mdanderson_stats-0.1.0.tar.gz": "f1eb809e3b8710cb3ab9fbabdd1ad83c22f040a0769e677300d604ce12a54c3f"
+    }
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "mypy_source_files": 780,
+    "build": "passed"
+  },
+  "catalog": {
+    "entries": 138,
+    "implemented": 103,
+    "partial": 31,
+    "pending": 4
+  },
+  "remote_push_attempted": false,
+  "native_references": {
+    "file_cases": 3,
+    "imputed_cases": 12,
+    "byte_identical_regeneration": true,
+    "reduced_cases": 36,
+    "reduced_native_inverse_failures": 36
+  },
+  "artifact_scope": "Production/data/notices byte-identical to accepted snapshot; artifacts predate final research acceptance."
+}

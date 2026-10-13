@@ -2298,6 +2298,13 @@ from .wfmm_compression import WFMMCompression, wfmm_compress_coefficients
 from .wfmm_conditional import WFMMConditionalVariance, fit_wfmm_conditional_variances
 from .wfmm_covariance import WFMMCovarianceSummary, wfmm_covariance, wfmm_summarize_covariance
 from .wfmm_empirical_bayes import WFMMShrinkage, calibrate_wfmm_shrinkage
+from .wfmm_files import wfmm_decode_draws, wfmm_encode_draws, wfmm_summary_mat
+from .wfmm_hyperprior import (
+    WFMMShrinkageConditional,
+    WFMMShrinkageHyperprior,
+    wfmm_mode_shrinkage_hyperprior,
+    wfmm_shrinkage_conditional,
+)
 from .wfmm_initialization import WFMMInitialization, initialize_wfmm
 from .wfmm_model import WFMMCoefficientFit, WFMMPrior, fit_wfmm_coefficients
 from .wfmm_mom import WFMMMomentInitialization, wfmm_mom_initialization
@@ -2311,6 +2318,7 @@ from .wfmm_selection import (
     wfmm_restore_coefficients,
     wfmm_select_coefficients,
 )
+from .wfmm_spatial import wfmm_spatial_wavelet_basis
 from .wfmm_study import WFMMStudy, WFMMStudyResult, read_wfmm_study, run_wfmm_study
 from .wfmm_variance_init import WFMMVarianceInitialization, initialize_wfmm_variances
 from .wfmm_variance_prior import wfmm_variance_prior
@@ -2325,6 +2333,7 @@ from .windows import (
 
 __all__ = [
     "wfmm_extended_wavelet_basis",
+    "wfmm_spatial_wavelet_basis",
     "wfmm_named_wavelet_basis",
     "PRTLegacyProjection",
     "PRTLegacyMoments",
@@ -2450,6 +2459,13 @@ __all__ = [
     "wfmm_variance_prior",
     "WFMMPrior",
     "WFMMCoefficientFit",
+    "wfmm_decode_draws",
+    "wfmm_encode_draws",
+    "wfmm_summary_mat",
+    "WFMMShrinkageHyperprior",
+    "WFMMShrinkageConditional",
+    "wfmm_shrinkage_conditional",
+    "wfmm_mode_shrinkage_hyperprior",
     "fit_wfmm_coefficients",
     "WFMMPosteriorSummary",
     "wfmm_summarize",

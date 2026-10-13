@@ -1,0 +1,144 @@
+{
+  "executable_sha256": "0c18cac7225eca3db264b8a4e769a45960cde0bfbf68fc2c1554c83cf451cf8e",
+  "cases": [
+    {
+      "missing_data": 0,
+      "Y": true,
+      "Vstar": true,
+      "Mstar": true,
+      "complete_basis": false,
+      "level": 0.1,
+      "captured_shape": [
+        8,
+        16
+      ],
+      "max_error_Mstar": 0.10000000000000009,
+      "max_error_transformed_Y": 0.0
+    },
+    {
+      "missing_data": 0,
+      "Y": true,
+      "Vstar": false,
+      "Mstar": false,
+      "complete_basis": false,
+      "level": 0.1,
+      "captured_shape": [
+        8,
+        16
+      ],
+      "max_error_Mstar": 0.10000000000000009,
+      "max_error_transformed_Y": 0.0
+    },
+    {
+      "missing_data": 0,
+      "Y": false,
+      "Vstar": true,
+      "Mstar": true,
+      "complete_basis": false,
+      "level": 0.1,
+      "capture_error": "ERROR: Error reading <<:TODO:>>: field(s) do not exist: Y"
+    },
+    {
+      "missing_data": 0,
+      "Y": false,
+      "Vstar": true,
+      "Mstar": true,
+      "complete_basis": true,
+      "level": 0.1,
+      "capture_error": "ERROR: Error reading <<:TODO:>>: field(s) do not exist: Y"
+    },
+    {
+      "missing_data": 0,
+      "Y": false,
+      "Vstar": true,
+      "Mstar": false,
+      "complete_basis": true,
+      "level": 0.1,
+      "capture_error": "ERROR: Error reading <<:TODO:>>: field(s) do not exist: Y"
+    },
+    {
+      "missing_data": 1,
+      "Y": true,
+      "Vstar": true,
+      "Mstar": true,
+      "complete_basis": false,
+      "level": 0.1,
+      "capture_error": "ERROR: BiostatGeneral: operator(): Index must be between zero and Size()-1, inclusive.  SeverityLevel: 0  Cookie: 0"
+    },
+    {
+      "missing_data": 1,
+      "Y": true,
+      "Vstar": false,
+      "Mstar": false,
+      "complete_basis": false,
+      "level": 0.1,
+      "capture_error": "ERROR: Error reading <<:TODO:>>: field(s) do not exist: Vstar"
+    },
+    {
+      "missing_data": 1,
+      "Y": false,
+      "Vstar": true,
+      "Mstar": true,
+      "complete_basis": false,
+      "level": 0.1,
+      "capture_error": "ERROR: BiostatGeneral: operator(): Index must be between zero and Size()-1, inclusive.  SeverityLevel: 0  Cookie: 0"
+    },
+    {
+      "missing_data": 1,
+      "Y": false,
+      "Vstar": true,
+      "Mstar": true,
+      "complete_basis": true,
+      "level": 0.0,
+      "captured_shape": [
+        8,
+        16
+      ],
+      "max_error_Mstar": 0.0,
+      "max_error_transformed_Y": 0.0,
+      "full_exit_code": 1,
+      "full_error": "ERROR: BiostatGeneral: operator(): Column index must be between zero and QtyCols()-1, inclusive.  SeverityLevel: 0  Cookie: 0"
+    },
+    {
+      "missing_data": 1,
+      "Y": false,
+      "Vstar": true,
+      "Mstar": true,
+      "complete_basis": true,
+      "level": 0.1,
+      "captured_shape": [
+        8,
+        16
+      ],
+      "max_error_Mstar": 0.0,
+      "max_error_transformed_Y": 0.10000000000000009,
+      "full_exit_code": 1,
+      "full_error": "ERROR: BiostatGeneral: operator(): Column index must be between zero and QtyCols()-1, inclusive.  SeverityLevel: 0  Cookie: 0"
+    },
+    {
+      "missing_data": 1,
+      "Y": false,
+      "Vstar": true,
+      "Mstar": true,
+      "complete_basis": true,
+      "level": 1.0,
+      "captured_shape": [
+        8,
+        16
+      ],
+      "max_error_Mstar": 0.0,
+      "max_error_transformed_Y": 1.0000000000000002,
+      "full_exit_code": 1,
+      "full_error": "ERROR: BiostatGeneral: operator(): Column index must be between zero and QtyCols()-1, inclusive.  SeverityLevel: 0  Cookie: 0"
+    },
+    {
+      "missing_data": 1,
+      "Y": false,
+      "Vstar": true,
+      "Mstar": false,
+      "complete_basis": true,
+      "level": 0.1,
+      "capture_error": "ERROR: Error reading <<:TODO:>>: field(s) do not exist: Mstar"
+    }
+  ]
+}

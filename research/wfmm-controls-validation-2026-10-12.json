@@ -1,0 +1,86 @@
+{
+  "base_commit": "00ac2e3f251d2a271295c00e5e2420eb7ce79b47",
+  "scope": "Thinning and pyramid spatial pass controls; native hyperprior conversion audit; WFMM partial; local checkpoint while GitHub auth is invalid",
+  "full_suite": {
+    "passed": 77132,
+    "seconds": 464.43,
+    "workers": 4,
+    "warnings_as_errors": true,
+    "all_extras": true,
+    "production_python_files": 778,
+    "test_and_fixture_files": 1609,
+    "tested_files_unchanged": true,
+    "log_sha256": "7c6f03f14473852d896494020a03ee48336b2a6eb7d020fbdafbabc30c288d17",
+    "production_filter_table_unchanged": true,
+    "production_data_files": 5
+  },
+  "focused": {
+    "passed": 1000,
+    "seconds": 30.83,
+    "log_sha256": "4293fccad8b81cf82a0b4d1de1413346059ef5ec04816c7483cfb26b85acdcfd"
+  },
+  "installed_wheel": {
+    "passed": 1028,
+    "seconds": 79.94,
+    "wfmm": 1000,
+    "extras": 28,
+    "outside_checkout": true,
+    "examples": [
+      "wfmm_reporting.py",
+      "wfmm_study.py",
+      "wfmm_automatic.py",
+      "wfmm_initialization.py",
+      "wfmm_spatial.py"
+    ],
+    "dependencies": "passed",
+    "log_sha256": "bdbce1c9df03c7d3b4efc6db6d13a96955a83323fb3ccc686c7ee342e56b3c2b"
+  },
+  "artifact_audit": {
+    "package_files": 783,
+    "retained_notices": 29,
+    "source_bytes_equal": true,
+    "notices_equal": true,
+    "original_binaries_excluded": true,
+    "hashes": {
+      "mdanderson_stats-0.1.0-py3-none-any.whl": "f12da7b181043c9cbb182dc0c15d5537b51aa927be9356874d6c9bdb9a11bce3",
+      "mdanderson_stats-0.1.0.tar.gz": "787effb57055fddee04fea6c418269a364a5704003a02fc656a2d0f8f5053142"
+    }
+  },
+  "artifact_scope": "Built before final research/acceptance documentation and hyperprior audit; production package and retained notice bytes match source.",
+  "static_checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "mypy_source_files": 778,
+    "build": "passed"
+  },
+  "catalog": {
+    "entries": 138,
+    "implemented": 103,
+    "partial": 31,
+    "pending": 4
+  },
+  "native_spatial_analysis": {
+    "cases": 52,
+    "byte_identical_regeneration": true,
+    "sha256": "0af1d741832f888805fc356d2b735ce3b9755861b6250d5d85be83577a6d5526",
+    "capture": "ANOVA_MOM entry before initialization; no native fitting or inverse report acceptance",
+    "synthesis": "Independent composition of validated 1D pairs; independent identity and signal reconstruction"
+  },
+  "remote_status": "Last verified remote 369d3f80b0cb004384b9a2b62c339dbc0514002b; no subsequent remote verification or push claimed.",
+  "native_spatial_pass": {
+    "cases": 40,
+    "selections": 15,
+    "failures": 25,
+    "rectangular_nonzero_pass_failures": 8,
+    "sha256": "1c8bfa5707399cd50598a581eb23b48b6f4cb85c80db1849c72cfe3245680e02",
+    "byte_identical_regeneration": true,
+    "qualification": "Analysis selection only; one successful rectangular case is the unfiltered baseline; all nonzero rectangular controls remain unsupported."
+  },
+  "native_hyperprior_audit": {
+    "cases": 16,
+    "sha256": "45222f472274e1a4ef44884b2319fb79d808be680192ac6b0d5142abb49d7d7d",
+    "byte_identical_regeneration": true,
+    "accepted_as_production_conversion": false,
+    "qualification": "Controlled numeric inputs at native function entry; prior moment discrepancies remain research evidence."
+  }
+}

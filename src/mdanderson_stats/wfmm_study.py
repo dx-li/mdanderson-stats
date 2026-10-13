@@ -6,7 +6,7 @@ import csv
 import hashlib
 import io
 import json
-from dataclasses import dataclass, fields
+from dataclasses import dataclass, fields, replace
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -17,12 +17,14 @@ from .wfmm_basis import WFMMBasis, _setting, wfmm_basis, wfmm_transform
 from .wfmm_boundary import wfmm_extended_wavelet_basis, wfmm_named_wavelet_basis
 from .wfmm_compression import TiePolicy, WFMMCompression, wfmm_compress_coefficients
 from .wfmm_covariance import WFMMCovarianceSummary, wfmm_summarize_covariance
+from .wfmm_hyperprior import WFMMShrinkageHyperprior, _hyperprior_arrays
 from .wfmm_initialization import WFMMInitialization, initialize_wfmm
 from .wfmm_model import WFMMCoefficientFit, _strata, fit_wfmm_coefficients
 from .wfmm_pca import wfmm_pca_basis
 from .wfmm_posterior import WFMMPosteriorSummary, wfmm_summarize
 from .wfmm_prediction import wfmm_predict_coefficients
 from .wfmm_selection import wfmm_pass_filter, wfmm_restore_coefficients
+from .wfmm_spatial import wfmm_spatial_wavelet_basis
 
 _MAX_JSON_BYTES = 16_000_000
 
@@ -47,6 +49,8 @@ def _matrix(value, name, rows=None, columns=None):
 
 
 def _json_value(value):
+    if isinstance(value, WFMMShrinkageHyperprior):
+        return {f.name: _json_value(getattr(value, f.name)) for f in fields(value)}
     if isinstance(value, np.ndarray):
         return _json_value(value.tolist())
     if isinstance(value, (tuple, list)):
@@ -104,6 +108,11 @@ class WFMMStudy:
     prediction_strata: ArrayLike | None = None
     boundary: str = "periodic"
     wavelet_name: str | None = None
+    spatial_shape: tuple[int, ...] | None = None
+    spatial_layout: str = "pyramid"
+    axis_levels: tuple[int, ...] | None = None
+    axis_wavelets: tuple[str, ...] | None = None
+    axis_boundaries: tuple[str, ...] | None = None
     summarize_random_effects: bool = False
     include_covariance: bool = False
     effect_contrast: ArrayLike | None = None
@@ -114,8 +123,14 @@ class WFMMStudy:
     prediction_existing_random_design: ArrayLike | None = None
     prediction_new_random_design: ArrayLike | None = None
     prediction_new_random_strata: ArrayLike | None = None
+    thin: int = 1
+    shrinkage_hyperprior: WFMMShrinkageHyperprior | None = None
 
     def __post_init__(self):
+        if self.shrinkage_hyperprior is not None and not isinstance(
+            self.shrinkage_hyperprior, WFMMShrinkageHyperprior
+        ):
+            raise ValueError("shrinkage_hyperprior must be a WFMMShrinkageHyperprior")
         y = _matrix(self.curves, "curves")
         n, t = y.shape
         if not 2 <= n <= 500 or not 2 <= t <= 4096:
@@ -144,6 +159,7 @@ class WFMMStudy:
             "identity",
             "wavelet",
             "extended_wavelet",
+            "spatial_wavelet",
             "custom",
             "PC",
             "PCw",
@@ -152,9 +168,41 @@ class WFMMStudy:
             raise ValueError("unsupported study transform")
         if self.boundary not in ("periodic", "zero", "reflection"):
             raise ValueError("unsupported boundary convention")
-        if self.transform != "extended_wavelet" and self.boundary != "periodic":
+        if (
+            self.transform not in ("extended_wavelet", "spatial_wavelet")
+            and self.boundary != "periodic"
+        ):
             raise ValueError("nonperiodic boundary requires extended_wavelet")
-        if self.wavelet_name is not None:
+        if self.transform == "spatial_wavelet":
+            if self.filter_length != 2:
+                raise ValueError("spatial_wavelet uses named wavelets and default filter_length")
+            for axis, scalar, default in (
+                ("axis_levels", "levels", 1),
+                ("axis_wavelets", "wavelet_name", None),
+                ("axis_boundaries", "boundary", "periodic"),
+            ):
+                if getattr(self, axis) is not None and getattr(self, scalar) != default:
+                    raise ValueError("axis settings conflict with scalar settings")
+            basis = _spatial_basis(self)
+            if basis.time_count != t:
+                raise ValueError("spatial_shape product must equal curve columns")
+            object.__setattr__(self, "spatial_shape", basis.spatial_shape)
+            for field in ("axis_levels", "axis_wavelets", "axis_boundaries"):
+                value = getattr(self, field)
+                if value is not None:
+                    if not isinstance(value, (tuple, list)):
+                        raise ValueError(field + " must be an axis sequence")
+                    object.__setattr__(self, field, tuple(value))
+        elif (
+            self.spatial_shape is not None
+            or self.spatial_layout != "pyramid"
+            or any(
+                value is not None
+                for value in (self.axis_levels, self.axis_wavelets, self.axis_boundaries)
+            )
+        ):
+            raise ValueError("spatial settings require spatial_wavelet")
+        if self.wavelet_name is not None and self.transform != "spatial_wavelet":
             if self.transform != "extended_wavelet" or self.filter_length != 2:
                 raise ValueError(
                     "wavelet_name requires extended_wavelet and the default filter_length"
@@ -180,6 +228,7 @@ class WFMMStudy:
             ("compression_votes", 0, n),
             ("draws", 8, 5000),
             ("warmup", 0, 5000),
+            ("thin", 1, 100),
             ("chains", 2, 4),
             ("seed", 0, 2**63 - 1),
             ("moment_iterations", 1, 5000),
@@ -191,10 +240,23 @@ class WFMMStudy:
             raise ValueError("2**levels must divide the number of time points")
         if self.filter_length % 2:
             raise ValueError("filter_length must be even")
-        if self.transform not in ("wavelet", "extended_wavelet") and (
+        if self.transform not in ("wavelet", "extended_wavelet", "spatial_wavelet") and (
             self.highpass or self.lowpass
         ):
             raise ValueError("saved pass flags currently require the wavelet transform")
+        if (
+            self.transform == "spatial_wavelet"
+            and self.spatial_layout == "rectangular"
+            and (self.highpass or self.lowpass)
+        ):
+            raise ValueError("rectangular spatial pass filtering is not yet supported")
+        if self.transform == "spatial_wavelet" and self.spatial_layout == "pyramid":
+            if (
+                self.highpass > basis.levels
+                or self.lowpass > basis.levels
+                or (self.highpass and self.highpass + self.lowpass >= basis.levels)
+            ):
+                raise ValueError("spatial pass flags retain no coefficients or exceed levels")
         if self.compression_ties not in ("reject_split", "original_index"):
             raise ValueError("unsupported compression tie policy")
         for name, lo, hi, strict in (
@@ -326,6 +388,18 @@ class WFMMStudy:
         return text
 
 
+def _spatial_basis(study):
+    return wfmm_spatial_wavelet_basis(
+        study.spatial_shape,
+        levels=study.levels if study.axis_levels is None else study.axis_levels,
+        wavelets=("db1" if study.wavelet_name is None else study.wavelet_name)
+        if study.axis_wavelets is None
+        else study.axis_wavelets,
+        boundaries=study.boundary if study.axis_boundaries is None else study.axis_boundaries,
+        layout=study.spatial_layout,
+    )
+
+
 def read_wfmm_study(text: str) -> WFMMStudy:
     """Read complete version1 JSON with duplicate/unknown-field rejection."""
     if not isinstance(text, str) or len(text.encode()) > _MAX_JSON_BYTES:
@@ -347,8 +421,15 @@ def read_wfmm_study(text: str) -> WFMMStudy:
         if isinstance(data, dict):
             # Version 1 studies saved before extended boundaries used periodic defaults.
             for name, default in {
+                "thin": 1,
+                "shrinkage_hyperprior": None,
                 "boundary": "periodic",
                 "wavelet_name": None,
+                "spatial_shape": None,
+                "spatial_layout": "pyramid",
+                "axis_levels": None,
+                "axis_wavelets": None,
+                "axis_boundaries": None,
                 "summarize_random_effects": False,
                 "include_covariance": False,
                 "effect_contrast": None,
@@ -369,6 +450,13 @@ def read_wfmm_study(text: str) -> WFMMStudy:
             or set(data) != {f.name for f in fields(WFMMStudy)}
         ):
             raise ValueError("unsupported WFMM study schema/version/fields")
+        if data["shrinkage_hyperprior"] is not None:
+            hyper = data["shrinkage_hyperprior"]
+            if not isinstance(hyper, dict) or set(hyper) != {
+                f.name for f in fields(WFMMShrinkageHyperprior)
+            }:
+                raise ValueError("invalid shrinkage hyperprior fields")
+            data["shrinkage_hyperprior"] = WFMMShrinkageHyperprior(**hyper)
         return WFMMStudy(**data)
     except (TypeError, OverflowError, RecursionError) as exc:
         raise ValueError("invalid WFMM study JSON") from exc
@@ -395,6 +483,11 @@ class WFMMStudyResult:
             status="held" if self.fit is None else "sampled",
             initializer_holds=self.initialization.holds,
             rng="NumPy PCG64; SeedSequence.spawn(2): fit, prediction",
+            thinning=self.study.thin,
+            retained_draws_per_chain=0 if self.fit is None else self.study.draws,
+            iterations_per_chain=(
+                None if self.fit is None else self.study.warmup + self.study.draws * self.study.thin
+            ),
             seed=self.study.seed,
             numpy_version=np.__version__,
             retained_indices=self.compression.selection.retained_indices,
@@ -416,6 +509,27 @@ class WFMMStudyResult:
                 variance_proposals=fit.variance_proposals,
                 likelihood_evaluations=fit.likelihood_evaluations,
             )
+            if fit.inclusion_probabilities is not None and fit.slab_variances is not None:
+                hyper_report: dict = dict(
+                    partition_labels=fit.hyperparameter_partitions,
+                    update_mask=fit.hyperparameter_update_mask,
+                    prior_parameterization="explicit_beta_and_inverse_gamma_shape_scale",
+                )
+                for name, samples in (
+                    ("pi", fit.inclusion_probabilities),
+                    ("tau", fit.slab_variances),
+                ):
+                    stats = summarize_chains(samples)
+                    hyper_report[name] = dict(
+                        mean=np.mean(samples, axis=(0, 1)),
+                        quantiles=np.quantile(
+                            samples, np.asarray(self.study.quantiles, dtype=float), axis=(0, 1)
+                        ),
+                        quantile_probabilities=self.study.quantiles,
+                        rhat=stats.split_rhat,
+                        mcse=stats.batch_mean_mcse,
+                    )
+                data["shrinkage_hyperparameters"] = hyper_report
             for name, summary in (
                 ("curves", self.summary),
                 ("prediction", self.prediction),
@@ -489,6 +603,8 @@ def run_wfmm_study(study: WFMMStudy) -> WFMMStudyResult:
     t = np.asarray(study.curves).shape[1]
     if study.transform == "identity":
         basis = wfmm_basis(t, transform="identity")
+    elif study.transform == "spatial_wavelet":
+        basis = _spatial_basis(study)
     elif study.transform == "custom":
         basis = wfmm_basis(
             t,
@@ -521,7 +637,9 @@ def run_wfmm_study(study: WFMMStudy) -> WFMMStudyResult:
         ).basis
     transformed = wfmm_transform(study.curves, basis).coefficients
     eligible = None
-    if study.transform in ("wavelet", "extended_wavelet"):
+    if study.transform in ("wavelet", "extended_wavelet") or (
+        study.transform == "spatial_wavelet" and study.spatial_layout == "pyramid"
+    ):
         eligible = wfmm_pass_filter(
             transformed, basis, highpass=study.highpass, lowpass=study.lowpass
         ).retained_indices
@@ -567,12 +685,25 @@ def run_wfmm_study(study: WFMMStudy) -> WFMMStudyResult:
         raise ValueError("study restored draws exceed the 2000000-cell limit")
     state = initialization.conditional
     h = state.random_variance.shape[0]
+    sampler_prior = initialization.prior
+    if study.shrinkage_hyperprior is not None:
+        labels, groups = np.unique(selection.coefficient_partition, return_inverse=True)
+        a, b, shape, scale, mask = _hyperprior_arrays(
+            study.shrinkage_hyperprior, (np.asarray(study.fixed_design).shape[1], len(labels))
+        )
+        # Explicit hyperpriors initialize active shared parameters at the Beta
+        # mean and inverse-gamma mode; retain empirical-Bayes values when masked.
+        pi = np.asarray(sampler_prior.inclusion_probability).copy()
+        tau = np.asarray(sampler_prior.slab_variance).copy()
+        pi = np.where(mask[:, groups], (a / (a + b))[:, groups], pi)
+        tau = np.where(mask[:, groups], (scale / (shape + 1))[:, groups], tau)
+        sampler_prior = replace(sampler_prior, inclusion_probability=pi, slab_variance=tau)
     seeds = np.random.SeedSequence(study.seed).spawn(2)
     fit = fit_wfmm_coefficients(
         selection.coefficients,
         study.fixed_design,
         study.random_design,
-        prior=initialization.prior,
+        prior=sampler_prior,
         random_variance=state.random_variance,
         residual_variance=state.residual_variance,
         random_strata=study.random_strata,
@@ -582,6 +713,8 @@ def run_wfmm_study(study: WFMMStudy) -> WFMMStudyResult:
         proposal_sd=(state.proposal_sd[:h], state.proposal_sd[h:]),
         draws=study.draws,
         warmup=study.warmup,
+        thin=study.thin,
+        shrinkage_hyperprior=study.shrinkage_hyperprior,
         chains=study.chains,
         sample_random_effects=study.random_design is not None,
         rng=np.random.Generator(np.random.PCG64(seeds[0])),

@@ -78,7 +78,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 66 | Bayesian Chi Square TTE fit | partial | Rounded interval-likelihood fitting now covers all seven families with explicit proper Gaussian parameter priors and paired randomized CDF diagnostics. Censored diagnostics, native fitting/priors, fallback priors, Rychlik rank/trim convention, sorting, and reports remain uncertain. No BIC/DIC output contract was established. [Bayesian chi-square guide](../docs/bayesian-chi-square.md); [rounded-time guide](../docs/rounded-tte-bayesian-gof.md) |
 | 67 | ANOVA DDP | implemented | Declared recovered workflow implemented; [Guide](../docs/anovaddp.md) retains scope and compatibility limits. |
 | 69 | PRT | implemented | Original saved conduct/simulation settings, separate paper/native controllers, generated calendar, numerical holds, saved replay and unconditional batch reports are integrated.21 native fixture files,72 composed enrollment steps and qualified real posterior trials support the [scope crosswalk](prt-simulation-complete-checkpoint-2026-10-12.md). Native RNG/GUI identity and clinical validity are separate claims. |
-| 70 | WFMM | partial | Native MOM/profile variance and proposal initialization, other extended transforms/boundaries, pass filtering and files remain unresolved. The inverse-gamma `delta_omega` mapping and energy compression are now native-verified, with five periodic Haar transforms checked. [native-prior audit](wfmm-native-prior-audit.md); [WFMM audit](wfmm-audit.md); [prediction guide](../docs/wfmm-prediction.md) |
+| 70 | WFMM | partial | Validated initialization, conditional sampling, PCA/named extended transforms, bounded 2D/3D and saved reports/prediction are integrated. Interval/reduced boundaries, rectangular spatial pass filtering and optional hyperparameter/imputed-data contracts remain open. Native initialization/report failures and integer defects are qualified separately. [spatial checkpoint](wfmm-spatial-checkpoint-2026-10-12.md); [study guide](../docs/wfmm-studies.md) |
 | 72 | Toxicity Probability Intervals | implemented | Current version2.1 monitoring and all-scenario simulation/report workflow is integrated with bounded XLSM/JSON input, paper-default and explicit legacy controller/final ranking, native uniform replay and captured profile/seed. Original2007 TPI tuning and informative-prior recalibration remain separate extension limits. [Acceptance](mtpi-desktop-complete-checkpoint-2026-10-12.md). |
 | 74 | BP1CI | implemented | Declared recovered workflow implemented; [Guide](../docs/bp1ci.md) retains scope and compatibility limits. |
 | 75 | Dose Schedule Finder | implemented | Current2.2.0 guide-defined calibration, saved studies, actual-history conduct, generated low-grade simulation, all-scenario reports and distribution/trial-detail export are integrated. Safe and explicit legacy rules remain separate; independent posterior integration and native fixtures validate distinct claims. [Acceptance](dose-schedule-desktop-complete-checkpoint-2026-10-12.md); [guide](../docs/dose-schedule-desktop.md). |
@@ -223,3 +223,51 @@ The remaining innovations and covariance factor agree; Python retains correct
 conditional sampling. See the revised wfmm-report-edges audit. WFMM remains
 partial; interval/reduced boundaries, multidimensional transforms and remaining
 hyperparameter/sampler contracts still need closure. Catalog remains 103/31/4.
+
+
+WFMM70 bounded extended 2D/3D pyramids and rectangular 2D wavelets now compose
+with saved studies, fitting, prediction and reports. 52 native analysis-only
+references regenerate identically; independent reconstruction and spatial Haar
+identities pass. Native initialization/report failures remain separately
+qualified. 77,064 full tests / 485.98s, 932 focused and 960 installed-wheel checks
+plus five examples passed; 778 production Python files, five data files and
+1,606 test/fixture files stayed unchanged. See wfmm-spatial-validation-2026-10-12.json.
+A separate 28-case native interval audit records inverse assertions or lossless
+reconstruction discrepancies; two maps have subnormal replay differences. These
+are not passing interval references. Public interval-wavelet paper recovery is
+under way; the accessible NASA follow-up distinguishes scaling coefficients
+from sampled values, requiring a convention audit. Interval/reduced boundaries,
+spatial pass filtering and remaining hyperparameter/sampler controls remain open.
+The guide's optional pi/tau updates, thinning and imputed Vstar need explicit
+scope closure. Catalog remains 103 implemented / 31 partial / 4 pending.
+
+
+LOCAL ONLY: WFMM thinning and pyramid spatial pass controls passed 77,132 full
+tests / 464.43s, 1,000 focused checks and 1,028 fresh-wheel tests plus five
+examples. Source/data/tests stayed unchanged. See wfmm-controls-validation-2026-10-12.json.
+40 native pass configurations and the earlier 52 spatial maps regenerate
+identically; rectangular nonzero pass flags still fail and remain rejected.
+Thinning preserves dense-run subsequences and RNG consumption, including random
+effects, and accounts for all transitions in work limits. A 16-case native
+hyperprior audit exposes requested-variance/centering discrepancies; no flawed
+conversion is copied. Explicit proper-prior pi/tau updates are next, along with
+interval/reduced and imputed-data scope. Catalog remains 103/31/4.
+GitHub authentication is invalid; no remote retries or alternate credentials are
+used. Last verified remote remains 369d3f80; 00ac2e3f is local and saved privately
+in Library with a verified incremental bundle and base/checksum record. Later
+local acceptance does not imply a push succeeded.
+
+LOCAL ONLY: Explicit optional WFMM partition-level pi/tau priors and Gibbs
+updates passed 77,167 full tests / 490.23s, 1,035 focused checks and 1,063 fresh-wheel
+checks, plus six installed examples. Frozen source/data/tests are unchanged.
+See wfmm-hyperprior-validation-2026-10-12.json and the matching checkpoint.
+Independent enumeration/integration checks posterior inclusion and hyperparameter
+means; zero-information checks recover prior marginals. Mode/variance calibration
+is an explicitly independent policy, not native conversion identity. Saved studies
+retain historical defaults and report pi/tau diagnostics. WFMM remains partial;
+interval/reduced, imputed-data and native file/report/RNG gates remain distinct.
+Catalog stays 103/31/4. Remote access is unresolved; no authentication retries or
+pushes were attempted. Last verified remote remains 369d3f80. Local history is
+preserved with a verified private Library bundle after acceptance.
+
+LOCAL ONLY: WFMM numerical file interchange accepted with 77,187 full tests / 496.2s, 1,055 focused and 1,083 installed-wheel checks; six examples. New implementation/tests are byte-identical from the pre-test snapshot through validation, not unchanged from the preceding commit. Both artifacts match 790 package files and 29 retained notices, with originals excluded. See wfmm-files-validation-2026-10-12.json and wfmm-remaining-gates-2026-10-12.md. WFMM stays partial at a qualified interval/reduced/imputed-likelihood evidence boundary. BFMonitor143 calibration recovery still lacks equations; work advances to CondiS157 saved workflows. No remote authentication request or push.

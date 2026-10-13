@@ -1,0 +1,83 @@
+{
+  "base_commit": "369d3f80b0cb004384b9a2b62c339dbc0514002b",
+  "scope": "Bounded extended 2D/3D and rectangular 2D transforms with saved studies; native spatial failures and interval audit remain qualified; WFMM partial",
+  "full_suite": {
+    "passed": 77064,
+    "seconds": 485.98,
+    "workers": 4,
+    "warnings_as_errors": true,
+    "all_extras": true,
+    "production_python_files": 778,
+    "test_and_fixture_files": 1606,
+    "tested_files_unchanged": true,
+    "log_sha256": "a472b67fbb4c3f9190f1f8d6db162f92a2bb4d2333b379fbfca4c7de139106d4",
+    "production_filter_table_unchanged": true,
+    "production_data_files": 5
+  },
+  "focused": {
+    "passed": 932,
+    "seconds": 27.67,
+    "log_sha256": "a532f3967f52eb069e1a1a7c6dfae618953fb2f8cf35fcc75520394384c61391"
+  },
+  "installed_wheel": {
+    "passed": 960,
+    "seconds": 89.92,
+    "wfmm": 932,
+    "extras": 28,
+    "outside_checkout": true,
+    "examples": [
+      "wfmm_reporting.py",
+      "wfmm_study.py",
+      "wfmm_automatic.py",
+      "wfmm_initialization.py",
+      "wfmm_spatial.py"
+    ],
+    "dependencies": "passed",
+    "log_sha256": "26c9d596de85bed5169589f430689ac0fec906c49662feaae3921a5714a06c66"
+  },
+  "artifact_audit": {
+    "package_files": 783,
+    "retained_notices": 29,
+    "source_bytes_equal": true,
+    "notices_equal": true,
+    "original_binaries_excluded": true,
+    "hashes": {
+      "mdanderson_stats-0.1.0-py3-none-any.whl": "0d4e4f758e33e0f4b24198cbe1c9988c25a5ddc547d820cc6c8639a2023e1536",
+      "mdanderson_stats-0.1.0.tar.gz": "254b167b876a98042b8ee7388f8034ffc9dadb712550d0718bdd02b85f6817d8"
+    }
+  },
+  "artifact_scope": "Built before final research/acceptance documentation and interval audit; production package and retained notice bytes match source.",
+  "static_checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "mypy_source_files": 778,
+    "build": "passed"
+  },
+  "catalog": {
+    "entries": 138,
+    "implemented": 103,
+    "partial": 31,
+    "pending": 4
+  },
+  "native_spatial_analysis": {
+    "cases": 52,
+    "byte_identical_regeneration": true,
+    "sha256": "0af1d741832f888805fc356d2b735ce3b9755861b6250d5d85be83577a6d5526",
+    "capture": "ANOVA_MOM entry before initialization; no native fitting or inverse report acceptance",
+    "synthesis": "Independent composition of validated 1D pairs; independent identity and signal reconstruction"
+  },
+  "native_spatial_failures": {
+    "cases": 22,
+    "sha256": "5d0e1016e69ed5d8fa82d009ec1bed2c550bfb012beefc2b316a58892205a7a8",
+    "accepted_as_successful": false
+  },
+  "native_interval_audit": {
+    "cases": 28,
+    "reduced_inverse_assertions": 14,
+    "extended_reconstruction_inconsistencies": 14,
+    "sha256": "571fd8b421405a47e91c3278ea9defa5b2f53069b340adbaca1b2209af20f2b4",
+    "byte_identical_regeneration": false,
+    "replay_sha256": "ee1ed85cbe72c104f298cd4847e55f5c109abb8c273094dbd15ee75f041d6fe0",
+    "qualification": "Identical synthesis maps/error outcomes; two analysis maps differ only by subnormal entries <=1.78922783e-315. No interval implementation accepted."
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "base_commit": "608a15c3e311d3bdba816d8e88932d79c84c0c0f",
+  "scope": "Explicit proper partition pi/tau hyperpriors, independent mode calibration and saved-study reports; WFMM partial; local only",
+  "full_suite": {
+    "passed": 77167,
+    "seconds": 490.23,
+    "log_sha256": "0a30c45db5d74e18b504ec724a0a0bdc0805e59599362a49aefb0a08bb6f2773",
+    "workers": 4,
+    "warnings_as_errors": true,
+    "all_extras": true,
+    "production_python_files": 779,
+    "production_json_files": 5,
+    "compressed_data_files": 5,
+    "test_and_fixture_files": 1610,
+    "tested_files_unchanged": true
+  },
+  "focused": {
+    "passed": 1035,
+    "seconds": 44.72,
+    "log_sha256": "3c58b5de5739849a8167571c3d3dc0bc11e3cc0e8ac64bc52b8b179079d387c8"
+  },
+  "installed_wheel": {
+    "passed": 1063,
+    "seconds": 103.71,
+    "log_sha256": "13e771376988cd92d7fda1935e83ab6543709f62f73d383a659693de5f42b985",
+    "outside_checkout": true,
+    "wfmm": 1035,
+    "extras": 28,
+    "dependencies": "passed",
+    "examples": [
+      "wfmm_reporting.py",
+      "wfmm_study.py",
+      "wfmm_automatic.py",
+      "wfmm_initialization.py",
+      "wfmm_spatial.py",
+      "wfmm_hyperprior.py"
+    ]
+  },
+  "artifact_audit": {
+    "package_files": 789,
+    "retained_notices": 29,
+    "source_bytes_equal": true,
+    "notices_equal": true,
+    "original_binaries_excluded": true,
+    "hashes": {
+      "mdanderson_stats-0.1.0-py3-none-any.whl": "cc1897292b21eafbb2a5b26f92974a330b050d2dcac2ff55a26a36509722e327",
+      "mdanderson_stats-0.1.0.tar.gz": "81edb3f83c67f194ee4288bc9bed25e7d3da9c5a6c526067c4e984e09efde866"
+    }
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "mypy_source_files": 779,
+    "build": "passed"
+  },
+  "catalog": {
+    "entries": 138,
+    "implemented": 103,
+    "partial": 31,
+    "pending": 4
+  },
+  "remote": {
+    "last_verified_commit": "369d3f80b0cb004384b9a2b62c339dbc0514002b",
+    "push_attempted": false,
+    "access": "unresolved; retries prohibited; separate identity diagnostic Forbidden does not establish token validity or cause"
+  },
+  "artifact_scope": "Built before final research acceptance and the new example; all production, data and retained notice bytes match source."
+}

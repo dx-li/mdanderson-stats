@@ -199,3 +199,87 @@ reaches approximately `7e-9` in the two-level source comparisons and `2.1e-8` in
 short-signal/deep-level mathematical checks. Tests bound these cases at `5e-8`;
 machine-precision orthogonality is not claimed. db transforms keep their existing
 filter construction. See [the family checkpoint](../research/wfmm-family-checkpoint-2026-10-12.md).
+
+## Images and volumes
+
+`wfmm_spatial_wavelet_basis(shape, layout="pyramid")` supplies extended 2D/3D
+separable wavelets. `layout="rectangular"` applies independent complete 1D
+transforms along each axis of a 2D image. Pass `levels`, `wavelets` and
+`boundaries` as scalar settings or per-axis tuples. Pyramid transforms require
+common settings. Arrays use column stacking (`ravel(order="F")`); the first
+spatial index varies fastest. Each contiguous subband has its own shrinkage
+partition. Dense matrices are bounded to 512 input samples and two million
+estimated live cells; every decomposed axis must have at least two samples.
+
+Saved studies use `transform="spatial_wavelet"`, `spatial_shape=(rows, columns)`
+(or three dimensions), and `spatial_layout`. Common controls are `levels`,
+`wavelet_name` (default Haar), and `boundary`; optional `axis_levels`,
+`axis_wavelets`, `axis_boundaries` replace their scalar defaults. Conflicting
+scalar/axis settings are rejected. Prediction, covariance and reporting use the
+original flattened grid; reshape with `order="F"`. See
+[the spatial example](../examples/wfmm_spatial.py). Pyramid studies support highpass/lowpass by whole spatial level, including all
+orientations. Rectangular pass flags remain unsupported; compression is available.
+
+Native analysis-only references establish coefficient ordering for tested
+extended transforms. Native initialization/report failures remain documented;
+native inverse-file interoperability is not established. Synthesis is an
+independent composition of validated 1D inverses with reconstruction checks.
+Redundant coefficients define a working model, not proof of independent errors.
+Existing initializer holds remain enforced, including for degenerate boundary
+coefficients. Clinical validity and exact native RNG identity are not claimed.
+
+## Retained draws and thinning
+
+`WFMMStudy(..., draws=1000, warmup=500, thin=5)` performs 5,500 transitions per
+chain and retains 1,000 draws, every fifth transition after warmup. The sampler
+API has the same convention. `thin=1` retains historical behavior; older saved
+studies default to one. Thinning is bounded to 1–100 and all transitions count
+toward the work budget. It controls storage and does not establish better Monte
+Carlo efficiency. Conditional random-effect draws are still generated on skipped
+post-warmup transitions, preserving the unthinned RNG stream and exact subsequence
+replay. Reports distinguish retained draws, thinning, and completed iterations;
+held studies report zero retained draws and no completed iteration count.
+
+Pyramid spatial `highpass=h>0` discards the approximation and h coarsest detail
+levels; `lowpass=l` discards l finest detail levels. Every orientation receives
+the same level decision. These recovered source conventions reverse the guide's
+short descriptions. Empty selections are rejected. Filtering precedes energy
+compression, and reporting restores omitted coefficients as zero. Native
+rectangular pass attempts failed in the audited settings, so those flags remain
+explicitly unsupported. Native fitting/file compatibility remains a separate
+claim from validated analysis selection.
+
+## Explicit optional shrinkage hyperpriors
+
+`WFMMShrinkageHyperprior(a, b, shape, scale, update_mask=True)` enables shared
+partition-level inclusion probabilities π and slab variances τ. Parameters
+broadcast to fixed effects × sorted retained partitions; a vector addresses
+partitions. The independent priors are Beta(a,b) and inverse-gamma(shape,scale),
+with density proportional to τ^(-shape-1) exp(-scale/τ). This is an explicit
+community model, not a claim of reproducing native hyperprior conversion.
+
+`fit_wfmm_coefficients(..., shrinkage_hyperprior=...)` requires initial π and τ
+constant within each partition. Each complete coefficient sweep is followed by
+Beta(a+included,b+excluded) and inverse-gamma(shape+included/2,
+scale+sum(included coefficients squared)/2) updates. Included exact zeros count
+as included. False mask entries retain supplied initial values and consume no
+hyperparameter draws. Disabled updates preserve the existing random stream.
+Draws outside representable open support raise rather than being clipped.
+
+Saved studies accept the same optional object. Active parameters start at the
+Beta prior mean and inverse-gamma prior mode; empirical-Bayes initialization
+and its validity holds still run. Masked parameters retain empirical-Bayes
+values, which must satisfy the sampler's within-partition constancy requirement.
+Reports include π/τ means, requested quantiles, R-hat, MCSE, labels and masks.
+Older saved studies default to no updates. Fits retain read-only
+`inclusion_probabilities` and `slab_variances` arrays shaped chains × retained
+draws × fixed effects × partitions. Thinning preserves exact subsequences,
+including hyperparameter draws.
+
+`wfmm_shrinkage_conditional` exposes the independently testable conditional
+parameters. `wfmm_mode_shrinkage_hyperprior` optionally calibrates explicit modes
+and finite variances using bounded root solving. Its inverse-gamma shapes exceed
+two. This mode-centering convention is independent of the diagnosed native
+conversion: see `research/wfmm-hyperprior-audit-2026-10-12.md`. Proper explicit
+priors with smaller shapes remain allowed but may have infinite moments.
+Neither these checks nor posterior diagnostics establish clinical validity.

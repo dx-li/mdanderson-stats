@@ -1,0 +1,20 @@
+{
+  "first_sha256": "571fd8b421405a47e91c3278ea9defa5b2f53069b340adbaca1b2209af20f2b4",
+  "second_sha256": "596bf23ae31288a43df9c0d0e824c389b3f3f515773b6fbf7a3e6e34b4e1cd2d",
+  "byte_identical": false,
+  "synthesis_and_failure_outcomes_identical": true,
+  "analysis_differences": [
+    {
+      "wavelet": "db4",
+      "n": 33,
+      "extended": 1,
+      "analysis_max_abs_difference": 1.78922783e-315
+    },
+    {
+      "wavelet": "sym4",
+      "n": 33,
+      "extended": 1,
+      "analysis_max_abs_difference": 8.2860105e-316
+    }
+  ]
+}

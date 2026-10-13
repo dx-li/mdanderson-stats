@@ -1,0 +1,719 @@
+{
+  "executable_sha256": {
+    "wfmm1": "0c18cac7225eca3db264b8a4e769a45960cde0bfbf68fc2c1554c83cf451cf8e",
+    "wfmm2": "4db3d8724fe80e5450b6b666b67de2967d625f421c5e05a9cc0d31049e3a3f0e"
+  },
+  "method": "Own child stopped at native prior conversion entry; numerical centering matrix supplied in memory, outputs captured at return; no posterior/RNG acceptance claim",
+  "cases": [
+    {
+      "family": "beta",
+      "requested_center": 0.01,
+      "requested_variance": 0.01,
+      "initial": [
+        [
+          0.01,
+          0.01,
+          0.01
+        ]
+      ],
+      "variance": 0.01,
+      "mean_after": [
+        [
+          0.01,
+          0.01,
+          0.01
+        ]
+      ],
+      "a": [
+        [
+          1.0724921335403208,
+          1.0724921335403208,
+          1.0724921335403208
+        ]
+      ],
+      "b": [
+        [
+          8.17760111871628,
+          8.17760111871628,
+          8.17760111871628
+        ]
+      ],
+      "implied_moments": {
+        "mean": 0.11594392664946179,
+        "mode": 0.009998786362886786,
+        "variance": 0.01
+      },
+      "independent_mode_centered_reference": {
+        "a": 1.0725013212202392,
+        "b": 8.17763080080368,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "beta",
+      "requested_center": 0.01,
+      "requested_variance": 0.06,
+      "initial": [
+        [
+          0.01,
+          0.01,
+          0.01
+        ]
+      ],
+      "variance": 0.06,
+      "mean_after": [
+        [
+          0.01,
+          0.01,
+          0.01
+        ]
+      ],
+      "a": [
+        [
+          1.0043402183791736,
+          1.0043402183791736,
+          1.0043402183791736
+        ]
+      ],
+      "b": [
+        [
+          1.8167693463766426,
+          1.8167693463766426,
+          1.8167693463766426
+        ]
+      ],
+      "implied_moments": {
+        "mean": 0.35600893737925604,
+        "mode": 0.005285796884444221,
+        "variance": 0.06000000000000001
+      },
+      "independent_mode_centered_reference": {
+        "a": 1.0082524331191274,
+        "b": 1.8169908787936098,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "beta",
+      "requested_center": 0.2,
+      "requested_variance": 0.01,
+      "initial": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ],
+      "variance": 0.01,
+      "mean_after": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ],
+      "a": [
+        [
+          3.998737817560058,
+          3.998737817560058,
+          3.998737817560058
+        ]
+      ],
+      "b": [
+        [
+          12.994999962769274,
+          12.994999962769274,
+          12.994999962769274
+        ]
+      ],
+      "implied_moments": {
+        "mean": 0.23530655052172778,
+        "mode": 0.1999993504951233,
+        "variance": 0.010000000000000002
+      },
+      "independent_mode_centered_reference": {
+        "a": 3.998753022295525,
+        "b": 12.9950120891821,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "beta",
+      "requested_center": 0.2,
+      "requested_variance": 0.06,
+      "initial": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ],
+      "variance": 0.06,
+      "mean_after": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ],
+      "a": [
+        [
+          1.148820190697496,
+          1.148820190697496,
+          1.148820190697496
+        ]
+      ],
+      "b": [
+        [
+          1.8098558684725392,
+          1.8098558684725392,
+          1.8098558684725392
+        ]
+      ],
+      "implied_moments": {
+        "mean": 0.38828860197008586,
+        "mode": 0.15523511750813476,
+        "variance": 0.06
+      },
+      "independent_mode_centered_reference": {
+        "a": 1.1999999999999997,
+        "b": 1.7999999999999994,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "beta",
+      "requested_center": 0.5,
+      "requested_variance": 0.01,
+      "initial": [
+        [
+          0.5,
+          0.5,
+          0.5
+        ]
+      ],
+      "variance": 0.01,
+      "mean_after": [
+        [
+          0.5,
+          0.5,
+          0.5
+        ]
+      ],
+      "a": [
+        [
+          12.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "b": [
+        [
+          12.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "implied_moments": {
+        "mean": 0.5,
+        "mode": 0.5,
+        "variance": 0.01
+      },
+      "independent_mode_centered_reference": {
+        "a": 11.999999999999996,
+        "b": 11.999999999999996,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "beta",
+      "requested_center": 0.5,
+      "requested_variance": 0.06,
+      "initial": [
+        [
+          0.5,
+          0.5,
+          0.5
+        ]
+      ],
+      "variance": 0.06,
+      "mean_after": [
+        [
+          0.5,
+          0.5,
+          0.5
+        ]
+      ],
+      "a": [
+        [
+          1.5833333333333335,
+          1.5833333333333335,
+          1.5833333333333335
+        ]
+      ],
+      "b": [
+        [
+          1.5833333333333335,
+          1.5833333333333335,
+          1.5833333333333335
+        ]
+      ],
+      "implied_moments": {
+        "mean": 0.5,
+        "mode": 0.5,
+        "variance": 0.06
+      },
+      "independent_mode_centered_reference": {
+        "a": 1.5833333333333335,
+        "b": 1.5833333333333335,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "beta",
+      "requested_center": 0.8,
+      "requested_variance": 0.01,
+      "initial": [
+        [
+          0.8,
+          0.8,
+          0.8
+        ]
+      ],
+      "variance": 0.01,
+      "mean_after": [
+        [
+          0.8,
+          0.8,
+          0.8
+        ]
+      ],
+      "a": [
+        [
+          12.994999962769274,
+          12.994999962769274,
+          12.994999962769274
+        ]
+      ],
+      "b": [
+        [
+          3.998737817560058,
+          3.998737817560058,
+          3.998737817560058
+        ]
+      ],
+      "implied_moments": {
+        "mean": 0.7646934494782722,
+        "mode": 0.8000006495048767,
+        "variance": 0.010000000000000002
+      },
+      "independent_mode_centered_reference": {
+        "a": 12.9950120891821,
+        "b": 3.9987530222955243,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "beta",
+      "requested_center": 0.8,
+      "requested_variance": 0.06,
+      "initial": [
+        [
+          0.8,
+          0.8,
+          0.8
+        ]
+      ],
+      "variance": 0.06,
+      "mean_after": [
+        [
+          0.8,
+          0.8,
+          0.8
+        ]
+      ],
+      "a": [
+        [
+          1.8098558684725392,
+          1.8098558684725392,
+          1.8098558684725392
+        ]
+      ],
+      "b": [
+        [
+          1.148820190697496,
+          1.148820190697496,
+          1.148820190697496
+        ]
+      ],
+      "implied_moments": {
+        "mean": 0.6117113980299141,
+        "mode": 0.8447648824918652,
+        "variance": 0.06
+      },
+      "independent_mode_centered_reference": {
+        "a": 1.8000000000000007,
+        "b": 1.2000000000000002,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "beta",
+      "requested_center": 0.99,
+      "requested_variance": 0.01,
+      "initial": [
+        [
+          0.99,
+          0.99,
+          0.99
+        ]
+      ],
+      "variance": 0.01,
+      "mean_after": [
+        [
+          0.99,
+          0.99,
+          0.99
+        ]
+      ],
+      "a": [
+        [
+          8.17760111871628,
+          8.17760111871628,
+          8.17760111871628
+        ]
+      ],
+      "b": [
+        [
+          1.0724921335403208,
+          1.0724921335403208,
+          1.0724921335403208
+        ]
+      ],
+      "implied_moments": {
+        "mean": 0.8840560733505383,
+        "mode": 0.9900012136371132,
+        "variance": 0.01
+      },
+      "independent_mode_centered_reference": {
+        "a": 8.177630800803684,
+        "b": 1.0725013212202392,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "beta",
+      "requested_center": 0.99,
+      "requested_variance": 0.06,
+      "initial": [
+        [
+          0.99,
+          0.99,
+          0.99
+        ]
+      ],
+      "variance": 0.06,
+      "mean_after": [
+        [
+          0.99,
+          0.99,
+          0.99
+        ]
+      ],
+      "a": [
+        [
+          1.8167693463766426,
+          1.8167693463766426,
+          1.8167693463766426
+        ]
+      ],
+      "b": [
+        [
+          1.0043402183791736,
+          1.0043402183791736,
+          1.0043402183791736
+        ]
+      ],
+      "implied_moments": {
+        "mean": 0.6439910626207439,
+        "mode": 0.9947142031155558,
+        "variance": 0.06000000000000001
+      },
+      "independent_mode_centered_reference": {
+        "a": 1.8169908787936098,
+        "b": 1.0082524331191274,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "inverse_gamma",
+      "requested_center": 0.1,
+      "requested_variance": 1.0,
+      "initial": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ],
+      "variance": 1.0,
+      "mean_after": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ],
+      "a": [
+        [
+          1.8180689001567674,
+          1.8180689001567674,
+          1.8180689001567674
+        ]
+      ],
+      "b": [
+        [
+          0.2818068900156767,
+          0.2818068900156767,
+          0.2818068900156767
+        ]
+      ],
+      "implied_moments": {
+        "mean": 0.34447818510356987,
+        "mode": 0.1,
+        "variance": null,
+        "finite_variance": false
+      },
+      "independent_mode_centered_reference": {
+        "a": 2.0812122114359473,
+        "b": 0.30812122114359475,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "inverse_gamma",
+      "requested_center": 0.1,
+      "requested_variance": 1000.0,
+      "initial": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ],
+      "variance": 1000.0,
+      "mean_after": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ],
+      "a": [
+        [
+          1.6703645743513977,
+          1.6703645743513977,
+          1.6703645743513977
+        ]
+      ],
+      "b": [
+        [
+          0.26703645743513976,
+          0.26703645743513976,
+          0.26703645743513976
+        ]
+      ],
+      "implied_moments": {
+        "mean": 0.3983451209269334,
+        "mode": 0.09999999999999999,
+        "variance": null,
+        "finite_variance": false
+      },
+      "independent_mode_centered_reference": {
+        "a": 2.0000899892025914,
+        "b": 0.3000089989202592,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "inverse_gamma",
+      "requested_center": 1.0,
+      "requested_variance": 1.0,
+      "initial": [
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "variance": 1.0,
+      "mean_after": [
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "a": [
+        [
+          3.521207904839203,
+          3.521207904839203,
+          3.521207904839203
+        ]
+      ],
+      "b": [
+        [
+          4.521207904839203,
+          4.521207904839203,
+          4.521207904839203
+        ]
+      ],
+      "implied_moments": {
+        "mean": 1.7932705574027443,
+        "mode": 1.0,
+        "variance": 2.1139906529656596,
+        "finite_variance": true
+      },
+      "independent_mode_centered_reference": {
+        "a": 4.479815748755145,
+        "b": 5.479815748755145,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "inverse_gamma",
+      "requested_center": 1.0,
+      "requested_variance": 1000.0,
+      "initial": [
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "variance": 1000.0,
+      "mean_after": [
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "a": [
+        [
+          1.7075626112970819,
+          1.7075626112970819,
+          1.7075626112970819
+        ]
+      ],
+      "b": [
+        [
+          2.7075626112970816,
+          2.7075626112970816,
+          2.7075626112970816
+        ]
+      ],
+      "implied_moments": {
+        "mean": 3.8266049789341774,
+        "mode": 1.0,
+        "variance": null,
+        "finite_variance": false
+      },
+      "independent_mode_centered_reference": {
+        "a": 2.008894517662488,
+        "b": 3.008894517662488,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "inverse_gamma",
+      "requested_center": 10.0,
+      "requested_variance": 1.0,
+      "initial": [
+        [
+          10.0,
+          10.0,
+          10.0
+        ]
+      ],
+      "variance": 1.0,
+      "mean_after": [
+        [
+          10.0,
+          10.0,
+          10.0
+        ]
+      ],
+      "a": [
+        [
+          105.85114278729554,
+          105.85114278729554,
+          105.85114278729554
+        ]
+      ],
+      "b": [
+        [
+          1068.5114278729554,
+          1068.5114278729554,
+          1068.5114278729554
+        ]
+      ],
+      "implied_moments": {
+        "mean": 10.190746609606084,
+        "mode": 10.0,
+        "variance": 1.0000016723350142,
+        "finite_variance": true
+      },
+      "independent_mode_centered_reference": {
+        "a": 105.85131025190702,
+        "b": 1068.5131025190703,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    },
+    {
+      "family": "inverse_gamma",
+      "requested_center": 10.0,
+      "requested_variance": 1000.0,
+      "initial": [
+        [
+          10.0,
+          10.0,
+          10.0
+        ]
+      ],
+      "variance": 1000.0,
+      "mean_after": [
+        [
+          10.0,
+          10.0,
+          10.0
+        ]
+      ],
+      "a": [
+        [
+          2.2166028132310815,
+          2.2166028132310815,
+          2.2166028132310815
+        ]
+      ],
+      "b": [
+        [
+          32.166028132310814,
+          32.166028132310814,
+          32.166028132310814
+        ]
+      ],
+      "implied_moments": {
+        "mean": 26.439218932005872,
+        "mode": 10.0,
+        "variance": 3227.254010725977,
+        "finite_variance": true
+      },
+      "independent_mode_centered_reference": {
+        "a": 2.5316591605345593,
+        "b": 35.31659160534559,
+        "interpretation": "Mathematical mode/variance solution, not a claim of native implementation or intended centering"
+      }
+    }
+  ]
+}

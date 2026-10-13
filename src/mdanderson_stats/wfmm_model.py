@@ -16,6 +16,7 @@ from scipy.stats import truncnorm
 
 from ._validation import FloatArray, finite
 from .hierarchical_binomial import ChainSummary, summarize_chains
+from .wfmm_hyperprior import WFMMShrinkageHyperprior, _draw_hyperparameters, _hyperprior_arrays
 
 _MAX_DESIGN_CELLS = 2_000_000
 _MAX_RETAINED_CELLS = 2_000_000
@@ -373,6 +374,11 @@ class WFMMCoefficientFit:
     variance_acceptance: FloatArray
     likelihood_evaluations: int
     variance_proposals: FloatArray | None = None
+    thin: int = 1
+    inclusion_probabilities: FloatArray | None = None
+    slab_variances: FloatArray | None = None
+    hyperparameter_partitions: NDArray[np.int64] | None = None
+    hyperparameter_update_mask: NDArray[np.bool_] | None = None
 
 
 def fit_wfmm_coefficients(
@@ -381,6 +387,7 @@ def fit_wfmm_coefficients(
     random_design: ArrayLike | None = None,
     *,
     prior: WFMMPrior,
+    shrinkage_hyperprior: WFMMShrinkageHyperprior | None = None,
     random_variance: ArrayLike | None = None,
     residual_variance: ArrayLike,
     random_strata: ArrayLike | None = None,
@@ -392,6 +399,7 @@ def fit_wfmm_coefficients(
     zero_proposal_policy: str = "error",
     draws: int = 1000,
     warmup: int = 500,
+    thin: int = 1,
     chains: int = 2,
     sample_random_effects: bool = False,
     rng: np.random.Generator,
@@ -413,7 +421,15 @@ def fit_wfmm_coefficients(
     random-effect levels and independent residual rows, with coefficient-
     specific variance components. This fits the wavelet-domain model, not a
     generic mixed model; input transforms and empirical-Bayes defaults are
-    intentionally outside this API.
+    intentionally outside this API. ``draws`` counts retained samples; after
+    warmup, retain every ``thin``-th transition (1..100). Discarded transitions
+    still consume the same random numbers, including conditional random effects,
+    as the corresponding unthinned run. Thinning is a storage control, not a
+    claim of improved Monte Carlo efficiency. An optional ``shrinkage_hyperprior``
+    adds shared partition-level Beta/inverse-gamma Gibbs updates after each full
+    coefficient sweep. Initial pi/tau must be constant within each partition.
+    Prior arrays address sorted retained partition labels. Masked pairs retain
+    initial values; no native hyperprior conversion or RNG identity is implied.
     """
     if zero_proposal_policy not in ("error", "freeze"):
         raise ValueError("zero_proposal_policy must be error or freeze")
@@ -569,8 +585,19 @@ def fit_wfmm_coefficients(
 
     partitions = coefficient_labels(coefficient_partition, "coefficient_partition")
     scales = coefficient_labels(coefficient_scale, "coefficient_scale")
+    hyper_labels, hyper_first, hyper_groups = np.unique(
+        partitions, return_index=True, return_inverse=True
+    )
+    hyper_arrays = None
+    if shrinkage_hyperprior is not None:
+        hyper_arrays = _hyperprior_arrays(shrinkage_hyperprior, (fixed_count, len(hyper_labels)))
+        if not np.array_equal(pi, pi[:, hyper_first][:, hyper_groups]) or not np.array_equal(
+            tau, tau[:, hyper_first][:, hyper_groups]
+        ):
+            raise ValueError("initial pi and tau must be constant within each hyperprior partition")
     draw_count = _integer(draws, "draws", 8, 5000)
     warm = _integer(warmup, "warmup", 0, 5000)
+    thinning = _integer(thin, "thin", 1, 100)
     chain_count = _integer(chains, "chains", 2, 4)
     if not np.all(np.isfinite(q)) or not np.all(np.isfinite(s)):
         raise ValueError("starting variances must be positive and finite")
@@ -581,9 +608,14 @@ def fit_wfmm_coefficients(
     kept_random_effects = (
         chain_count * draw_count * z.shape[1] * coefficient_count if sample_random_effects else 0
     )
-    if kept_fixed * 2 + kept_variance + kept_random_effects > _MAX_RETAINED_CELLS:
+    kept_hyper = (
+        2 * chain_count * draw_count * fixed_count * len(hyper_labels)
+        if hyper_arrays is not None
+        else 0
+    )
+    if kept_fixed * 2 + kept_variance + kept_random_effects + kept_hyper > _MAX_RETAINED_CELLS:
         raise ValueError("retained WFMM posterior arrays exceed 2000000 cells")
-    iterations = warm + draw_count
+    iterations = warm + draw_count * thinning
     likelihood_factorizations = (
         random_group_count + residual_group_count + 3 if estimate_variances else 2
     )
@@ -593,10 +625,16 @@ def fit_wfmm_coefficients(
         + rows * fixed_count
     )
     work = chain_count * iterations * coefficient_count * per_coefficient_work
+    if hyper_arrays is not None:
+        work += chain_count * iterations * fixed_count * coefficient_count * 4
     if work > _MAX_WORK:
         raise ValueError("WFMM sampling work exceeds the supported budget")
     random_sampling_work = (
-        chain_count * draw_count * coefficient_count * (z.shape[1] ** 3 + rows * z.shape[1] ** 2)
+        chain_count
+        * draw_count
+        * thinning
+        * coefficient_count
+        * (z.shape[1] ** 3 + rows * z.shape[1] ** 2)
     )
     if sample_random_effects and random_sampling_work > _MAX_WORK:
         raise ValueError("random-effect posterior sampling exceeds the supported budget")
@@ -621,11 +659,19 @@ def fit_wfmm_coefficients(
         if sample_random_effects
         else None
     )
+    pi_draws = (
+        np.empty((chain_count, draw_count, fixed_count, len(hyper_labels)))
+        if hyper_arrays is not None
+        else None
+    )
+    tau_draws = None if pi_draws is None else np.empty_like(pi_draws)
     acceptance = np.zeros((random_group_count + residual_group_count, coefficient_count))
     proposals = np.zeros_like(acceptance)
     likelihood_evaluations = 0
 
     for chain in range(chain_count):
+        pi_chain, tau_chain = pi.copy(), tau.copy()
+        group_pi, group_tau = pi[:, hyper_first].copy(), tau[:, hyper_first].copy()
         gamma = np.zeros((fixed_count, coefficient_count), dtype=np.bool_)
         beta = np.zeros((fixed_count, coefficient_count), dtype=np.float64)
         for i in range(fixed_count):
@@ -676,8 +722,8 @@ def fit_wfmm_coefficients(
                     new, included = _draw_fixed_coefficient(
                         bhat,
                         conditional_variance,
-                        float(pi[i, k]),
-                        float(tau[i, k]),
+                        float(pi_chain[i, k]),
+                        float(tau_chain[i, k]),
                         rng,
                     )
                     gamma[i, k] = included
@@ -764,7 +810,7 @@ def fit_wfmm_coefficients(
                 )
                 likelihood_evaluations += 1
                 if effect_draws is not None and iteration >= warm:
-                    effect_draws[chain, iteration - warm, :, k] = _sample_random_effects(
+                    sampled_effects = _sample_random_effects(
                         residual,
                         z,
                         random_groups,
@@ -775,13 +821,26 @@ def fit_wfmm_coefficients(
                         rng,
                     )
 
-            if iteration >= warm:
-                index = iteration - warm
+                    if (iteration - warm + 1) % thinning == 0:
+                        effect_draws[chain, (iteration - warm + 1) // thinning - 1, :, k] = (
+                            sampled_effects
+                        )
+
+            if hyper_arrays is not None:
+                group_pi, group_tau = _draw_hyperparameters(
+                    beta, gamma, hyper_groups, hyper_arrays, group_pi, group_tau, rng
+                )
+                pi_chain, tau_chain = group_pi[:, hyper_groups], group_tau[:, hyper_groups]
+            if iteration >= warm and (iteration - warm + 1) % thinning == 0:
+                index = (iteration - warm + 1) // thinning - 1
                 coefficients_draws[chain, index] = beta
                 inclusion_draws[chain, index] = gamma
                 random_draws[chain, index] = q_chain
                 residual_draws[chain, index] = s_chain
                 likelihood_draws[chain, index] = log_likelihood
+                if pi_draws is not None and tau_draws is not None:
+                    pi_draws[chain, index] = group_pi
+                    tau_draws[chain, index] = group_tau
 
     acceptance_rate = np.divide(
         acceptance, proposals, out=np.zeros_like(acceptance), where=proposals > 0
@@ -803,4 +862,9 @@ def fit_wfmm_coefficients(
         _owned(acceptance_rate),
         likelihood_evaluations,
         _owned(proposals),
+        thinning,
+        None if pi_draws is None else _owned(pi_draws),
+        None if tau_draws is None else _owned(tau_draws),
+        None if hyper_arrays is None else _owned_int(hyper_labels),
+        None if hyper_arrays is None else _owned_bool(hyper_arrays[4]),
     )
